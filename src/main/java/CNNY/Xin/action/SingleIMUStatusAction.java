@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import CNNY.Xin.model.SingleIMUStatusModel;
@@ -26,7 +29,7 @@ public class SingleIMUStatusAction {
 
 	private SingleIMUStatusModel singleIMUStatusModel;
 	private SingleIMUStatusPanel singleIMUStatusPanel;
-	private TimeSeriesCollection imuChartTimeSeriesCollection = new TimeSeriesCollection();
+	private TimeSeriesCollection imuChartTimeSeriesCollection;
 	private Boolean recordingFlag = true;
 
 	public SingleIMUStatusAction(
@@ -35,6 +38,10 @@ public class SingleIMUStatusAction {
 
 		this.singleIMUStatusModel = singleIMUStatusModel;
 		this.singleIMUStatusPanel = singleIMUStatusPanel;
+
+		this.imuChartTimeSeriesCollection = new TimeSeriesCollection();
+		this.singleIMUStatusPanel.chartContentVal 	= ChartFactory.createXYLineChart("IMU", "TIME", "VAL", imuChartTimeSeriesCollection);
+		this.singleIMUStatusPanel.chartPanelContentVal.setChart(this.singleIMUStatusPanel.chartContentVal);
 	}
 
 	/**
@@ -52,17 +59,19 @@ public class SingleIMUStatusAction {
 					//					if (!checkReadFlag()) {
 					//						readData();
 					//					}
-					singleIMUStatusModel.serialPortBufferData.addAll(
-							readSerialPort(singleIMUStatusModel.serialPort));
+					singleIMUStatusModel.serialPortBufferData.addAll(readSerialPort(singleIMUStatusModel.serialPort));
 					for (int i = 0; i < singleIMUStatusModel.serialPortBufferData.size(); i++) {
 
 						// if decode success, imu data model is ready
-						if(singleIMUStatusModel.imuFrameDecoder.PacketDecode(
-								singleIMUStatusModel.serialPortBufferData.get(i)) != null) {
-							
-							System.out.println("packet decode success.");
+						if(singleIMUStatusModel.imuFrameDecoder.PacketDecode(singleIMUStatusModel.serialPortBufferData.get(i))) {
+
+							//							System.out.println("packet decode success.");
+
 							// refresh data exhibit
 							refreshIMUDataDisplay();
+
+							// clear serial port buffer
+							singleIMUStatusModel.serialPortBufferData.clear();
 						}
 					}
 				}
@@ -126,7 +135,7 @@ public class SingleIMUStatusAction {
 				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port is already opened!");
 				return;
 			}
-			
+
 			// set port parameter
 			try {
 				singleIMUStatusModel.serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -233,11 +242,14 @@ public class SingleIMUStatusAction {
 			FileWriter fileWriter = new FileWriter(file);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-			//			bufferedWriter.write("leftLegThighAngleTimeSeries:\n");
-			//			for (int i = 0; i < leftLegThighAngleTimeSeries.getItemCount(); i++) {
-			//				bufferedWriter.write(leftLegThighAngleTimeSeries.getValue(i).toString() + "\n");
-			//			}
-			//			bufferedWriter.write("\n");
+			for (int i = 0; i < imuChartTimeSeriesCollection.getSeriesCount(); i++) {
+				TimeSeries tempTimeSeries = imuChartTimeSeriesCollection.getSeries(i);
+				bufferedWriter.write(tempTimeSeries.getKey().toString() + "\n");
+				for (int j = 0; j < tempTimeSeries.getItemCount(); j++) {
+					bufferedWriter.write(tempTimeSeries.getTimePeriod(j).toString() + " " + tempTimeSeries.getValue(j) + "\n");
+				}
+				bufferedWriter.write("\n");
+			}
 
 			bufferedWriter.close();
 			fileWriter.close();
@@ -256,6 +268,7 @@ public class SingleIMUStatusAction {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawZAxisTimeSeries);
+			System.out.println("1");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.accRawXAxisTimeSeries);
@@ -273,6 +286,7 @@ public class SingleIMUStatusAction {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
+			System.out.println("2");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
@@ -290,6 +304,7 @@ public class SingleIMUStatusAction {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesZAxisTimeSeries);
+			System.out.println("3");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesXAxisTimeSeries);
@@ -308,7 +323,11 @@ public class SingleIMUStatusAction {
 		singleIMUStatusPanel.textAreaContentVal.setText(singleIMUStatusModel.imuDataDecoder.imuDataModel.StringData);
 
 		// refresh data display on chart
-		singleIMUStatusModel.updateTimeSeries();
+		if (recordingFlag == true) {
+			singleIMUStatusModel.updateTimeSeries();
+		}
+		else {
+		}
 	}
 
 	/**
@@ -330,9 +349,9 @@ public class SingleIMUStatusAction {
 			readData = serialPort.readBytes();
 
 			// print read data length
-			if (readData != null) {
-				System.out.println("readData.length = " + readData.length);	
-			}
+			//			if (readData != null) {
+			//				System.out.println("readData.length = " + readData.length);	
+			//			}
 
 			// if data is not null
 			if (readData != null) {

@@ -44,9 +44,11 @@ public class IMUFrameDecoder {
 	 * 		if frame exist, return imu data model
 	 * 		else, return null
 	 */
-	public IMUDataModel PacketDecode(short c)
+	public boolean PacketDecode(short c)
 	{
 		//Console.WriteLine(c.ToString("X"));
+		boolean result = false;
+		
 		switch (status)
 		{
 		case kStatus_Idle:
@@ -104,9 +106,10 @@ public class IMUFrameDecoder {
 				CRCCalculated = crc16(CRCCalculated, DataPacketBuffer, 0, DataPacketLen, 0x1021);
 
 				// CRC match, Kboot suffucally received a packet
-				if (CRCCalculated == CRCReceived) {
+				if (CRCCalculated.intValue() == CRCReceived.intValue()) {
 					if (imuDataDecoder != null) {
-						return imuDataDecoder.decode(DataPacketBuffer, DataPacketLen);
+						imuDataDecoder.decode(DataPacketBuffer, DataPacketLen);
+						result = true;
 					}
 				}
 				status = DecoderStatus.kStatus_Idle;
@@ -114,7 +117,7 @@ public class IMUFrameDecoder {
 			break;
 		}
 		
-		return null;
+		return result;
 	}
 	
 	/**
@@ -134,12 +137,12 @@ public class IMUFrameDecoder {
             	Boolean b1 = (crc & 0x8000) != 0;
             	Boolean b2 = (bt & 0x80) != 0;
                 if (b1 != b2) {
-                	crc = ((crc << 1) ^ poly);
+                	crc = ((crc << 1) ^ poly) & 0xFFFF;
                 }
                 else {
-                	crc <<= 1;
+                	crc = (crc << 1) & 0xFFFF;
                 }
-                bt <<= 1;
+                bt = (short)((bt << 1) & 0xFF);
             }
         }
         return crc;

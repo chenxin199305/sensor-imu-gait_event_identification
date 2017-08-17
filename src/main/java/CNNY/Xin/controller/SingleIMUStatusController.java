@@ -28,8 +28,9 @@ public class SingleIMUStatusController {
 
 		this.singleIMUStatusModel = singleIMUStatusModel;
 		this.singleIMUStatusPanel = singleIMUStatusPanel;
-		
-		this.singleIMUStatusAction = new SingleIMUStatusAction(singleIMUStatusModel, singleIMUStatusPanel);
+
+		this.singleIMUStatusAction = 
+				new SingleIMUStatusAction(this.singleIMUStatusModel, this.singleIMUStatusPanel);
 	
 		initActionListener();
 	}

@@ -25,7 +25,7 @@ public class SingleIMUStatusPanel extends JPanel {
 	public JCheckBox chckbxAirPressure;
 	public JTextArea textAreaContentVal;
 	private JPanel panelContentValForChart;
-	private ChartPanel chartPanelContentVal;
+	public ChartPanel chartPanelContentVal;
 	public JFreeChart chartContentVal;
 	public JButton btnStartRecord;
 	public JButton btnSaveToFile;
@@ -54,12 +54,10 @@ public class SingleIMUStatusPanel extends JPanel {
 		add(lblContentSel);
 		
 		chckbxAcceleration = new JCheckBox("Acceleration");
-		chckbxAcceleration.setSelected(true);
 		chckbxAcceleration.setBounds(21, 82, 119, 23);
 		add(chckbxAcceleration);
 		
 		chckbxAngleVelocity = new JCheckBox("Angle Velocity");
-		chckbxAngleVelocity.setSelected(true);
 		chckbxAngleVelocity.setBounds(21, 107, 119, 23);
 		add(chckbxAngleVelocity);
 		
@@ -68,7 +66,6 @@ public class SingleIMUStatusPanel extends JPanel {
 		add(chckbxMagnetic);
 		
 		chckbxEulerAngle = new JCheckBox("Euler Angle");
-		chckbxEulerAngle.setSelected(true);
 		chckbxEulerAngle.setBounds(142, 107, 103, 23);
 		add(chckbxEulerAngle);
 		
@@ -86,7 +83,7 @@ public class SingleIMUStatusPanel extends JPanel {
 		add(textAreaContentVal);
 		
 		panelContentValForChart = new JPanel();
-		panelContentValForChart.setBounds(21, 288, 384, 197);
+		panelContentValForChart.setBounds(21, 288, 384, 255);
 		add(panelContentValForChart);
 		panelContentValForChart.setLayout(null);
 		
@@ -103,20 +100,20 @@ public class SingleIMUStatusPanel extends JPanel {
 		chartPanelContentVal.setChart(chartContentVal);
 		
 		JLabel lblRecordLens = new JLabel("RecordLen(s)");
-		lblRecordLens.setBounds(21, 495, 90, 15);
+		lblRecordLens.setBounds(21, 557, 90, 15);
 		add(lblRecordLens);
 		
 		textFieldRecordLength = new JTextField();
-		textFieldRecordLength.setBounds(119, 492, 66, 21);
+		textFieldRecordLength.setBounds(119, 554, 66, 21);
 		add(textFieldRecordLength);
 		textFieldRecordLength.setColumns(10);
 		
 		btnStartRecord = new JButton("StopRecord");
-		btnStartRecord.setBounds(195, 491, 100, 23);
+		btnStartRecord.setBounds(195, 553, 100, 23);
 		add(btnStartRecord);
 		
 		btnSaveToFile = new JButton("SaveToFile");
-		btnSaveToFile.setBounds(305, 491, 100, 23);
+		btnSaveToFile.setBounds(305, 553, 100, 23);
 		add(btnSaveToFile);
 
 	}
