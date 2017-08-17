@@ -214,6 +214,16 @@ public class SingleIMUStatusAction {
 			break;
 		}
 	}
+	
+	public void setToRecordState() {
+		recordingFlag = true;
+		singleIMUStatusPanel.btnStartRecord.setText("StopRecord");
+	}
+	
+	public void setToStopRecordState() {
+		recordingFlag = false;
+		singleIMUStatusPanel.btnStartRecord.setText("StartRecord");
+	}
 
 	/**
 	 *	Function Info

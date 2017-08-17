@@ -107,4 +107,16 @@ public class SingleIMUStatusController {
 		});
 		
 	}
+
+	public SingleIMUStatusModel getSingleIMUStatusModel() {
+		return singleIMUStatusModel;
+	}
+
+	public SingleIMUStatusPanel getSingleIMUStatusPanel() {
+		return singleIMUStatusPanel;
+	}
+
+	public SingleIMUStatusAction getSingleIMUStatusAction() {
+		return singleIMUStatusAction;
+	}
 }
