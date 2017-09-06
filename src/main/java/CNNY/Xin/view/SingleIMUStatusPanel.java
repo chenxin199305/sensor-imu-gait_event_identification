@@ -20,9 +20,10 @@ public class SingleIMUStatusPanel extends JPanel {
 	public JButton btnConnect;
 	public JCheckBox chckbxAcceleration;
 	public JCheckBox chckbxAngleVelocity;
-	public JCheckBox chckbxMagnetic;
 	public JCheckBox chckbxEulerAngle;
-	public JCheckBox chckbxAirPressure;
+	public JCheckBox chckbxAccFiltered;
+	public JCheckBox chckbxAngvelFiltered;
+	public JCheckBox chckbxEulangFiltered;
 	public JTextArea textAreaContentVal;
 	private JPanel panelContentValForChart;
 	public ChartPanel chartPanelContentVal;
@@ -58,20 +59,24 @@ public class SingleIMUStatusPanel extends JPanel {
 		add(chckbxAcceleration);
 		
 		chckbxAngleVelocity = new JCheckBox("Angle Velocity");
-		chckbxAngleVelocity.setBounds(21, 107, 119, 23);
+		chckbxAngleVelocity.setBounds(142, 82, 119, 23);
 		add(chckbxAngleVelocity);
 		
-		chckbxMagnetic = new JCheckBox("Magnetic");
-		chckbxMagnetic.setBounds(142, 82, 103, 23);
-		add(chckbxMagnetic);
-		
 		chckbxEulerAngle = new JCheckBox("Euler Angle");
-		chckbxEulerAngle.setBounds(142, 107, 103, 23);
+		chckbxEulerAngle.setBounds(263, 82, 119, 23);
 		add(chckbxEulerAngle);
 		
-		chckbxAirPressure = new JCheckBox("Air Pressure");
-		chckbxAirPressure.setBounds(247, 82, 103, 23);
-		add(chckbxAirPressure);
+		chckbxAccFiltered = new JCheckBox("Acc Filtered");
+		chckbxAccFiltered.setBounds(21, 107, 119, 23);
+		add(chckbxAccFiltered);
+		
+		chckbxAngvelFiltered = new JCheckBox("AngVel Filtered");
+		chckbxAngvelFiltered.setBounds(142, 107, 119, 23);
+		add(chckbxAngvelFiltered);
+		
+		chckbxEulangFiltered = new JCheckBox("EulAng Filtered");
+		chckbxEulangFiltered.setBounds(263, 107, 119, 23);
+		add(chckbxEulangFiltered);
 		
 		JLabel lblContentval = new JLabel("ContentVal:");
 		lblContentval.setBounds(21, 136, 100, 15);

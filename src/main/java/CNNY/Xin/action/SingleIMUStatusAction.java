@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.xml.transform.Templates;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.data.time.Millisecond;
@@ -59,19 +60,22 @@ public class SingleIMUStatusAction {
 					//					if (!checkReadFlag()) {
 					//						readData();
 					//					}
-					singleIMUStatusModel.serialPortBufferData.addAll(readSerialPort(singleIMUStatusModel.serialPort));
-					for (int i = 0; i < singleIMUStatusModel.serialPortBufferData.size(); i++) {
+					ArrayList<Short> tempArray;
+					if ((tempArray = readSerialPort(singleIMUStatusModel.serialPort)) != null) {
+						singleIMUStatusModel.serialPortBufferData.addAll(tempArray);
+						for (int i = 0; i < singleIMUStatusModel.serialPortBufferData.size(); i++) {
 
-						// if decode success, imu data model is ready
-						if(singleIMUStatusModel.imuFrameDecoder.PacketDecode(singleIMUStatusModel.serialPortBufferData.get(i))) {
+							// if decode success, imu data model is ready
+							if(singleIMUStatusModel.imuFrameDecoder.PacketDecode(singleIMUStatusModel.serialPortBufferData.get(i))) {
 
-							//							System.out.println("packet decode success.");
+								//							System.out.println("packet decode success.");
 
-							// refresh data exhibit
-							refreshIMUDataDisplay();
+								// refresh data exhibit
+								refreshIMUDataDisplay();
 
-							// clear serial port buffer
-							singleIMUStatusModel.serialPortBufferData.clear();
+								// clear serial port buffer
+								singleIMUStatusModel.serialPortBufferData.clear();
+							}
 						}
 					}
 				}
@@ -293,15 +297,15 @@ public class SingleIMUStatusAction {
 	 */
 	public void angleVelocityCheckBoxStateChange() {
 		if (singleIMUStatusPanel.chckbxAngleVelocity.isSelected()) {
-			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
-			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
 			System.out.println("2");
 		}
 		else {
-			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
-			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
 		}
 	}
 
@@ -320,6 +324,57 @@ public class SingleIMUStatusAction {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesXAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesYAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesZAxisTimeSeries);
+		}
+	}
+	
+	/**
+	 *	Function Info
+	 *		acceleration filtered data check box state change
+	 */
+	public void accFilteredCheckBoxStateChange() {
+		if (singleIMUStatusPanel.chckbxAccFiltered.isSelected()) {
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredYAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredZAxisTimeSeries);
+		}
+		else {
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.accFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.accFilteredYAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.accFilteredZAxisTimeSeries);
+		}
+	}
+
+	/**
+	 *	Function Info
+	 *		angle velocity filtered data check box state change
+	 */
+	public void angVelFilteredCheckBoxStateChange() {
+		if (singleIMUStatusPanel.chckbxAngvelFiltered.isSelected()) {
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredYAxisTimeSeries);
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredZAxisTimeSeries);
+		}
+		else {
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoFilteredYAxisTimeSeries);
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoFilteredZAxisTimeSeries);
+		}
+	}
+
+	/**
+	 *	Function Info
+	 *		euler angle filtered data check box state change
+	 */
+	public void eulerAngleFilteredCheckBoxStateChange() {
+		if (singleIMUStatusPanel.chckbxEulangFiltered.isSelected()) {
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredYAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredZAxisTimeSeries);
+		}
+		else {
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredXAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredYAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredZAxisTimeSeries);
 		}
 	}
 

@@ -79,6 +79,30 @@ public class SingleIMUStatusController {
 			}
 		});
 		
+		singleIMUStatusPanel.chckbxAccFiltered.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				singleIMUStatusAction.accFilteredCheckBoxStateChange();
+			}
+		});
+		
+		singleIMUStatusPanel.chckbxAngvelFiltered.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				singleIMUStatusAction.angVelFilteredCheckBoxStateChange();
+			}
+		});
+		
+		singleIMUStatusPanel.chckbxEulangFiltered.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				singleIMUStatusAction.eulerAngleFilteredCheckBoxStateChange();
+			}
+		});
+		
 		// Connect Button Clicked
 		singleIMUStatusPanel.btnConnect.addMouseListener(new MouseAdapter() {
 			@Override

@@ -71,7 +71,7 @@ public class MainWindow {
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1751, 697);
+		frame.setBounds(100, 100, 878, 697);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -94,14 +94,14 @@ public class MainWindow {
 		singleIMUStatusModel3 = new SingleIMUStatusModel();
 		singleIMUStatusPanel3 = new SingleIMUStatusPanel();
 		singleIMUStatusPanel3.setBounds(872, 0, 426, 589);
-		this.frame.getContentPane().add(singleIMUStatusPanel3);
+//		this.frame.getContentPane().add(singleIMUStatusPanel3);
 		singleIMUStatusController3 = new SingleIMUStatusController(singleIMUStatusModel3, singleIMUStatusPanel3);
 		
 		// IMU4
 		singleIMUStatusModel4 = new SingleIMUStatusModel();
 		singleIMUStatusPanel4 = new SingleIMUStatusPanel();
 		singleIMUStatusPanel4.setBounds(1308, 0, 426, 589);
-		this.frame.getContentPane().add(singleIMUStatusPanel4);
+//		this.frame.getContentPane().add(singleIMUStatusPanel4);
 		singleIMUStatusController4 = new SingleIMUStatusController(singleIMUStatusModel4, singleIMUStatusPanel4);
 		
 		JPanel panel = new JPanel();
