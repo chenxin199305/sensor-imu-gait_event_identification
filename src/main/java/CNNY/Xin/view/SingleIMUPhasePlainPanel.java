@@ -1,15 +1,16 @@
 package CNNY.Xin.view;
 
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class SingleIMUPhasePlainPanel extends JPanel {
 
@@ -17,6 +18,7 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 
 	public ChartPanel chartPanel;
 	public JFreeChart chart;
+	public XYSeriesCollection chartDataSet;
 
 	/**
 	 * Create the panel.
@@ -64,7 +66,8 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		// chart panel Phase Plain
 		chartPanel = new ChartPanel((JFreeChart) null);
 		chartPanel.setBounds(10, 124, 384, 255);
-		chart = ChartFactory.createXYLineChart("Phase Plain", "X(deg)", "Y(deg/s)", null);
+		chartDataSet = new XYSeriesCollection();
+		chart = ChartFactory.createXYLineChart("Phase Plain", "X(deg)", "Y(deg/s)", chartDataSet);
 		chartPanel.setChart(chart);
 		add(chartPanel);
 		

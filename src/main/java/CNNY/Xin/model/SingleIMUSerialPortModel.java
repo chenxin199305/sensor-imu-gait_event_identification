@@ -7,8 +7,15 @@ import jssc.SerialPort;
 public class SingleIMUSerialPortModel {
 
 	public SerialPort serialPort;
-	public ArrayList<Short> serialPortBufferData = new ArrayList<>();
-	public IMUDataDecoder imuDataDecoder = new IMUDataDecoder();
-	public IMUFrameDecoder imuFrameDecoder = new IMUFrameDecoder(imuDataDecoder);
+	public ArrayList<Short> serialPortBufferData;
+	public IMUDataDecoder imuDataDecoder;
+	public IMUFrameDecoder imuFrameDecoder;
 
+	public SingleIMUSerialPortModel(IMUDataDecoder imuDataDecoder) {
+
+		this.imuDataDecoder = imuDataDecoder;
+		this.imuFrameDecoder = new IMUFrameDecoder(imuDataDecoder);
+		
+		serialPortBufferData = new ArrayList<Short>();
+	}
 }

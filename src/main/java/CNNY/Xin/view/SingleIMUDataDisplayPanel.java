@@ -1,19 +1,19 @@
 package CNNY.Xin.view;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import javax.swing.UIManager;
-import java.awt.Color;
+import org.jfree.data.time.TimeSeriesCollection;
 
 public class SingleIMUDataDisplayPanel extends JPanel {
 	
@@ -29,9 +29,8 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 	public JCheckBox chckbxDebug;
 	
 	public ChartPanel chartPanel;
-	public JFreeChart chartIMU;
-	public ChartPanel chartPanelPhasePlain;
-	public JFreeChart chartPhasePlain;
+	public JFreeChart chart;
+	public TimeSeriesCollection chartDataSet;
 	
 	public JButton btnStartRecord;
 	public JButton btnSaveToFile;
@@ -75,8 +74,9 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		// chart panel IMU
 		chartPanel = new ChartPanel(null);
 		chartPanel.setBounds(10, 124, 384, 255);
-		chartIMU 	= ChartFactory.createTimeSeriesChart("IMU", "TIME", "VAL", null);
-		chartPanel.setChart(chartIMU);
+		chartDataSet = new TimeSeriesCollection();
+		chart 	= ChartFactory.createTimeSeriesChart("IMU", "TIME", "VAL", chartDataSet);
+		chartPanel.setChart(chart);
 		add(chartPanel);
 		
 		JLabel lblRecordLens = new JLabel("RecordLen(s)");

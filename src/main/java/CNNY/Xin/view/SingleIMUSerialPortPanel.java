@@ -9,7 +9,7 @@ import javax.swing.border.TitledBorder;
 
 public class SingleIMUSerialPortPanel extends JPanel {
 
-	public JComboBox<String> comboBoxSerialPortSel;
+	public JComboBox<String> comboBoxSerialPortSelection;
 	public JButton buttonConnectDisconnect;
 	public JTextArea textAreaContentVal;
 	
@@ -22,9 +22,9 @@ public class SingleIMUSerialPortPanel extends JPanel {
 		labelSerialPortSel.setBounds(10, 24, 100, 15);
 		add(labelSerialPortSel);
 		
-		comboBoxSerialPortSel = new JComboBox<String>();
-		comboBoxSerialPortSel.setBounds(120, 21, 90, 21);
-		add(comboBoxSerialPortSel);
+		comboBoxSerialPortSelection = new JComboBox<String>();
+		comboBoxSerialPortSelection.setBounds(120, 21, 90, 21);
+		add(comboBoxSerialPortSelection);
 		
 		buttonConnectDisconnect = new JButton("Connect");
 		buttonConnectDisconnect.setBounds(236, 20, 93, 23);

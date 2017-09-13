@@ -22,24 +22,24 @@ public class MainWindow {
 	private JFrame frame;
 
 	// IMU1
-	private SingleIMUModel singleIMUStatusModel1;
-	private SingleIMUPanel singleIMUMainPanel1;
-	private SingleIMUController singleIMUStatusController1;
+	private SingleIMUModel singleIMUModel1;
+	private SingleIMUPanel singleIMUPanel1;
+	private SingleIMUController singleIMUController1;
 
 	// IMU2
-	private SingleIMUModel singleIMUStatusModel2;
-	private SingleIMUPanel singleIMUMainPanel2;
-	private SingleIMUController singleIMUStatusController2;
+	private SingleIMUModel singleIMUModel2;
+	private SingleIMUPanel singleIMUPanel2;
+	private SingleIMUController singleIMUController2;
 	
 	// IMU3
-	private SingleIMUModel singleIMUStatusModel3;
-	private SingleIMUPanel singleIMUMainPanel3;
-	private SingleIMUController singleIMUStatusController3;
+	private SingleIMUModel singleIMUModel3;
+	private SingleIMUPanel singleIMUPanel3;
+	private SingleIMUController singleIMUController3;
 	
 	// IMU4
-	private SingleIMUModel singleIMUStatusModel4;
-	private SingleIMUPanel singleIMUMainPanel4;
-	private SingleIMUController singleIMUStatusController4;
+	private SingleIMUModel singleIMUModel4;
+	private SingleIMUPanel singleIMUPanel4;
+	private SingleIMUController singleIMUController4;
 
 	// total control panel
 	JButton btnStartrecord;
@@ -78,33 +78,32 @@ public class MainWindow {
 		frame.getContentPane().setLayout(null);
 		
 		// IMU1
-		singleIMUStatusModel1 = new SingleIMUModel();
-		singleIMUMainPanel1 = new SingleIMUPanel();
-//		singleIMUStatusPanel1.setBounds(0, 0, 425, 589);
-		singleIMUMainPanel1.setBounds(0, 0, 426, 589);
-		this.frame.getContentPane().add(singleIMUMainPanel1);
-		singleIMUStatusController1 = new SingleIMUController(singleIMUStatusModel1, singleIMUStatusPanel1);
+		singleIMUModel1 = new SingleIMUModel();
+		singleIMUPanel1 = new SingleIMUPanel();
+		singleIMUPanel1.setBounds(0, 0, 426, 589);
+		this.frame.getContentPane().add(singleIMUPanel1);
+		singleIMUController1 = new SingleIMUController(singleIMUModel1, singleIMUPanel1);
 
 		// IMU2
-		singleIMUStatusModel2 = new SingleIMUModel();
-		singleIMUStatusPanel2 = new SingleIMUDataDisplayPanel();
-		singleIMUStatusPanel2.setBounds(436, 0, 426, 589);
-		this.frame.getContentPane().add(singleIMUStatusPanel2);
-		singleIMUStatusController2 = new SingleIMUController(singleIMUStatusModel2, singleIMUStatusPanel2);
+		singleIMUModel2 = new SingleIMUModel();
+		singleIMUPanel2 = new SingleIMUPanel();
+		singleIMUPanel2.setBounds(436, 0, 426, 589);
+		this.frame.getContentPane().add(singleIMUPanel2);
+		singleIMUController2 = new SingleIMUController(singleIMUModel2, singleIMUPanel2);
 		
 		// IMU3
-		singleIMUStatusModel3 = new SingleIMUModel();
-		singleIMUStatusPanel3 = new SingleIMUDataDisplayPanel();
-		singleIMUStatusPanel3.setBounds(872, 0, 426, 589);
-//		this.frame.getContentPane().add(singleIMUStatusPanel3);
-		singleIMUStatusController3 = new SingleIMUController(singleIMUStatusModel3, singleIMUStatusPanel3);
+		singleIMUModel3 = new SingleIMUModel();
+		singleIMUPanel3 = new SingleIMUPanel();
+		singleIMUPanel3.setBounds(872, 0, 426, 589);
+//		this.frame.getContentPane().add(singleIMUPanel3);
+		singleIMUController3 = new SingleIMUController(singleIMUModel3, singleIMUPanel3);
 		
 		// IMU4
-		singleIMUStatusModel4 = new SingleIMUModel();
-		singleIMUStatusPanel4 = new SingleIMUDataDisplayPanel();
-		singleIMUStatusPanel4.setBounds(1308, 0, 426, 589);
-//		this.frame.getContentPane().add(singleIMUStatusPanel4);
-		singleIMUStatusController4 = new SingleIMUController(singleIMUStatusModel4, singleIMUStatusPanel4);
+		singleIMUModel4 = new SingleIMUModel();
+		singleIMUPanel4 = new SingleIMUPanel();
+		singleIMUPanel4.setBounds(1308, 0, 426, 589);
+//		this.frame.getContentPane().add(singleIMUPanel4);
+		singleIMUController4 = new SingleIMUController(singleIMUModel4, singleIMUPanel4);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "total control", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -122,17 +121,17 @@ public class MainWindow {
 				
 				switch (btnStartrecord.getText()) {
 				case "StartRecord":
-					singleIMUStatusController1.getSingleIMUStatusAction().setToRecordState();
-					singleIMUStatusController2.getSingleIMUStatusAction().setToRecordState();
-					singleIMUStatusController3.getSingleIMUStatusAction().setToRecordState();
-					singleIMUStatusController4.getSingleIMUStatusAction().setToRecordState();
+//					singleIMUController1.singleIMUAction.setToRecordState();
+//					singleIMUController2.singleIMUAction.setToRecordState();
+//					singleIMUController3.singleIMUAction.setToRecordState();
+//					singleIMUController4.singleIMUAction.setToRecordState();
 					btnStartrecord.setText("StopRecord");
 					break;
 				case "StopRecord":
-					singleIMUStatusController1.getSingleIMUStatusAction().setToStopRecordState();
-					singleIMUStatusController2.getSingleIMUStatusAction().setToStopRecordState();
-					singleIMUStatusController3.getSingleIMUStatusAction().setToStopRecordState();
-					singleIMUStatusController4.getSingleIMUStatusAction().setToStopRecordState();
+//					singleIMUController1.singleIMUAction.setToStopRecordState();
+//					singleIMUController2.singleIMUAction.setToStopRecordState();
+//					singleIMUController3.singleIMUAction.setToStopRecordState();
+//					singleIMUController4.singleIMUAction.setToStopRecordState();
 					btnStartrecord.setText("StartRecord");
 					break;
 				default:

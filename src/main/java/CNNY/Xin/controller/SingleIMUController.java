@@ -9,30 +9,66 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 import CNNY.Xin.action.SingleIMUAction;
+import CNNY.Xin.action.SingleIMUDataDisplayAction;
+import CNNY.Xin.action.SingleIMUPhasePlainAction;
+import CNNY.Xin.action.SingleIMUSerialPortAction;
+import CNNY.Xin.model.SingleIMUDataDisplayModel;
 import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.model.SingleIMUPhasePlainModel;
+import CNNY.Xin.model.SingleIMUSerialPortModel;
 import CNNY.Xin.view.SingleIMUDataDisplayPanel;
 import CNNY.Xin.view.SingleIMUPanel;
+import CNNY.Xin.view.SingleIMUPhasePlainPanel;
+import CNNY.Xin.view.SingleIMUSerialPortPanel;
 
 public class SingleIMUController {
 
-	private SingleIMUModel singleIMUStatusModel;
-	private SingleIMUPanel singleIMUMainPanel;
-	private SingleIMUAction singleIMUStatusAction;
+	public SingleIMUModel singleIMUModel;
+	public SingleIMUPanel singleIMUPanel;
+	public SingleIMUAction singleIMUAction;
+	
+	// serial port MVA
+	private SingleIMUSerialPortAction serialPortAction;
+	private SingleIMUSerialPortModel serialPortModel;
+	private SingleIMUSerialPortPanel serialPortPanel;
+	
+	// data display MVA
+	private SingleIMUDataDisplayAction dataDisplayAction;
+	private SingleIMUDataDisplayPanel dataDisplayPanel;
+	private SingleIMUDataDisplayModel dataDisplayModel;
+	
+	// phase plain MVA
+	private SingleIMUPhasePlainAction phasePlainAction;
+	private SingleIMUPhasePlainModel phasePlainModel;
+	private SingleIMUPhasePlainPanel phasePlainPanel;
 
 	/**
 	 *	Function Info:
 	 *		Initialization 
 	 */
 	public SingleIMUController(
-			SingleIMUModel singleIMUStatusModel,
+			SingleIMUModel singleIMUModel,
 			SingleIMUPanel singleIMUPanel) {
 
-		this.singleIMUStatusModel = singleIMUStatusModel;
-		this.singleIMUMainPanel = singleIMUPanel;
+		this.singleIMUModel = singleIMUModel;
+		this.singleIMUPanel = singleIMUPanel;
+		this.singleIMUAction = new SingleIMUAction(singleIMUModel, singleIMUPanel);
 
-		this.singleIMUStatusAction = 
-				new SingleIMUAction(this.singleIMUStatusModel, this.singleIMUStatusPanel);
-
+		// serial port MVA
+		this.serialPortModel = singleIMUModel.serialPortModel;
+		this.serialPortPanel = singleIMUPanel.serialPortPanel;
+		this.serialPortAction = new SingleIMUSerialPortAction(serialPortModel, serialPortPanel);
+		
+		// data display MVA
+		this.dataDisplayModel = singleIMUModel.dataDisplayModel;
+		this.dataDisplayPanel = singleIMUPanel.dataDisplayPanel;
+		this.dataDisplayAction = new SingleIMUDataDisplayAction(dataDisplayModel, dataDisplayPanel);
+		
+		// phase plain MVA
+		this.phasePlainModel = singleIMUModel.phasePlainModel;
+		this.phasePlainPanel = singleIMUPanel.phasePlainPanel;
+		this.phasePlainAction = new SingleIMUPhasePlainAction(phasePlainModel, phasePlainPanel);
+		
 		initActionListener();
 	}
 
@@ -42,11 +78,11 @@ public class SingleIMUController {
 	 */
 	private void initActionListener() {
 
-		// SerailPort ComboBox Pop Up
-		singleIMUStatusPanel.comboBoxSerialPortSelection.addPopupMenuListener(new PopupMenuListener() {
+		// serial port MVA combobox pop up
+		serialPortPanel.comboBoxSerialPortSelection.addPopupMenuListener(new PopupMenuListener() {
 
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-				singleIMUStatusAction.serialPortComboBoxPopUp();
+				serialPortAction.serialPortComboBoxPopUp();
 			}
 
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
@@ -54,110 +90,99 @@ public class SingleIMUController {
 			public void popupMenuCanceled(PopupMenuEvent e) {
 			}
 		});
-
-		// Check Box Selection
-		singleIMUStatusPanel.chckbxAcceleration.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.accelerationCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxAngleVelocity.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.angleVelocityCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxEulerAngle.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.eulerAngleCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxAccFiltered.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.accFilteredCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxAngvelFiltered.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.angVelFilteredCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxEulangFiltered.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.eulerAngleFilteredCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxToeOffHeelHitDetect.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.toeOffHeelHitDetectCheckBoxStateChange();
-			}
-		});
-
-		singleIMUStatusPanel.chckbxDebug.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				singleIMUStatusAction.debugCheckBoxStateChange();
-			}
-		});
-
-		// Connect Button Clicked
-		singleIMUStatusPanel.btnConnect.addMouseListener(new MouseAdapter() {
+		
+		// serial port MVA connect button clicked
+		serialPortPanel.buttonConnectDisconnect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				singleIMUStatusAction.connectButtonCliced();
+				serialPortAction.connectButtonCliced();
+			}
+		});
+
+		// data display MVA check box selection
+		dataDisplayPanel.chckbxAcceleration.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.accelerationCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxAngleVelocity.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.angleVelocityCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxEulerAngle.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.eulerAngleCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxAccFiltered.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.accFilteredCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxAngvelFiltered.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.angVelFilteredCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxEulangFiltered.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.eulerAngleFilteredCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxToeOffHeelHitDetect.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.toeOffHeelHitDetectCheckBoxStateChange();
+			}
+		});
+
+		dataDisplayPanel.chckbxDebug.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				dataDisplayAction.debugCheckBoxStateChange();
 			}
 		});
 
 		// StartToRecord Button Clicked
-		singleIMUStatusPanel.btnStartRecord.addMouseListener(new MouseAdapter() {
+		dataDisplayPanel.btnStartRecord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				singleIMUStatusAction.startToRecordButtonCliced();
+				dataDisplayAction.startToRecordButtonCliced();
 			}
 		});
 
 		// SaveToFile Button Clicked
-		singleIMUStatusPanel.btnSaveToFile.addMouseListener(new MouseAdapter() {
+		dataDisplayPanel.btnSaveToFile.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				singleIMUStatusAction.saveToFileButtonCliced();
+				dataDisplayAction.saveToFileButtonCliced();
 			}
 		});
 
 	}
 
-	public SingleIMUModel getSingleIMUStatusModel() {
-		return singleIMUStatusModel;
-	}
-
-	public SingleIMUDataDisplayPanel getSingleIMUStatusPanel() {
-		return singleIMUStatusPanel;
-	}
-
-	public SingleIMUAction getSingleIMUStatusAction() {
-		return singleIMUStatusAction;
-	}
 }
