@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class SingleIMUPhasePlainPanel extends JPanel {
@@ -28,6 +29,7 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 	public ChartPanel chartPanel;
 	public JFreeChart chart;
 	public XYSeriesCollection chartDataSet;
+	public XYLineAndShapeRenderer lineAndShapeRenderer;
 
 	/**
 	 * Create the panel.
@@ -71,6 +73,9 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		chart = ChartFactory.createXYLineChart("Phase Plain", "X(deg)", "Y(deg/s)", chartDataSet);
 		chartPanel.setChart(chart);
 		add(chartPanel);
+
+		lineAndShapeRenderer = new XYLineAndShapeRenderer();
+		chart.getXYPlot().setRenderer(lineAndShapeRenderer);
 		
 		JLabel labelRecordLength = new JLabel("RecordLen(s)");
 		labelRecordLength.setBounds(10, 393, 90, 15);

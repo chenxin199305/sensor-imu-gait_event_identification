@@ -339,6 +339,10 @@ public class SingleIMUDataDisplayAction {
 			panel.chartDataSet.removeSeries(model.accRawXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.accRawYAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.accRawZAxisTimeSeries);
+
+			model.accRawXAxisTimeSeries.clear();
+			model.accRawYAxisTimeSeries.clear();
+			model.accRawZAxisTimeSeries.clear();
 		}
 	}
 
@@ -356,6 +360,10 @@ public class SingleIMUDataDisplayAction {
 			panel.chartDataSet.removeSeries(model.gyoRawXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.gyoRawYAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.gyoRawZAxisTimeSeries);
+
+			model.gyoRawXAxisTimeSeries.clear();
+			model.gyoRawYAxisTimeSeries.clear();
+			model.gyoRawZAxisTimeSeries.clear();
 		}
 	}
 
@@ -373,6 +381,10 @@ public class SingleIMUDataDisplayAction {
 			panel.chartDataSet.removeSeries(model.eulerAnglesXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.eulerAnglesZAxisTimeSeries);
+
+			model.eulerAnglesXAxisTimeSeries.clear();
+			model.eulerAnglesYAxisTimeSeries.clear();
+			model.eulerAnglesZAxisTimeSeries.clear();
 		}
 	}
 	
@@ -390,6 +402,10 @@ public class SingleIMUDataDisplayAction {
 			panel.chartDataSet.removeSeries(model.accFilteredXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.accFilteredYAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.accFilteredZAxisTimeSeries);
+
+			model.accFilteredXAxisTimeSeries.clear();
+			model.accFilteredYAxisTimeSeries.clear();
+			model.accFilteredZAxisTimeSeries.clear();
 		}
 	}
 
@@ -407,6 +423,10 @@ public class SingleIMUDataDisplayAction {
 //			singleIMUDataDisplayPanel.chartDataSet.removeSeries(singleIMUDataDisplayModel.gyoFilteredXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.gyoFilteredYAxisTimeSeries);
 //			singleIMUDataDisplayPanel.chartDataSet.removeSeries(singleIMUDataDisplayModel.gyoFilteredZAxisTimeSeries);
+
+			model.gyoFilteredXAxisTimeSeries.clear();
+			model.gyoFilteredYAxisTimeSeries.clear();
+			model.gyoFilteredZAxisTimeSeries.clear();
 		}
 	}
 
@@ -424,6 +444,10 @@ public class SingleIMUDataDisplayAction {
 			panel.chartDataSet.removeSeries(model.eulerAnglesFilteredXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.eulerAnglesFilteredYAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.eulerAnglesFilteredZAxisTimeSeries);
+
+			model.eulerAnglesFilteredXAxisTimeSeries.clear();
+			model.eulerAnglesFilteredYAxisTimeSeries.clear();
+			model.eulerAnglesFilteredZAxisTimeSeries.clear();
 		}
 	}
 	
