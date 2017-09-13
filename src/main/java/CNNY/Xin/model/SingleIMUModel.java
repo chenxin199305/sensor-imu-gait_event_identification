@@ -8,12 +8,7 @@ import org.jfree.data.time.TimeSeries;
 import Jama.Matrix;
 import jssc.SerialPort;
 
-public class SingleIMUStatusModel {
-
-	public SerialPort serialPort;
-	public ArrayList<Short> serialPortBufferData = new ArrayList<>();
-	public IMUDataDecoder imuDataDecoder = new IMUDataDecoder();
-	public IMUFrameDecoder imuFrameDecoder = new IMUFrameDecoder(imuDataDecoder);
+public class SingleIMUModel {
 
 	// char panel data
 	public TimeSeries accRawXAxisTimeSeries = new TimeSeries("accRawX");
@@ -87,7 +82,7 @@ public class SingleIMUStatusModel {
 	public TimeSeries debugPPeriodTimeSeries = new TimeSeries("debug_pPeriod");
 	public TimeSeries debugPTotalTimeSeries = new TimeSeries("debug_pTotal");
 	
-	public SingleIMUStatusModel() {
+	public SingleIMUModel() {
 
 		long timeForRecord = 6 * 1000;
 

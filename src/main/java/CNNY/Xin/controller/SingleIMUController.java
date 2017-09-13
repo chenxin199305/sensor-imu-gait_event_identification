@@ -8,29 +8,30 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-import CNNY.Xin.action.SingleIMUStatusAction;
-import CNNY.Xin.model.SingleIMUStatusModel;
-import CNNY.Xin.view.SingleIMUStatusPanel;
+import CNNY.Xin.action.SingleIMUAction;
+import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.view.SingleIMUPanel;
 
-public class SingleIMUStatusController {
+public class SingleIMUController {
 
-	private SingleIMUStatusModel singleIMUStatusModel;
-	private SingleIMUStatusPanel singleIMUStatusPanel;
-	private SingleIMUStatusAction singleIMUStatusAction;
+	private SingleIMUModel singleIMUStatusModel;
+	private SingleIMUPanel singleIMUMainPanel;
+	private SingleIMUAction singleIMUStatusAction;
 
 	/**
 	 *	Function Info:
 	 *		Initialization 
 	 */
-	public SingleIMUStatusController(
-			SingleIMUStatusModel singleIMUStatusModel,
-			SingleIMUStatusPanel singleIMUStatusPanel) {
+	public SingleIMUController(
+			SingleIMUModel singleIMUStatusModel,
+			SingleIMUPanel singleIMUPanel) {
 
 		this.singleIMUStatusModel = singleIMUStatusModel;
-		this.singleIMUStatusPanel = singleIMUStatusPanel;
+		this.singleIMUMainPanel = singleIMUPanel;
 
 		this.singleIMUStatusAction = 
-				new SingleIMUStatusAction(this.singleIMUStatusModel, this.singleIMUStatusPanel);
+				new SingleIMUAction(this.singleIMUStatusModel, this.singleIMUStatusPanel);
 
 		initActionListener();
 	}
@@ -148,15 +149,15 @@ public class SingleIMUStatusController {
 
 	}
 
-	public SingleIMUStatusModel getSingleIMUStatusModel() {
+	public SingleIMUModel getSingleIMUStatusModel() {
 		return singleIMUStatusModel;
 	}
 
-	public SingleIMUStatusPanel getSingleIMUStatusPanel() {
+	public SingleIMUDataDisplayPanel getSingleIMUStatusPanel() {
 		return singleIMUStatusPanel;
 	}
 
-	public SingleIMUStatusAction getSingleIMUStatusAction() {
+	public SingleIMUAction getSingleIMUStatusAction() {
 		return singleIMUStatusAction;
 	}
 }

@@ -12,8 +12,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import CNNY.Xin.model.SingleIMUStatusModel;
-import CNNY.Xin.view.SingleIMUStatusPanel;
+import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.view.SingleIMUPanel;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -24,178 +25,25 @@ import jssc.SerialPortList;
  *	Class Info:
  *		IMU Status Action 
  */
-public class SingleIMUStatusAction {
-
-	private SingleIMUStatusModel singleIMUStatusModel;
-	private SingleIMUStatusPanel singleIMUStatusPanel;
+public class SingleIMUAction {
+	
+	private SingleIMUModel singleIMUStatusModel;
+	private SingleIMUPanel singleIMUMainPanel;
 	private TimeSeriesCollection imuChartTimeSeriesCollection;
 	private Boolean recordingFlag = true;
 
-	public SingleIMUStatusAction(
-			SingleIMUStatusModel singleIMUStatusModel,
-			SingleIMUStatusPanel singleIMUStatusPanel) {
+	public SingleIMUAction(
+			SingleIMUModel singleIMUStatusModel,
+			SingleIMUPanel singleIMUMainPanel) {
 
 		this.singleIMUStatusModel = singleIMUStatusModel;
-		this.singleIMUStatusPanel = singleIMUStatusPanel;
+		this.singleIMUMainPanel = singleIMUMainPanel;
 
 		this.imuChartTimeSeriesCollection = new TimeSeriesCollection();
 		this.singleIMUStatusPanel.chartContentVal 	= ChartFactory.createXYLineChart("IMU", "TIME", "VAL", imuChartTimeSeriesCollection);
-		this.singleIMUStatusPanel.chartPanelContentVal.setChart(this.singleIMUStatusPanel.chartContentVal);
 	}
 
-	/**
-	 *	Class Info:
-	 *		IMU serial port event listener 
-	 */
-	public class IMUSerialPortEventListener implements SerialPortEventListener {
 
-		public void serialEvent(SerialPortEvent serialPortEvent) {
-
-			// Receive Data, decode and read data
-			if (serialPortEvent.getEventType() == SerialPortEvent.RXCHAR) {
-
-				synchronized (serialPortEvent) {
-					//					if (!checkReadFlag()) {
-					//						readData();
-					//					}
-					ArrayList<Short> tempArray;
-					if ((tempArray = readSerialPort(singleIMUStatusModel.serialPort)) != null) {
-						singleIMUStatusModel.serialPortBufferData.addAll(tempArray);
-						for (int i = 0; i < singleIMUStatusModel.serialPortBufferData.size(); i++) {
-
-							// if decode success, imu data model is ready
-							if(singleIMUStatusModel.imuFrameDecoder.PacketDecode(singleIMUStatusModel.serialPortBufferData.get(i))) {
-
-								//							System.out.println("packet decode success.");
-
-								// refresh data exhibit
-								refreshIMUDataDisplay();
-
-								// clear serial port buffer
-								singleIMUStatusModel.serialPortBufferData.clear();
-							}
-						}
-					}
-				}
-			}
-
-			// send clear
-			if (serialPortEvent.getEventType() == SerialPortEvent.TXEMPTY) {
-				System.out.println("send successful!");
-			}
-
-			// serial port wrong
-			if (serialPortEvent.getEventType() == SerialPortEvent.ERR) {
-				System.err.println("IMUSerialPortEventListener.serialEvent()");
-			}
-
-			// 4 还有其他标志位可选用...根据具体情况可以进行添加...		
-		}
-
-	}
-
-	/**
-	 *	Function Info
-	 *		Serial Port ComboBox Pop Up 
-	 */
-	public void serialPortComboBoxPopUp() {
-
-		singleIMUStatusPanel.comboBoxSerialPortSelection.removeAllItems();
-		for (String object : SerialPortList.getPortNames()) {
-			singleIMUStatusPanel.comboBoxSerialPortSelection.addItem(object);
-		}
-	}
-
-	/**
-	 *	Function Info
-	 *		Connect button clicked event handler 
-	 */
-	public void connectButtonCliced() {
-
-		switch (singleIMUStatusPanel.btnConnect.getText()) {
-		case "Connect":
-			// select port
-			if (singleIMUStatusPanel.comboBoxSerialPortSelection.getSelectedItem() != null && 
-			singleIMUStatusPanel.comboBoxSerialPortSelection.getSelectedItem().toString().length() > 1) {
-				singleIMUStatusModel.serialPort = 
-						new SerialPort(singleIMUStatusPanel.comboBoxSerialPortSelection.getSelectedItem().toString());
-			}
-			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port select error!");
-			}
-
-			// open port
-			if (singleIMUStatusModel.serialPort.isOpened() == false) {
-				try {
-					singleIMUStatusModel.serialPort.openPort();
-				} catch (SerialPortException e) {
-					System.err.println("SingleIMUStatusAction.connectButtonCliced(): open serial port error!");
-					return;
-				}
-			}
-			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port is already opened!");
-				return;
-			}
-
-			// set port parameter
-			try {
-				singleIMUStatusModel.serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			} catch (SerialPortException e2) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): set port parameter error!");
-				try {
-					singleIMUStatusModel.serialPort.closePort();
-				} catch (SerialPortException e) {
-					e.printStackTrace();
-				}
-				return;
-			}
-
-			// add event listener
-			try {
-				singleIMUStatusModel.serialPort.addEventListener(new IMUSerialPortEventListener());
-			} catch (SerialPortException e1) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): add event listener error!");
-				return;
-			}
-
-			// change button text
-			singleIMUStatusPanel.btnConnect.setText("Disconnect");
-
-			break;
-		case "Disconnect":
-
-			// remove event listener
-			try {
-				singleIMUStatusModel.serialPort.removeEventListener();
-			} catch (SerialPortException e) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): remove event listener error!");
-				e.printStackTrace();
-				return;
-			}
-
-			// close port
-			if (singleIMUStatusModel.serialPort.isOpened() == true) {
-				try {
-					singleIMUStatusModel.serialPort.closePort();
-				} catch (SerialPortException e) {
-					System.err.println("SingleIMUStatusAction.connectButtonCliced(): close serial port error!");
-					return;
-				}
-			}
-			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port is already closed!");
-				return;
-			}
-
-			// change button text
-			singleIMUStatusPanel.btnConnect.setText("Connect");
-
-			break;
-		default:
-			break;
-		}
-	}
 
 	/**
 	 *	Function Info
@@ -219,12 +67,12 @@ public class SingleIMUStatusAction {
 	
 	public void setToRecordState() {
 		recordingFlag = true;
-		singleIMUStatusPanel.btnStartRecord.setText("StopRecord");
+		singleIMUMainPanel.dataDisplayPanel.btnStartRecord.setText("StopRecord");
 	}
 	
 	public void setToStopRecordState() {
 		recordingFlag = false;
-		singleIMUStatusPanel.btnStartRecord.setText("StartRecord");
+		singleIMUMainPanel.dataDisplayPanel.btnStartRecord.setText("StartRecord");
 	}
 
 	/**
@@ -276,11 +124,10 @@ public class SingleIMUStatusAction {
 	 *		acceleration check box state change
 	 */
 	public void accelerationCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxAcceleration.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxAcceleration.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accRawZAxisTimeSeries);
-			System.out.println("1");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.accRawXAxisTimeSeries);
@@ -294,11 +141,10 @@ public class SingleIMUStatusAction {
 	 *		angle velocity check box state change
 	 */
 	public void angleVelocityCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxAngleVelocity.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxAngleVelocity.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
-			System.out.println("2");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
@@ -312,11 +158,10 @@ public class SingleIMUStatusAction {
 	 *		euler angle check box state change
 	 */
 	public void eulerAngleCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxEulerAngle.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxEulerAngle.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesZAxisTimeSeries);
-			System.out.println("3");
 		}
 		else {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesXAxisTimeSeries);
@@ -330,7 +175,7 @@ public class SingleIMUStatusAction {
 	 *		acceleration filtered data check box state change
 	 */
 	public void accFilteredCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxAccFiltered.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxAccFiltered.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.accFilteredZAxisTimeSeries);
@@ -347,7 +192,7 @@ public class SingleIMUStatusAction {
 	 *		angle velocity filtered data check box state change
 	 */
 	public void angVelFilteredCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxAngvelFiltered.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxAngvelFiltered.isSelected()) {
 //			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredYAxisTimeSeries);
 //			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoFilteredZAxisTimeSeries);
@@ -364,7 +209,7 @@ public class SingleIMUStatusAction {
 	 *		euler angle filtered data check box state change
 	 */
 	public void eulerAngleFilteredCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxEulangFiltered.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxEulangFiltered.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredYAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.eulerAnglesFilteredZAxisTimeSeries);
@@ -381,7 +226,7 @@ public class SingleIMUStatusAction {
 	 *		toe-off heel-hit check box state change
 	 */
 	public void toeOffHeelHitDetectCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxToeOffHeelHitDetect.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxToeOffHeelHitDetect.isSelected()) {
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.toeOffHeelHitTimeSeries);
 		}
 		else {
@@ -394,7 +239,7 @@ public class SingleIMUStatusAction {
 	 *		debug check box state change
 	 */
 	public void debugCheckBoxStateChange() {
-		if (singleIMUStatusPanel.chckbxDebug.isSelected()) {
+		if (singleIMUMainPanel.dataDisplayPanel.chckbxDebug.isSelected()) {
 //			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPPeakTimeSeries);
 //			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPGradientTimeSeries);
 //			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPPeriodTimeSeries);
@@ -415,7 +260,7 @@ public class SingleIMUStatusAction {
 	public void refreshIMUDataDisplay() {
 
 		// refresh data display on text area
-		singleIMUStatusPanel.textAreaContentVal.setText(singleIMUStatusModel.imuDataDecoder.imuDataModel.StringData);
+		singleIMUMainPanel.textAreaContentVal.setText(singleIMUStatusModel.imuDataDecoder.imuDataModel.StringData);
 
 		// refresh data display on chart
 		if (recordingFlag == true) {
@@ -423,49 +268,6 @@ public class SingleIMUStatusAction {
 		}
 		else {
 		}
-	}
-
-	/**
-	 *	Function Info
-	 *		read data from serialPort
-	 */
-	public ArrayList<Short> readSerialPort(SerialPort serialPort) {
-
-		byte[] readData;
-
-		if (serialPort == null || serialPort.isOpened() == false) {
-			System.err.println("SingleIMUStatusAction.readSerialPort(): serial port is not ready.");
-			return null;
-		}
-
-		// read all data in buffer
-		try {
-
-			readData = serialPort.readBytes();
-
-			// print read data length
-			//			if (readData != null) {
-			//				System.out.println("readData.length = " + readData.length);	
-			//			}
-
-			// if data is not null
-			if (readData != null) {
-
-				ArrayList<Short> bufferData = new ArrayList<>();
-				for (int i = 0; i < readData.length; i++) {
-					bufferData.add((short) (readData[i] & 0xFF));
-				}
-				return bufferData;
-			}
-			else {
-				return null;
-			}
-		} 
-		catch (SerialPortException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 }

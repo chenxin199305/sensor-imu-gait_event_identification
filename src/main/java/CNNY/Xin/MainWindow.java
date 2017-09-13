@@ -6,10 +6,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
-import CNNY.Xin.action.SingleIMUStatusAction;
-import CNNY.Xin.controller.SingleIMUStatusController;
-import CNNY.Xin.model.SingleIMUStatusModel;
-import CNNY.Xin.view.SingleIMUStatusPanel;
+import CNNY.Xin.action.SingleIMUAction;
+import CNNY.Xin.controller.SingleIMUController;
+import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.view.SingleIMUPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -20,24 +22,24 @@ public class MainWindow {
 	private JFrame frame;
 
 	// IMU1
-	private SingleIMUStatusModel singleIMUStatusModel1;
-	private SingleIMUStatusPanel singleIMUStatusPanel1;
-	private SingleIMUStatusController singleIMUStatusController1;
+	private SingleIMUModel singleIMUStatusModel1;
+	private SingleIMUPanel singleIMUMainPanel1;
+	private SingleIMUController singleIMUStatusController1;
 
 	// IMU2
-	private SingleIMUStatusModel singleIMUStatusModel2;
-	private SingleIMUStatusPanel singleIMUStatusPanel2;
-	private SingleIMUStatusController singleIMUStatusController2;
+	private SingleIMUModel singleIMUStatusModel2;
+	private SingleIMUPanel singleIMUMainPanel2;
+	private SingleIMUController singleIMUStatusController2;
 	
 	// IMU3
-	private SingleIMUStatusModel singleIMUStatusModel3;
-	private SingleIMUStatusPanel singleIMUStatusPanel3;
-	private SingleIMUStatusController singleIMUStatusController3;
+	private SingleIMUModel singleIMUStatusModel3;
+	private SingleIMUPanel singleIMUMainPanel3;
+	private SingleIMUController singleIMUStatusController3;
 	
 	// IMU4
-	private SingleIMUStatusModel singleIMUStatusModel4;
-	private SingleIMUStatusPanel singleIMUStatusPanel4;
-	private SingleIMUStatusController singleIMUStatusController4;
+	private SingleIMUModel singleIMUStatusModel4;
+	private SingleIMUPanel singleIMUMainPanel4;
+	private SingleIMUController singleIMUStatusController4;
 
 	// total control panel
 	JButton btnStartrecord;
@@ -76,33 +78,33 @@ public class MainWindow {
 		frame.getContentPane().setLayout(null);
 		
 		// IMU1
-		singleIMUStatusModel1 = new SingleIMUStatusModel();
-		singleIMUStatusPanel1 = new SingleIMUStatusPanel();
+		singleIMUStatusModel1 = new SingleIMUModel();
+		singleIMUMainPanel1 = new SingleIMUPanel();
 //		singleIMUStatusPanel1.setBounds(0, 0, 425, 589);
-		singleIMUStatusPanel1.setBounds(0, 0, 426, 589);
-		this.frame.getContentPane().add(singleIMUStatusPanel1);
-		singleIMUStatusController1 = new SingleIMUStatusController(singleIMUStatusModel1, singleIMUStatusPanel1);
+		singleIMUMainPanel1.setBounds(0, 0, 426, 589);
+		this.frame.getContentPane().add(singleIMUMainPanel1);
+		singleIMUStatusController1 = new SingleIMUController(singleIMUStatusModel1, singleIMUStatusPanel1);
 
 		// IMU2
-		singleIMUStatusModel2 = new SingleIMUStatusModel();
-		singleIMUStatusPanel2 = new SingleIMUStatusPanel();
+		singleIMUStatusModel2 = new SingleIMUModel();
+		singleIMUStatusPanel2 = new SingleIMUDataDisplayPanel();
 		singleIMUStatusPanel2.setBounds(436, 0, 426, 589);
 		this.frame.getContentPane().add(singleIMUStatusPanel2);
-		singleIMUStatusController2 = new SingleIMUStatusController(singleIMUStatusModel2, singleIMUStatusPanel2);
+		singleIMUStatusController2 = new SingleIMUController(singleIMUStatusModel2, singleIMUStatusPanel2);
 		
 		// IMU3
-		singleIMUStatusModel3 = new SingleIMUStatusModel();
-		singleIMUStatusPanel3 = new SingleIMUStatusPanel();
+		singleIMUStatusModel3 = new SingleIMUModel();
+		singleIMUStatusPanel3 = new SingleIMUDataDisplayPanel();
 		singleIMUStatusPanel3.setBounds(872, 0, 426, 589);
 //		this.frame.getContentPane().add(singleIMUStatusPanel3);
-		singleIMUStatusController3 = new SingleIMUStatusController(singleIMUStatusModel3, singleIMUStatusPanel3);
+		singleIMUStatusController3 = new SingleIMUController(singleIMUStatusModel3, singleIMUStatusPanel3);
 		
 		// IMU4
-		singleIMUStatusModel4 = new SingleIMUStatusModel();
-		singleIMUStatusPanel4 = new SingleIMUStatusPanel();
+		singleIMUStatusModel4 = new SingleIMUModel();
+		singleIMUStatusPanel4 = new SingleIMUDataDisplayPanel();
 		singleIMUStatusPanel4.setBounds(1308, 0, 426, 589);
 //		this.frame.getContentPane().add(singleIMUStatusPanel4);
-		singleIMUStatusController4 = new SingleIMUStatusController(singleIMUStatusModel4, singleIMUStatusPanel4);
+		singleIMUStatusController4 = new SingleIMUController(singleIMUStatusModel4, singleIMUStatusPanel4);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "total control", TitledBorder.LEADING, TitledBorder.TOP, null, null));
