@@ -2,7 +2,7 @@ package CNNY.Xin.action;
 
 import java.util.ArrayList;
 
-import CNNY.Xin.model.SingleIMUPhasePlainModel;
+import CNNY.Xin.event.IMUDataUpdateEventManager;
 import CNNY.Xin.model.SingleIMUSerialPortModel;
 import CNNY.Xin.view.SingleIMUSerialPortPanel;
 import jssc.SerialPort;
@@ -13,8 +13,10 @@ import jssc.SerialPortList;
 
 public class SingleIMUSerialPortAction {
 
-	private SingleIMUSerialPortModel singleIMUSerialPortModel;
-	private SingleIMUSerialPortPanel singleIMUSerialPortPanel;
+	private SingleIMUSerialPortModel model;
+	private SingleIMUSerialPortPanel panel;
+	
+	public IMUDataUpdateEventManager imuDataUpdateEventManager;
 	
 	/**
 	 *	Func Info:
@@ -23,9 +25,11 @@ public class SingleIMUSerialPortAction {
 	public SingleIMUSerialPortAction(
 			SingleIMUSerialPortModel singleIMUSerialPortModel,
 			SingleIMUSerialPortPanel singleIMUSerialPortPanel) {
-	
-		this.singleIMUSerialPortModel = singleIMUSerialPortModel;
-		this.singleIMUSerialPortPanel = singleIMUSerialPortPanel;
+
+		this.model = singleIMUSerialPortModel;
+		this.panel = singleIMUSerialPortPanel;
+		
+		imuDataUpdateEventManager = new IMUDataUpdateEventManager();
 	}
 	
 	/**
@@ -44,22 +48,22 @@ public class SingleIMUSerialPortAction {
 					//						readData();
 					//					}
 					ArrayList<Short> tempArray;
-					if ((tempArray = readSerialPort(singleIMUSerialPortModel.serialPort)) != null) {
-						singleIMUSerialPortModel.serialPortBufferData.addAll(tempArray);
-						for (int i = 0; i < singleIMUSerialPortModel.serialPortBufferData.size(); i++) {
+					if ((tempArray = readSerialPort(model.serialPort)) != null) {
+						model.serialPortBufferData.addAll(tempArray);
+						for (int i = 0; i < model.serialPortBufferData.size(); i++) {
 
 							// if decode success, imu data model is ready
-							if(singleIMUSerialPortModel.imuFrameDecoder.PacketDecode(
-									singleIMUSerialPortModel.serialPortBufferData.get(i))) {
+							if(model.imuFrameDecoder.PacketDecode(
+									model.serialPortBufferData.get(i))) {
 
-								//							System.out.println("packet decode success.");
+								// System.out.println("packet decode success.");
 
 								// broadcast to controller 
 								// to refresh data
 								refreshIMUDataDisplay();
 
 								// clear serial port buffer
-								singleIMUSerialPortModel.serialPortBufferData.clear();
+								model.serialPortBufferData.clear();
 							}
 						}
 					}
@@ -76,7 +80,7 @@ public class SingleIMUSerialPortAction {
 				System.err.println("IMUSerialPortEventListener.serialEvent()");
 			}
 
-			// 4 还有其他标志位可选用...根据具体情况可以进行添加...		
+			// there are still other events can be added...		
 		}
 
 	}
@@ -88,10 +92,10 @@ public class SingleIMUSerialPortAction {
 	public void refreshIMUDataDisplay() {
 
 		// refresh data display on text area
-		singleIMUSerialPortPanel.textAreaContentVal.setText(singleIMUSerialPortModel.imuDataDecoder.imuDataModel.StringData);
+		panel.textAreaContentVal.setText(model.imuDataDecoder.imuDataModel.StringData);
 
-		// refresh data display on chart
-		// ...
+		// notify serial port data update
+		imuDataUpdateEventManager.notifyListeners(model.imuDataDecoder.imuDataModel);
 	}
 
 	/**
@@ -100,9 +104,9 @@ public class SingleIMUSerialPortAction {
 	 */
 	public void serialPortComboBoxPopUp() {
 
-		singleIMUSerialPortPanel.comboBoxSerialPortSelection.removeAllItems();
+		panel.comboBoxSerialPortSelection.removeAllItems();
 		for (String object : SerialPortList.getPortNames()) {
-			singleIMUSerialPortPanel.comboBoxSerialPortSelection.addItem(object);
+			panel.comboBoxSerialPortSelection.addItem(object);
 		}
 	}
 
@@ -112,22 +116,22 @@ public class SingleIMUSerialPortAction {
 	 */
 	public void connectButtonCliced() {
 
-		switch (singleIMUSerialPortPanel.buttonConnectDisconnect.getText()) {
+		switch (panel.buttonConnectDisconnect.getText()) {
 		case "Connect":
 			// select port
-			if (singleIMUSerialPortPanel.comboBoxSerialPortSelection.getSelectedItem() != null && 
-					singleIMUSerialPortPanel.comboBoxSerialPortSelection.getSelectedItem().toString().length() > 1) {
-				singleIMUSerialPortModel.serialPort = 
-						new SerialPort(singleIMUSerialPortPanel.comboBoxSerialPortSelection.getSelectedItem().toString());
+			if (panel.comboBoxSerialPortSelection.getSelectedItem() != null && 
+					panel.comboBoxSerialPortSelection.getSelectedItem().toString().length() > 1) {
+				model.serialPort = 
+						new SerialPort(panel.comboBoxSerialPortSelection.getSelectedItem().toString());
 			}
 			else {
 				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port select error!");
 			}
 
 			// open port
-			if (singleIMUSerialPortModel.serialPort.isOpened() == false) {
+			if (model.serialPort.isOpened() == false) {
 				try {
-					singleIMUSerialPortModel.serialPort.openPort();
+					model.serialPort.openPort();
 				} catch (SerialPortException e) {
 					System.err.println("SingleIMUStatusAction.connectButtonCliced(): open serial port error!");
 					return;
@@ -140,11 +144,11 @@ public class SingleIMUSerialPortAction {
 
 			// set port parameter
 			try {
-				singleIMUSerialPortModel.serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+				model.serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (SerialPortException e2) {
 				System.err.println("SingleIMUStatusAction.connectButtonCliced(): set port parameter error!");
 				try {
-					singleIMUSerialPortModel.serialPort.closePort();
+					model.serialPort.closePort();
 				} catch (SerialPortException e) {
 					e.printStackTrace();
 				}
@@ -153,21 +157,21 @@ public class SingleIMUSerialPortAction {
 
 			// add event listener
 			try {
-				singleIMUSerialPortModel.serialPort.addEventListener(new IMUSerialPortEventListener());
+				model.serialPort.addEventListener(new IMUSerialPortEventListener());
 			} catch (SerialPortException e1) {
 				System.err.println("SingleIMUStatusAction.connectButtonCliced(): add event listener error!");
 				return;
 			}
 
 			// change button text
-			singleIMUSerialPortPanel.buttonConnectDisconnect.setText("Disconnect");
+			panel.buttonConnectDisconnect.setText("Disconnect");
 
 			break;
 		case "Disconnect":
 
 			// remove event listener
 			try {
-				singleIMUSerialPortModel.serialPort.removeEventListener();
+				model.serialPort.removeEventListener();
 			} catch (SerialPortException e) {
 				System.err.println("SingleIMUStatusAction.connectButtonCliced(): remove event listener error!");
 				e.printStackTrace();
@@ -175,9 +179,9 @@ public class SingleIMUSerialPortAction {
 			}
 
 			// close port
-			if (singleIMUSerialPortModel.serialPort.isOpened() == true) {
+			if (model.serialPort.isOpened() == true) {
 				try {
-					singleIMUSerialPortModel.serialPort.closePort();
+					model.serialPort.closePort();
 				} catch (SerialPortException e) {
 					System.err.println("SingleIMUStatusAction.connectButtonCliced(): close serial port error!");
 					return;
@@ -189,7 +193,7 @@ public class SingleIMUSerialPortAction {
 			}
 
 			// change button text
-			singleIMUSerialPortPanel.buttonConnectDisconnect.setText("Connect");
+			panel.buttonConnectDisconnect.setText("Connect");
 
 			break;
 		default:

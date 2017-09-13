@@ -1,10 +1,12 @@
 package CNNY.Xin.controller;
 
 import CNNY.Xin.action.SingleIMUAction;
+import CNNY.Xin.event.IMUDataUpdateEventListener;
+import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUModel;
 import CNNY.Xin.view.SingleIMUPanel;
 
-public class SingleIMUController {
+public class SingleIMUController implements IMUDataUpdateEventListener {
 
 	public SingleIMUAction action;
 	public SingleIMUModel model;
@@ -37,6 +39,8 @@ public class SingleIMUController {
 						singleIMUModel.serialPortModel, 
 						singleIMUPanel.serialPortPanel);
 		
+		this.serialPortController.action.imuDataUpdateEventManager.addListener(this);
+		
 		// data display
 		this.dataDisplayController = 
 				new SingleIMUDataDisplayController(
@@ -57,7 +61,17 @@ public class SingleIMUController {
 	 *		Initiate Action Listeners 
 	 */
 	private void initActionListener() {
+	}
 
+	/**
+	 *	Func Info:
+	 *		imu data update event listen 
+	 */
+	@Override
+	public void imuDataUpdate(IMUDataModel imuDataModel) {
+
+		dataDisplayController.imuDataUpdate(imuDataModel);
+		phasePlainController.imuDataUpdate(imuDataModel);
 	}
 
 }

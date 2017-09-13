@@ -11,9 +11,9 @@ public class SingleIMUSerialPortModel {
 	public IMUDataDecoder imuDataDecoder;
 	public IMUFrameDecoder imuFrameDecoder;
 
-	public SingleIMUSerialPortModel(IMUDataDecoder imuDataDecoder) {
+	public SingleIMUSerialPortModel() {
 
-		this.imuDataDecoder = imuDataDecoder;
+		this.imuDataDecoder = new IMUDataDecoder();
 		this.imuFrameDecoder = new IMUFrameDecoder(imuDataDecoder);
 		
 		serialPortBufferData = new ArrayList<Short>();

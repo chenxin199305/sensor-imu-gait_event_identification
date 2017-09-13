@@ -10,9 +10,17 @@ public class SingleIMUModel {
 	
 	// phase plain
 	public SingleIMUPhasePlainModel phasePlainModel;
-
+	
 	public SingleIMUModel() {
 
+		// serial port
+		serialPortModel = new SingleIMUSerialPortModel();
+		
+		// data display
+		dataDisplayModel = new SingleIMUDataDisplayModel();
+		
+		// phase plain
+		phasePlainModel = new SingleIMUPhasePlainModel();
 	}
 
 }

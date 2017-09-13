@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import CNNY.Xin.action.SingleIMUDataDisplayAction;
+import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUDataDisplayModel;
 import CNNY.Xin.view.SingleIMUDataDisplayPanel;
 
@@ -25,7 +26,7 @@ public class SingleIMUDataDisplayController {
 
 		initActionListener();
 	}
-
+	
 	private void initActionListener() {
 
 		// check box selection
@@ -110,5 +111,13 @@ public class SingleIMUDataDisplayController {
 				action.saveToFileButtonCliced();
 			}
 		});
+	}
+	
+	/**
+	 *	Func Info:
+	 *		imu data update event
+	 */
+	public void imuDataUpdate(IMUDataModel imuDataModel) {
+		action.imuDataUpdate(imuDataModel);
 	}
 }

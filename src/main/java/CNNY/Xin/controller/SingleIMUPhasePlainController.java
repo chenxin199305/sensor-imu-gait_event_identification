@@ -1,6 +1,7 @@
 package CNNY.Xin.controller;
 
 import CNNY.Xin.action.SingleIMUPhasePlainAction;
+import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUPhasePlainModel;
 import CNNY.Xin.view.SingleIMUPhasePlainPanel;
 
@@ -22,7 +23,14 @@ public class SingleIMUPhasePlainController {
 	}
 
 	private void initActionListener() {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 *	Func Info:
+	 *		imu data update event
+	 */
+	public void imuDataUpdate(IMUDataModel imuDataModel) {
+		action.imuDataUpdate(imuDataModel);
 	}
 }
