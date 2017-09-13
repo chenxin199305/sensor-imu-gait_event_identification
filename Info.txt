@@ -1,0 +1,16 @@
+Project Infomation:
+	This project is created to collect data from IMU H219M module boutght from Taobao.
+	The program can communicate with IMU module, read data from serial port, and filter the raw data.
+	The basic structure of this software is based on MVC framework.
+		Controller class is to control the relation between Action and Panel classes.
+		Panel class is responsible for displaying component.
+		Action class is responsible for realizing concrete affairs.
+		Model class is responsible for data structure and data manufacturing.
+
+Developer:
+	Xin Chen : chenxin1993@vip.163.com
+	Hao Su
+	
+Open Source:
+	Not open source, belong to CCNY BIRO Lab.
+	

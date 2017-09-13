@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-import javax.xml.transform.Templates;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
@@ -297,15 +295,15 @@ public class SingleIMUStatusAction {
 	 */
 	public void angleVelocityCheckBoxStateChange() {
 		if (singleIMUStatusPanel.chckbxAngleVelocity.isSelected()) {
-//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
-//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
 			System.out.println("2");
 		}
 		else {
-//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawXAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawYAxisTimeSeries);
-//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.gyoRawZAxisTimeSeries);
 		}
 	}
 
@@ -375,6 +373,38 @@ public class SingleIMUStatusAction {
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredXAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredYAxisTimeSeries);
 			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.eulerAnglesFilteredZAxisTimeSeries);
+		}
+	}
+	
+	/**
+	 *	Function Info
+	 *		toe-off heel-hit check box state change
+	 */
+	public void toeOffHeelHitDetectCheckBoxStateChange() {
+		if (singleIMUStatusPanel.chckbxToeOffHeelHitDetect.isSelected()) {
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.toeOffHeelHitTimeSeries);
+		}
+		else {
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.toeOffHeelHitTimeSeries);
+		}
+	}
+	
+	/**
+	 *	Function Info
+	 *		debug check box state change
+	 */
+	public void debugCheckBoxStateChange() {
+		if (singleIMUStatusPanel.chckbxDebug.isSelected()) {
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPPeakTimeSeries);
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPGradientTimeSeries);
+//			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPPeriodTimeSeries);
+			imuChartTimeSeriesCollection.addSeries(singleIMUStatusModel.debugPTotalTimeSeries);
+		}
+		else {
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.debugPPeakTimeSeries);
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.debugPGradientTimeSeries);
+//			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.debugPPeriodTimeSeries);
+			imuChartTimeSeriesCollection.removeSeries(singleIMUStatusModel.debugPTotalTimeSeries);
 		}
 	}
 

@@ -18,12 +18,16 @@ public class SingleIMUStatusPanel extends JPanel {
 	public JTextField textFieldRecordLength;
 	public JComboBox<String> comboBoxSerialPortSelection;
 	public JButton btnConnect;
+	
 	public JCheckBox chckbxAcceleration;
 	public JCheckBox chckbxAngleVelocity;
 	public JCheckBox chckbxEulerAngle;
 	public JCheckBox chckbxAccFiltered;
 	public JCheckBox chckbxAngvelFiltered;
 	public JCheckBox chckbxEulangFiltered;
+	public JCheckBox chckbxToeOffHeelHitDetect;
+	public JCheckBox chckbxDebug;
+	
 	public JTextArea textAreaContentVal;
 	private JPanel panelContentValForChart;
 	public ChartPanel chartPanelContentVal;
@@ -78,10 +82,6 @@ public class SingleIMUStatusPanel extends JPanel {
 		chckbxEulangFiltered.setBounds(263, 107, 119, 23);
 		add(chckbxEulangFiltered);
 		
-		JLabel lblContentval = new JLabel("ContentVal:");
-		lblContentval.setBounds(21, 136, 100, 15);
-		add(lblContentval);
-		
 		textAreaContentVal = new JTextArea();
 		textAreaContentVal.setEditable(false);
 		textAreaContentVal.setBounds(21, 161, 384, 117);
@@ -120,6 +120,14 @@ public class SingleIMUStatusPanel extends JPanel {
 		btnSaveToFile = new JButton("SaveToFile");
 		btnSaveToFile.setBounds(305, 553, 100, 23);
 		add(btnSaveToFile);
+		
+		chckbxToeOffHeelHitDetect = new JCheckBox("Toe-Off Heel-Hit Detect");
+		chckbxToeOffHeelHitDetect.setBounds(21, 132, 103, 23);
+		add(chckbxToeOffHeelHitDetect);
+		
+		chckbxDebug = new JCheckBox("debug");
+		chckbxDebug.setBounds(263, 132, 103, 23);
+		add(chckbxDebug);
 
 	}
 }

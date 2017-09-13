@@ -17,7 +17,7 @@ public class SingleIMUStatusController {
 	private SingleIMUStatusModel singleIMUStatusModel;
 	private SingleIMUStatusPanel singleIMUStatusPanel;
 	private SingleIMUStatusAction singleIMUStatusAction;
-	
+
 	/**
 	 *	Function Info:
 	 *		Initialization 
@@ -31,78 +31,94 @@ public class SingleIMUStatusController {
 
 		this.singleIMUStatusAction = 
 				new SingleIMUStatusAction(this.singleIMUStatusModel, this.singleIMUStatusPanel);
-	
+
 		initActionListener();
 	}
-	
+
 	/**
 	 *	Function Info:
 	 *		Initiate Action Listeners 
 	 */
 	private void initActionListener() {
-		
+
 		// SerailPort ComboBox Pop Up
 		singleIMUStatusPanel.comboBoxSerialPortSelection.addPopupMenuListener(new PopupMenuListener() {
-			
+
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				singleIMUStatusAction.serialPortComboBoxPopUp();
 			}
-			
+
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
 			}
 			public void popupMenuCanceled(PopupMenuEvent e) {
 			}
 		});
-		
+
 		// Check Box Selection
 		singleIMUStatusPanel.chckbxAcceleration.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.accelerationCheckBoxStateChange();
 			}
 		});
-		
+
 		singleIMUStatusPanel.chckbxAngleVelocity.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.angleVelocityCheckBoxStateChange();
 			}
 		});
-		
+
 		singleIMUStatusPanel.chckbxEulerAngle.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.eulerAngleCheckBoxStateChange();
 			}
 		});
-		
+
 		singleIMUStatusPanel.chckbxAccFiltered.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.accFilteredCheckBoxStateChange();
 			}
 		});
-		
+
 		singleIMUStatusPanel.chckbxAngvelFiltered.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.angVelFilteredCheckBoxStateChange();
 			}
 		});
-		
+
 		singleIMUStatusPanel.chckbxEulangFiltered.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				singleIMUStatusAction.eulerAngleFilteredCheckBoxStateChange();
 			}
 		});
-		
+
+		singleIMUStatusPanel.chckbxToeOffHeelHitDetect.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				singleIMUStatusAction.toeOffHeelHitDetectCheckBoxStateChange();
+			}
+		});
+
+		singleIMUStatusPanel.chckbxDebug.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				singleIMUStatusAction.debugCheckBoxStateChange();
+			}
+		});
+
 		// Connect Button Clicked
 		singleIMUStatusPanel.btnConnect.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,7 +127,7 @@ public class SingleIMUStatusController {
 				singleIMUStatusAction.connectButtonCliced();
 			}
 		});
-		
+
 		// StartToRecord Button Clicked
 		singleIMUStatusPanel.btnStartRecord.addMouseListener(new MouseAdapter() {
 			@Override
@@ -120,7 +136,7 @@ public class SingleIMUStatusController {
 				singleIMUStatusAction.startToRecordButtonCliced();
 			}
 		});
-		
+
 		// SaveToFile Button Clicked
 		singleIMUStatusPanel.btnSaveToFile.addMouseListener(new MouseAdapter() {
 			@Override
@@ -129,7 +145,7 @@ public class SingleIMUStatusController {
 				singleIMUStatusAction.saveToFileButtonCliced();
 			}
 		});
-		
+
 	}
 
 	public SingleIMUStatusModel getSingleIMUStatusModel() {

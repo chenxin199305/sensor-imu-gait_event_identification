@@ -19,46 +19,18 @@ public class SingleIMUStatusModel {
 	public TimeSeries accRawXAxisTimeSeries = new TimeSeries("accRawX");
 	public TimeSeries accRawYAxisTimeSeries = new TimeSeries("accRawY");
 	public TimeSeries accRawZAxisTimeSeries = new TimeSeries("accRawZ");
-	public TimeSeries accCalXAxisTimeSeries = new TimeSeries("accCalX");
-	public TimeSeries accCalYAxisTimeSeries = new TimeSeries("accCalY");
-	public TimeSeries accCalZAxisTimeSeries = new TimeSeries("accCalZ");
-	public TimeSeries accFilXAxisTimeSeries = new TimeSeries("accFilX");
-	public TimeSeries accFilYAxisTimeSeries = new TimeSeries("accFilY");
-	public TimeSeries accFilZAxisTimeSeries = new TimeSeries("accFilZ");
-	public TimeSeries accLinXAxisTimeSeries = new TimeSeries("accLinX");
-	public TimeSeries accLinYAxisTimeSeries = new TimeSeries("accLinY");
-	public TimeSeries accLinZAxisTimeSeries = new TimeSeries("accLinZ");
-	public TimeSeries accGraXAxisTimeSeries = new TimeSeries("accGraX");
-	public TimeSeries accGraYAxisTimeSeries = new TimeSeries("accGraY");
-	public TimeSeries accGraZAxisTimeSeries = new TimeSeries("accGraZ");
 
 	public TimeSeries gyoRawXAxisTimeSeries = new TimeSeries("gyoRawX");
 	public TimeSeries gyoRawYAxisTimeSeries = new TimeSeries("gyoRawY");
 	public TimeSeries gyoRawZAxisTimeSeries = new TimeSeries("gyoRawZ");
-	public TimeSeries gyoCalXAxisTimeSeries = new TimeSeries("gyoCalX");
-	public TimeSeries gyoCalYAxisTimeSeries = new TimeSeries("gyoCalY");
-	public TimeSeries gyoCalZAxisTimeSeries = new TimeSeries("gyoCalZ");
-	public TimeSeries gyoFilXAxisTimeSeries = new TimeSeries("gyoFilX");
-	public TimeSeries gyoFilYAxisTimeSeries = new TimeSeries("gyoFilY");
-	public TimeSeries gyoFilZAxisTimeSeries = new TimeSeries("gyoFilX");
 
 	public TimeSeries magRawXAxisTimeSeries = new TimeSeries("magRawX");
 	public TimeSeries magRawYAxisTimeSeries = new TimeSeries("magRawY");
 	public TimeSeries magRawZAxisTimeSeries = new TimeSeries("magRawZ");
-	public TimeSeries magCalXAxisTimeSeries = new TimeSeries("magCalX");
-	public TimeSeries magCalYAxisTimeSeries = new TimeSeries("magCalY");
-	public TimeSeries magCalZAxisTimeSeries = new TimeSeries("magCalZ");
-	public TimeSeries magFilXAxisTimeSeries = new TimeSeries("magFilX");
-	public TimeSeries magFilYAxisTimeSeries = new TimeSeries("magFilY");
-	public TimeSeries magFilZAxisTimeSeries = new TimeSeries("magFilZ");
 
 	public TimeSeries eulerAnglesXAxisTimeSeries = new TimeSeries("eulerX");
 	public TimeSeries eulerAnglesYAxisTimeSeries = new TimeSeries("eulerY");
 	public TimeSeries eulerAnglesZAxisTimeSeries = new TimeSeries("eulerZ");
-	public TimeSeries quaternion1AxisTimeSeries = new TimeSeries("quaternion1");
-	public TimeSeries quaternion2AxisTimeSeries = new TimeSeries("quaternion2");
-	public TimeSeries quaternion3AxisTimeSeries = new TimeSeries("quaternion3");
-	public TimeSeries quaternion4AxisTimeSeries = new TimeSeries("quaternion4");
 	
 	public TimeSeries pressureAxisTimeSeries = new TimeSeries("pressure");
 	public TimeSeries temperatureAxisTimeSeries = new TimeSeries("temperature");
@@ -103,6 +75,17 @@ public class SingleIMUStatusModel {
 	public TimeSeries eulerAnglesFilteredXAxisTimeSeries = new TimeSeries("eulerAngleFilteredX");
 	public TimeSeries eulerAnglesFilteredYAxisTimeSeries = new TimeSeries("eulerAngleFilteredY");
 	public TimeSeries eulerAnglesFilteredZAxisTimeSeries = new TimeSeries("eulerAngleFilteredZ");
+
+	// Find Toe Off or Heel Hit
+	FindToeOffHeelHit findToeOffHeelHit;
+
+	public TimeSeries toeOffHeelHitTimeSeries = new TimeSeries("ToeOffHeelHit");
+	
+	// Debug
+	public TimeSeries debugPPeakTimeSeries = new TimeSeries("debug_pPeak");
+	public TimeSeries debugPGradientTimeSeries = new TimeSeries("debug_pGradient");
+	public TimeSeries debugPPeriodTimeSeries = new TimeSeries("debug_pPeriod");
+	public TimeSeries debugPTotalTimeSeries = new TimeSeries("debug_pTotal");
 	
 	public SingleIMUStatusModel() {
 
@@ -111,49 +94,14 @@ public class SingleIMUStatusModel {
 		accRawXAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		accRawYAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		accRawZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accCalXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accCalYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accCalZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accFilXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accFilYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accFilZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accLinXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accLinYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accLinZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accGraXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accGraYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		accGraZAxisTimeSeries.setMaximumItemAge(timeForRecord);
 
 		gyoRawXAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		gyoRawYAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		gyoRawZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoCalXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoCalYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoCalZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoFilXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoFilYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		gyoFilZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-//		magRawXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magRawYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magRawZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magCalXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magCalYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magCalZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magFilXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magFilYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		magFilZAxisTimeSeries.setMaximumItemAge(timeForRecord);
 
 		eulerAnglesXAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		eulerAnglesYAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		eulerAnglesZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		quaternion1AxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		quaternion2AxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		quaternion3AxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		quaternion4AxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-//		pressureAxisTimeSeries.setMaximumItemAge(timeForRecord);
-//		temperatureAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		
 		// Filtered Data
 		accFilteredXAxisTimeSeries.setMaximumItemAge(timeForRecord);
@@ -167,6 +115,15 @@ public class SingleIMUStatusModel {
 		eulerAnglesFilteredXAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		eulerAnglesFilteredYAxisTimeSeries.setMaximumItemAge(timeForRecord);
 		eulerAnglesFilteredZAxisTimeSeries.setMaximumItemAge(timeForRecord);
+		
+		// Toe Off or Heel Hit
+		toeOffHeelHitTimeSeries.setMaximumItemAge(timeForRecord);
+		
+		// debug
+		debugPPeakTimeSeries.setMaximumItemAge(timeForRecord);
+		debugPGradientTimeSeries.setMaximumItemAge(timeForRecord);
+		debugPPeriodTimeSeries.setMaximumItemAge(timeForRecord);
+		debugPTotalTimeSeries.setMaximumItemAge(timeForRecord);
 	}
 	
 	/**
@@ -185,20 +142,10 @@ public class SingleIMUStatusModel {
 		gyoRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.GyoRaw[1]);
 		gyoRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.GyoRaw[2]);
 
-//		magRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.MagRaw[0]);
-//		magRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.MagRaw[1]);
-//		magRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.MagRaw[2]);
-
 		eulerAnglesXAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.EulerAngles[0]);
 		eulerAnglesYAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.EulerAngles[1]);
 		eulerAnglesZAxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.EulerAngles[2]);
-
-//		quaternion1AxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.Quaternion[0]);
-//		quaternion2AxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.Quaternion[1]);
-//		quaternion3AxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.Quaternion[2]);
-//		quaternion4AxisTimeSeries.addOrUpdate(millisecond, imuDataDecoder.imuDataModel.Quaternion[3]);
 	
-		//------------------------------------------------------------------------
 		// Filtering Data ...
 		imuFilteredDataModel.AccFiltered[0] = imuDataDecoder.imuDataModel.AccRaw[0].intValue();
 		imuFilteredDataModel.AccFiltered[1] = imuDataDecoder.imuDataModel.AccRaw[1].intValue();
@@ -213,7 +160,7 @@ public class SingleIMUStatusModel {
 		imuFilteredDataModel.EulerAnglesFiltered[2] = imuDataDecoder.imuDataModel.EulerAngles[2].intValue();
 		
 		// 1. Kalman Filter
-		if (false) {
+		if (true) {
 			if (gyoFilteredXKalmanFilter == null) {
 				double[][] A = {{1}};
 				double[][] G = {{1}};
@@ -317,7 +264,7 @@ public class SingleIMUStatusModel {
 		}
 		
 		// 2. Average Filter
-		if (true) {
+		if (false) {
 			while (accFilteredXTempDataArray.size() >= tempDataArraySize) {
 				accFilteredXTempDataArray.remove(0);
 			}
@@ -421,43 +368,50 @@ public class SingleIMUStatusModel {
 		gyoFilteredXAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.GyoFiltered[0]);
 		gyoFilteredYAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.GyoFiltered[1]);
 		gyoFilteredZAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.GyoFiltered[2]);
-
-		System.out.println("imuFilteredDataModel.GyoFiltered[0]:" + imuFilteredDataModel.GyoFiltered[0]);
-		System.out.println("imuFilteredDataModel.GyoFiltered[1]:" + imuFilteredDataModel.GyoFiltered[1]);
-		System.out.println("imuFilteredDataModel.GyoFiltered[2]:" + imuFilteredDataModel.GyoFiltered[2]);
 		
 		eulerAnglesFilteredXAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.EulerAnglesFiltered[0]);
 		eulerAnglesFilteredYAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.EulerAnglesFiltered[1]);
 		eulerAnglesFilteredZAxisTimeSeries.addOrUpdate(millisecond, imuFilteredDataModel.EulerAnglesFiltered[2]);
-	}
 	
-	/**
-	 *	Function Info:
-	 *		update time series from imu data model 
-	 */
-	public void updateTimeSeries(IMUDataModel imuDataModel) {
-//		
-//		final Millisecond millisecond = new Millisecond();
-//
-//		accRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[0]);
-//		accRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[1]);
-//		accRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[2]);
-//
-//		gyoRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[0]);
-//		gyoRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[1]);
-//		gyoRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[2]);
-//
-//		magRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.MagRaw[0]);
-//		magRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.MagRaw[1]);
-//		magRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.MagRaw[2]);
-//
-//		eulerAnglesXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[0]);
-//		eulerAnglesYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[1]);
-//		eulerAnglesZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[2]);
-//
-//		quaternion1AxisTimeSeries.addOrUpdate(millisecond, imuDataModel.Quaternion[0]);
-//		quaternion2AxisTimeSeries.addOrUpdate(millisecond, imuDataModel.Quaternion[1]);
-//		quaternion3AxisTimeSeries.addOrUpdate(millisecond, imuDataModel.Quaternion[2]);
-//		quaternion4AxisTimeSeries.addOrUpdate(millisecond, imuDataModel.Quaternion[3]);
+		//----------------------------------------------------------
+		// find toe-off and heel hit
+		if (true) {
+			if (findToeOffHeelHit == null) {
+//				FindToeOffHeelHitModel findToeOffHeelHitModel = new FindToeOffHeelHitModel();
+//				findToeOffHeelHitModel.windowWidth = 10;
+//				findToeOffHeelHitModel.gradientLimitation = 15;
+				
+				findToeOffHeelHit = new FindToeOffHeelHit();
+				findToeOffHeelHit.findToeOffHeelHitModel.windowWidth = 6;
+			}
+		
+			if (gyoFilteredYAxisTimeSeries.getItemCount() >= findToeOffHeelHit.findToeOffHeelHitModel.windowWidth) {
+				ArrayList<Integer> tempArray = new ArrayList<>();
+				
+				for (int i = gyoFilteredYAxisTimeSeries.getItemCount() - findToeOffHeelHit.findToeOffHeelHitModel.windowWidth;
+						i < gyoFilteredYAxisTimeSeries.getItemCount();
+						i++) {
+					tempArray.add(gyoFilteredYAxisTimeSeries.getValue(i).intValue());
+				}
+				
+				Boolean findResult = findToeOffHeelHit.isToeOffOrHeelHitAtMiddle(tempArray);
+
+				debugPPeakTimeSeries.addOrUpdate(millisecond, findToeOffHeelHit.findToeOffHeelHitModel.pPeak);
+				debugPGradientTimeSeries.addOrUpdate(millisecond, findToeOffHeelHit.findToeOffHeelHitModel.pGradient);
+				debugPPeriodTimeSeries.addOrUpdate(millisecond, findToeOffHeelHit.findToeOffHeelHitModel.pPeriod);
+				debugPTotalTimeSeries.addOrUpdate(millisecond, findToeOffHeelHit.findToeOffHeelHitModel.pTotal);
+				
+				if(findResult) {
+					
+					toeOffHeelHitTimeSeries.addOrUpdate(
+							gyoFilteredYAxisTimeSeries.getTimePeriod(gyoFilteredYAxisTimeSeries.getItemCount() - tempArray.size() / 2),
+							gyoFilteredYAxisTimeSeries.getValue(gyoFilteredYAxisTimeSeries.getItemCount() - tempArray.size() / 2));
+				}
+				else {
+//					toeOffHeelHitTimeSeries.addOrUpdate(millisecond, 0);
+				}
+			}
+		}
 	}
+
 }
