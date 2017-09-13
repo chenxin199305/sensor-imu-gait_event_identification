@@ -1,5 +1,8 @@
 package CNNY.Xin.controller;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import CNNY.Xin.action.SingleIMUPhasePlainAction;
 import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUPhasePlainModel;
@@ -24,6 +27,21 @@ public class SingleIMUPhasePlainController {
 
 	private void initActionListener() {
 		
+		panel.checkBoxAngleVelocity.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				action.checkBoxAngleVelocityStateChange();
+			}
+		});
+		
+		panel.checkBoxEulerAngle.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				action.checkBoxEulerAngleStateChange();
+			}
+		});
 	}
 	
 	/**

@@ -330,7 +330,7 @@ public class SingleIMUDataDisplayAction {
 	 *		acceleration check box state change
 	 */
 	public void accelerationCheckBoxStateChange() {
-		if (panel.chckbxAcceleration.isSelected()) {
+		if (panel.checkBoxAcceleration.isSelected()) {
 			panel.chartDataSet.addSeries(model.accRawXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.accRawYAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.accRawZAxisTimeSeries);
@@ -347,7 +347,7 @@ public class SingleIMUDataDisplayAction {
 	 *		angle velocity check box state change
 	 */
 	public void angleVelocityCheckBoxStateChange() {
-		if (panel.chckbxAngleVelocity.isSelected()) {
+		if (panel.checkBoxAngleVelocity.isSelected()) {
 			panel.chartDataSet.addSeries(model.gyoRawXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.gyoRawYAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.gyoRawZAxisTimeSeries);
@@ -364,7 +364,7 @@ public class SingleIMUDataDisplayAction {
 	 *		euler angle check box state change
 	 */
 	public void eulerAngleCheckBoxStateChange() {
-		if (panel.chckbxEulerAngle.isSelected()) {
+		if (panel.checkBoxEulerAngle.isSelected()) {
 			panel.chartDataSet.addSeries(model.eulerAnglesXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.eulerAnglesYAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.eulerAnglesZAxisTimeSeries);
@@ -381,7 +381,7 @@ public class SingleIMUDataDisplayAction {
 	 *		acceleration filtered data check box state change
 	 */
 	public void accFilteredCheckBoxStateChange() {
-		if (panel.chckbxAccFiltered.isSelected()) {
+		if (panel.checkBoxAccelerationFiltered.isSelected()) {
 			panel.chartDataSet.addSeries(model.accFilteredXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.accFilteredYAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.accFilteredZAxisTimeSeries);
@@ -398,7 +398,7 @@ public class SingleIMUDataDisplayAction {
 	 *		angle velocity filtered data check box state change
 	 */
 	public void angVelFilteredCheckBoxStateChange() {
-		if (panel.chckbxAngvelFiltered.isSelected()) {
+		if (panel.checkBoxAngleVelocityFiltered.isSelected()) {
 //			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.gyoFilteredXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.gyoFilteredYAxisTimeSeries);
 //			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.gyoFilteredZAxisTimeSeries);
@@ -415,7 +415,7 @@ public class SingleIMUDataDisplayAction {
 	 *		euler angle filtered data check box state change
 	 */
 	public void eulerAngleFilteredCheckBoxStateChange() {
-		if (panel.chckbxEulangFiltered.isSelected()) {
+		if (panel.checkBoxEulerAngleFiltered.isSelected()) {
 			panel.chartDataSet.addSeries(model.eulerAnglesFilteredXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.eulerAnglesFilteredYAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.eulerAnglesFilteredZAxisTimeSeries);
@@ -432,7 +432,7 @@ public class SingleIMUDataDisplayAction {
 	 *		toe-off heel-hit check box state change
 	 */
 	public void toeOffHeelHitDetectCheckBoxStateChange() {
-		if (panel.chckbxToeOffHeelHitDetect.isSelected()) {
+		if (panel.checkBoxToeOffHeelHitDetect.isSelected()) {
 			panel.chartDataSet.addSeries(model.toeOffHeelHitTimeSeries);
 		}
 		else {
@@ -445,7 +445,7 @@ public class SingleIMUDataDisplayAction {
 	 *		debug check box state change
 	 */
 	public void debugCheckBoxStateChange() {
-		if (panel.chckbxDebug.isSelected()) {
+		if (panel.checkBoxDebug.isSelected()) {
 //			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPPeakTimeSeries);
 //			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPGradientTimeSeries);
 //			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPPeriodTimeSeries);

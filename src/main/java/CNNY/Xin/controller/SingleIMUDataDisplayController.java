@@ -30,7 +30,7 @@ public class SingleIMUDataDisplayController {
 	private void initActionListener() {
 
 		// check box selection
-		panel.chckbxAcceleration.addItemListener(new ItemListener() {
+		panel.checkBoxAcceleration.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -38,7 +38,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxAngleVelocity.addItemListener(new ItemListener() {
+		panel.checkBoxAngleVelocity.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -46,7 +46,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxEulerAngle.addItemListener(new ItemListener() {
+		panel.checkBoxEulerAngle.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -54,7 +54,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxAccFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxAccelerationFiltered.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -62,7 +62,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxAngvelFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxAngleVelocityFiltered.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -70,7 +70,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxEulangFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxEulerAngleFiltered.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -78,7 +78,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxToeOffHeelHitDetect.addItemListener(new ItemListener() {
+		panel.checkBoxToeOffHeelHitDetect.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -86,7 +86,7 @@ public class SingleIMUDataDisplayController {
 			}
 		});
 
-		panel.chckbxDebug.addItemListener(new ItemListener() {
+		panel.checkBoxDebug.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {

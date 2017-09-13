@@ -37,7 +37,7 @@ public class SingleIMUSerialPortAction {
 	 *		IMU serial port event listener 
 	 */
 	public class IMUSerialPortEventListener implements SerialPortEventListener {
-
+		
 		public void serialEvent(SerialPortEvent serialPortEvent) {
 
 			// Receive Data, decode and read data

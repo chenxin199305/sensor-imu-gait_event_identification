@@ -14,8 +14,17 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class SingleIMUPhasePlainPanel extends JPanel {
 
-	private JTextField textFieldRecordLength;
-
+	public JCheckBox checkBoxAcceleration;
+	public JCheckBox checkBoxAngleVelocity;
+	public JCheckBox checkBoxEulerAngle;
+	public JCheckBox checkBoxAccelerationFiltered;
+	public JCheckBox checkBoxAngleVelocityFiltered;
+	public JCheckBox checkBoxEulerAngleFiltered;
+	
+	public JTextField textFieldRecordLength;
+	public JButton buttonStartStopRecord;
+	public JButton buttonSaveToFile;
+	
 	public ChartPanel chartPanel;
 	public JFreeChart chart;
 	public XYSeriesCollection chartDataSet;
@@ -31,37 +40,29 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		label.setBounds(10, 20, 100, 15);
 		add(label);
 
-		JCheckBox checkBoxAcceleration = new JCheckBox("Acceleration");
+		checkBoxAcceleration = new JCheckBox("Acceleration");
 		checkBoxAcceleration.setBounds(10, 41, 119, 23);
 		add(checkBoxAcceleration);
 
-		JCheckBox checkBoxAngleVelocity = new JCheckBox("Angle Velocity");
+		checkBoxAngleVelocity = new JCheckBox("Angle Velocity");
 		checkBoxAngleVelocity.setBounds(131, 41, 119, 23);
 		add(checkBoxAngleVelocity);
 
-		JCheckBox checkBoxEulerAngle = new JCheckBox("Euler Angle");
+		checkBoxEulerAngle = new JCheckBox("Euler Angle");
 		checkBoxEulerAngle.setBounds(252, 41, 119, 23);
 		add(checkBoxEulerAngle);
 
-		JCheckBox checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
-		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
-		add(checkBoxEulerAngleFiltered);
-
-		JCheckBox checkBoxAngleVelocityFiltered = new JCheckBox("AngVel Filtered");
-		checkBoxAngleVelocityFiltered.setBounds(131, 66, 119, 23);
-		add(checkBoxAngleVelocityFiltered);
-
-		JCheckBox checkBoxToeOffHeelHitDetect = new JCheckBox("Toe-Off Heel-Hit Detect");
-		checkBoxToeOffHeelHitDetect.setBounds(10, 91, 240, 23);
-		add(checkBoxToeOffHeelHitDetect);
-
-		JCheckBox checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
+		checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
 		checkBoxAccelerationFiltered.setBounds(10, 66, 119, 23);
 		add(checkBoxAccelerationFiltered);
 
-		JCheckBox checkBoxDebug = new JCheckBox("debug");
-		checkBoxDebug.setBounds(252, 91, 103, 23);
-		add(checkBoxDebug);
+		checkBoxAngleVelocityFiltered = new JCheckBox("AngVel Filtered");
+		checkBoxAngleVelocityFiltered.setBounds(131, 66, 119, 23);
+		add(checkBoxAngleVelocityFiltered);
+
+		checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
+		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
+		add(checkBoxEulerAngleFiltered);
 
 		// chart panel Phase Plain
 		chartPanel = new ChartPanel((JFreeChart) null);
@@ -80,14 +81,23 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		textFieldRecordLength.setBounds(108, 390, 66, 21);
 		add(textFieldRecordLength);
 
-		JButton buttonStartStopRecord = new JButton("StopRecord");
+		buttonStartStopRecord = new JButton("StopRecord");
 		buttonStartStopRecord.setBounds(184, 389, 100, 23);
 		add(buttonStartStopRecord);
 
-		JButton buttonSaveToFile = new JButton("SaveToFile");
+		buttonSaveToFile = new JButton("SaveToFile");
 		buttonSaveToFile.setBounds(294, 389, 100, 23);
 		add(buttonSaveToFile);
 
+		panelConfig();
+	}
+
+	private void panelConfig() {
+
+		checkBoxAcceleration.setEnabled(false);
+		checkBoxAccelerationFiltered.setEnabled(false);
+		checkBoxAngleVelocityFiltered.setEnabled(false);
+		checkBoxEulerAngleFiltered.setEnabled(false);
 	}
 
 }

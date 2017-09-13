@@ -19,14 +19,14 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 	
 	public JTextField textFieldRecordLength;
 	
-	public JCheckBox chckbxAcceleration;
-	public JCheckBox chckbxAngleVelocity;
-	public JCheckBox chckbxEulerAngle;
-	public JCheckBox chckbxAccFiltered;
-	public JCheckBox chckbxAngvelFiltered;
-	public JCheckBox chckbxEulangFiltered;
-	public JCheckBox chckbxToeOffHeelHitDetect;
-	public JCheckBox chckbxDebug;
+	public JCheckBox checkBoxAcceleration;
+	public JCheckBox checkBoxAngleVelocity;
+	public JCheckBox checkBoxEulerAngle;
+	public JCheckBox checkBoxAccelerationFiltered;
+	public JCheckBox checkBoxAngleVelocityFiltered;
+	public JCheckBox checkBoxEulerAngleFiltered;
+	public JCheckBox checkBoxToeOffHeelHitDetect;
+	public JCheckBox checkBoxDebug;
 	
 	public ChartPanel chartPanel;
 	public JFreeChart chart;
@@ -47,29 +47,37 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		lblContentSel.setBounds(10, 20, 100, 15);
 		add(lblContentSel);
 		
-		chckbxAcceleration = new JCheckBox("Acceleration");
-		chckbxAcceleration.setBounds(10, 41, 119, 23);
-		add(chckbxAcceleration);
+		checkBoxAcceleration = new JCheckBox("Acceleration");
+		checkBoxAcceleration.setBounds(10, 41, 119, 23);
+		add(checkBoxAcceleration);
 		
-		chckbxAngleVelocity = new JCheckBox("Angle Velocity");
-		chckbxAngleVelocity.setBounds(131, 41, 119, 23);
-		add(chckbxAngleVelocity);
+		checkBoxAngleVelocity = new JCheckBox("Angle Velocity");
+		checkBoxAngleVelocity.setBounds(131, 41, 119, 23);
+		add(checkBoxAngleVelocity);
 		
-		chckbxEulerAngle = new JCheckBox("Euler Angle");
-		chckbxEulerAngle.setBounds(252, 41, 119, 23);
-		add(chckbxEulerAngle);
+		checkBoxEulerAngle = new JCheckBox("Euler Angle");
+		checkBoxEulerAngle.setBounds(252, 41, 119, 23);
+		add(checkBoxEulerAngle);
 		
-		chckbxAccFiltered = new JCheckBox("Acc Filtered");
-		chckbxAccFiltered.setBounds(10, 66, 119, 23);
-		add(chckbxAccFiltered);
+		checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
+		checkBoxAccelerationFiltered.setBounds(10, 66, 119, 23);
+		add(checkBoxAccelerationFiltered);
 		
-		chckbxAngvelFiltered = new JCheckBox("AngVel Filtered");
-		chckbxAngvelFiltered.setBounds(131, 66, 119, 23);
-		add(chckbxAngvelFiltered);
+		checkBoxAngleVelocityFiltered = new JCheckBox("AngVel Filtered");
+		checkBoxAngleVelocityFiltered.setBounds(131, 66, 119, 23);
+		add(checkBoxAngleVelocityFiltered);
 		
-		chckbxEulangFiltered = new JCheckBox("EulAng Filtered");
-		chckbxEulangFiltered.setBounds(252, 66, 119, 23);
-		add(chckbxEulangFiltered);
+		checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
+		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
+		add(checkBoxEulerAngleFiltered);
+		
+		checkBoxToeOffHeelHitDetect = new JCheckBox("Toe-Off Heel-Hit Detect");
+		checkBoxToeOffHeelHitDetect.setBounds(10, 91, 240, 23);
+		add(checkBoxToeOffHeelHitDetect);
+		
+		checkBoxDebug = new JCheckBox("debug");
+		checkBoxDebug.setBounds(252, 91, 103, 23);
+		add(checkBoxDebug);
 		
 		// chart panel IMU
 		chartPanel = new ChartPanel(null);
@@ -96,12 +104,11 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		btnSaveToFile.setBounds(294, 389, 100, 23);
 		add(btnSaveToFile);
 		
-		chckbxToeOffHeelHitDetect = new JCheckBox("Toe-Off Heel-Hit Detect");
-		chckbxToeOffHeelHitDetect.setBounds(10, 91, 240, 23);
-		add(chckbxToeOffHeelHitDetect);
-		
-		chckbxDebug = new JCheckBox("debug");
-		chckbxDebug.setBounds(252, 91, 103, 23);
-		add(chckbxDebug);
+		panelConfig();
+	}
+
+	private void panelConfig() {
+
+		checkBoxDebug.setEnabled(false);
 	}
 }
