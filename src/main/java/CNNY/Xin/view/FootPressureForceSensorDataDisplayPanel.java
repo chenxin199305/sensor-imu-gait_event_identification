@@ -15,7 +15,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class SingleIMUDataDisplayPanel extends JPanel {
+public class FootPressureForceSensorDataDisplayPanel extends JPanel {
 	
 	public JTextField textFieldRecordLength;
 	
@@ -38,9 +38,9 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SingleIMUDataDisplayPanel() {
+	public FootPressureForceSensorDataDisplayPanel() {
 		
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "IMU data display", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "data display", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setLayout(null);
 		
 		JLabel lblContentSel = new JLabel("ContentSel:");
@@ -83,7 +83,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		chartPanel = new ChartPanel(null);
 		chartPanel.setBounds(10, 124, 384, 255);
 		chartDataSet = new TimeSeriesCollection();
-		chart 	= ChartFactory.createTimeSeriesChart("IMU", "TIME", "VAL", chartDataSet);
+		chart 	= ChartFactory.createTimeSeriesChart("Foot Pressure", "TIME", "VAL", chartDataSet);
 		chartPanel.setChart(chart);
 		add(chartPanel);
 		

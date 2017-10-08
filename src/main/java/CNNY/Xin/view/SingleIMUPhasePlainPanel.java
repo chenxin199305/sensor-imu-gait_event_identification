@@ -100,6 +100,7 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 	private void panelConfig() {
 
 		checkBoxAcceleration.setEnabled(false);
+		checkBoxAngleVelocity.setEnabled(false);
 		checkBoxAccelerationFiltered.setEnabled(false);
 		checkBoxAngleVelocityFiltered.setEnabled(false);
 		checkBoxEulerAngleFiltered.setEnabled(false);

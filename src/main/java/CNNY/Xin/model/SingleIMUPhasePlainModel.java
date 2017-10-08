@@ -22,7 +22,7 @@ public class SingleIMUPhasePlainModel {
 	public XYSeries eulerAnglesYAxisXYSeries = new XYSeries("eulerY");
 	public XYSeries eulerAnglesZAxisXYSeries = new XYSeries("eulerZ");
 
-	public int seriesMaximumCount = 200;
+	public int seriesMaximumCount = 450;
 	
 	public double[] LastGyoRaw 			= new double[3];
 	public double[] LastEulerAngles 	= new double[3];

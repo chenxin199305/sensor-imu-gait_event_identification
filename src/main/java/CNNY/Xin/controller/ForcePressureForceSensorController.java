@@ -6,7 +6,7 @@ import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUModel;
 import CNNY.Xin.view.SingleIMUPanel;
 
-public class SingleIMUController implements IMUDataUpdateEventListener {
+public class ForcePressureForceSensorController implements IMUDataUpdateEventListener {
 
 	public SingleIMUAction action;
 	public SingleIMUModel model;
@@ -25,7 +25,7 @@ public class SingleIMUController implements IMUDataUpdateEventListener {
 	 *	Function Info:
 	 *		Initialization 
 	 */
-	public SingleIMUController(
+	public ForcePressureForceSensorController(
 			SingleIMUModel singleIMUModel,
 			SingleIMUPanel singleIMUPanel) {
 

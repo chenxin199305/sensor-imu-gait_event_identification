@@ -19,14 +19,14 @@ import CNNY.Xin.model.SingleIMUDataDisplayModel;
 import CNNY.Xin.view.SingleIMUDataDisplayPanel;
 import Jama.Matrix;
 
-public class SingleIMUDataDisplayAction {
+public class FootPressureForceSensorDataDisplayAction {
 
 	private SingleIMUDataDisplayModel model;
 	private SingleIMUDataDisplayPanel panel;
 	
 	private Boolean recordingFlag = true;
 	
-	public SingleIMUDataDisplayAction(
+	public FootPressureForceSensorDataDisplayAction(
 			SingleIMUDataDisplayModel singleIMUDataDisplayModel,
 			SingleIMUDataDisplayPanel singleIMUDataDisplayPanel) {
 	

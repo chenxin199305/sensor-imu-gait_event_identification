@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 
 import CNNY.Xin.controller.SingleIMUController;
 import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.view.FootPressureForceSensorPanel;
 import CNNY.Xin.view.SingleIMUPanel;
 
 public class MainWindow {
@@ -18,9 +19,9 @@ public class MainWindow {
 	private JFrame frame;
 	
 	// IMU1
-	public SingleIMUModel model1;
-	public SingleIMUPanel panel1;
-	public SingleIMUController controller1;
+	public SingleIMUModel IMUmodel1;
+	public SingleIMUPanel IMUpanel1;
+	public SingleIMUController IMUcontroller1;
 
 	// IMU2
 	public SingleIMUModel model2;
@@ -36,6 +37,9 @@ public class MainWindow {
 	public SingleIMUModel model4;
 	public SingleIMUPanel panel4;
 	public SingleIMUController controller4;
+	
+	// Foot Pressure Force Sensor
+	public FootPressureForceSensorPanel FPFSpanel1;
 
 	// total control panel
 	JButton btnStartrecord;
@@ -69,16 +73,16 @@ public class MainWindow {
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 878, 744);
+		frame.setBounds(100, 100, 1372, 744);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		// IMU1
-		model1 = new SingleIMUModel();
-		panel1 = new SingleIMUPanel();
-		panel1.setBounds(10, 6, 872, 634);
-		this.frame.getContentPane().add(panel1);
-		controller1 = new SingleIMUController(model1, panel1);
+		IMUmodel1 = new SingleIMUModel();
+		IMUpanel1 = new SingleIMUPanel();
+		IMUpanel1.setBounds(10, 6, 872, 634);
+		this.frame.getContentPane().add(IMUpanel1);
+		IMUcontroller1 = new SingleIMUController(IMUmodel1, IMUpanel1);
 
 		// IMU2
 		model2 = new SingleIMUModel();
@@ -101,6 +105,11 @@ public class MainWindow {
 //		this.frame.getContentPane().add(singleIMUPanel4);
 		controller4 = new SingleIMUController(model4, panel4);
 		
+		// Foot Pressure Force Sensor
+		FPFSpanel1 = new FootPressureForceSensorPanel();
+		FPFSpanel1.setBounds(892, 6, 456, 634);
+		this.frame.getContentPane().add(FPFSpanel1);
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "total control", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 646, 426, 69);
@@ -117,14 +126,16 @@ public class MainWindow {
 				
 				switch (btnStartrecord.getText()) {
 				case "StartRecord":
-//					singleIMUController1.singleIMUAction.setToRecordState();
+					IMUcontroller1.setDataDisplayRecordingFlag();
+					IMUcontroller1.setPhasePlainRecordingFlag();
 //					singleIMUController2.singleIMUAction.setToRecordState();
 //					singleIMUController3.singleIMUAction.setToRecordState();
 //					singleIMUController4.singleIMUAction.setToRecordState();
 					btnStartrecord.setText("StopRecord");
 					break;
 				case "StopRecord":
-//					singleIMUController1.singleIMUAction.setToStopRecordState();
+					IMUcontroller1.clearDataDisplayRecordingFlag();
+					IMUcontroller1.clearPhasePlainRecordingFlag();
 //					singleIMUController2.singleIMUAction.setToStopRecordState();
 //					singleIMUController3.singleIMUAction.setToStopRecordState();
 //					singleIMUController4.singleIMUAction.setToStopRecordState();

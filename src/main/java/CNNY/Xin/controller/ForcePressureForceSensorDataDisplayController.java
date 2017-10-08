@@ -10,13 +10,13 @@ import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUDataDisplayModel;
 import CNNY.Xin.view.SingleIMUDataDisplayPanel;
 
-public class SingleIMUDataDisplayController {
+public class ForcePressureForceSensorDataDisplayController {
 
 	public SingleIMUDataDisplayAction action;
 	public SingleIMUDataDisplayModel model;
 	public SingleIMUDataDisplayPanel panel;
 
-	public SingleIMUDataDisplayController(
+	public ForcePressureForceSensorDataDisplayController(
 			SingleIMUDataDisplayModel singleIMUDataDisplayModel,
 			SingleIMUDataDisplayPanel singleIMUDataDisplayPanel) {
 

@@ -1,5 +1,15 @@
 package CNNY.Xin.action;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.xy.XYSeries;
+
 import CNNY.Xin.model.AverageFilter;
 import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.model.SingleIMUPhasePlainModel;
@@ -10,13 +20,15 @@ public class SingleIMUPhasePlainAction {
 	private SingleIMUPhasePlainModel model;
 	private SingleIMUPhasePlainPanel panel;
 
-	private AverageFilter averageFilterGyoX = new AverageFilter(10);
-	private AverageFilter averageFilterGyoY = new AverageFilter(10);
-	private AverageFilter averageFilterGyoZ = new AverageFilter(10);
+	private Boolean recordingFlag = true;
+	
+	private AverageFilter averageFilterGyoX = new AverageFilter(4);
+	private AverageFilter averageFilterGyoY = new AverageFilter(4);
+	private AverageFilter averageFilterGyoZ = new AverageFilter(4);
 
-	private AverageFilter averageFilterEulerAngleX = new AverageFilter(10);
-	private AverageFilter averageFilterEulerAngleY = new AverageFilter(10);
-	private AverageFilter averageFilterEulerAngleZ = new AverageFilter(10);
+	private AverageFilter averageFilterEulerAngleX = new AverageFilter(4);
+	private AverageFilter averageFilterEulerAngleY = new AverageFilter(4);
+	private AverageFilter averageFilterEulerAngleZ = new AverageFilter(4);
 	
 	public SingleIMUPhasePlainAction(
 			SingleIMUPhasePlainModel singleIMUPhasePlainModel,
@@ -32,6 +44,12 @@ public class SingleIMUPhasePlainAction {
 	 */
 	public void imuDataUpdate(IMUDataModel imuDataModel) {
 
+		if (recordingFlag == true) {
+		}
+		else {
+			return;
+		}
+		
 		double updateFrequency = 100.0;
 		
 		// filtering...
@@ -115,20 +133,101 @@ public class SingleIMUPhasePlainAction {
 
 	public void checkBoxEulerAngleStateChange() {
 		if (panel.checkBoxEulerAngle.isSelected()) {
-//			panel.chartDataSet.addSeries(model.eulerAnglesXAxisXYSeries);
-			panel.chartDataSet.addSeries(model.eulerAnglesYAxisXYSeries);
+			panel.chartDataSet.addSeries(model.eulerAnglesXAxisXYSeries);
+//			panel.chartDataSet.addSeries(model.eulerAnglesYAxisXYSeries);
 //			panel.chartDataSet.addSeries(model.eulerAnglesZAxisXYSeries);
 
 			panel.lineAndShapeRenderer.setSeriesLinesVisible(0, false);
 		}
 		else {
-//			panel.chartDataSet.removeSeries(model.eulerAnglesXAxisXYSeries);
-			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisXYSeries);
+			panel.chartDataSet.removeSeries(model.eulerAnglesXAxisXYSeries);
+//			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisXYSeries);
 //			panel.chartDataSet.removeSeries(model.eulerAnglesZAxisXYSeries);
 			
 			model.eulerAnglesXAxisXYSeries.clear();
 			model.eulerAnglesYAxisXYSeries.clear();
 			model.eulerAnglesZAxisXYSeries.clear();
+		}
+	}
+	
+	/**
+	 *	Function Info
+	 *		StartToRecord button clicked event handler 
+	 */
+	public void startToRecordButtonCliced() {
+
+		switch (panel.buttonStartStopRecord.getText()) {
+		case "StartRecord":
+			recordingFlag = true;
+			panel.buttonStartStopRecord.setText("StopRecord");
+			break;
+		case "StopRecord":
+			recordingFlag = false;
+			panel.buttonStartStopRecord.setText("StartRecord");
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void setRecordingFlag() {
+		recordingFlag = true;
+		panel.buttonStartStopRecord.setText("StopRecord");
+	}
+	
+	public void clearRecordingFlag() {
+		recordingFlag = false;
+		panel.buttonStartStopRecord.setText("StartRecord");
+	}
+	
+	/**
+	 *	Function Info
+	 *		SaveToFile button clicked event handler 
+	 */
+	public void saveToFileButtonCliced() {
+
+		JFileChooser jFileChooser = new JFileChooser();
+		int chooseResult = jFileChooser.showSaveDialog(null);
+		if (chooseResult == JFileChooser.APPROVE_OPTION) {
+		}
+		else {
+			return;
+		}
+
+		File file = jFileChooser.getSelectedFile();
+		try {
+			boolean createFileResult = file.createNewFile();
+			if (false == createFileResult) {
+				file.delete();
+				file.createNewFile();
+			}
+			else {
+			}
+
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			for (int i = 0; i < panel.chartDataSet.getSeriesCount(); i++) {
+				XYSeries tempSeries = panel.chartDataSet.getSeries(i);
+				bufferedWriter.write(tempSeries.getKey().toString() + "\n");
+				for (int j = 0; j < tempSeries.getItemCount(); j++) {
+					bufferedWriter.write(
+							tempSeries.getX(j).toString() 
+							+ " " + tempSeries.getY(j) + "\n");
+				}
+				bufferedWriter.write("\n");
+			}
+			
+			//---------------------- support information ----------------------
+			for (int i = 0; i < model.eulerAngleYAxisArray.size(); i++) {
+				bufferedWriter.write(model.eulerAngleYAxisArray.get(i).toString() + "\n");
+			}
+			
+			bufferedWriter.close();
+			fileWriter.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
