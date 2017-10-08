@@ -2,9 +2,10 @@ package CNNY.Xin.action;
 
 import java.util.ArrayList;
 
+import CNNY.Xin.event.FootPressureForceSensorDataUpdateEventManager;
 import CNNY.Xin.event.IMUDataUpdateEventManager;
-import CNNY.Xin.model.SingleIMUSerialPortModel;
-import CNNY.Xin.view.SingleIMUSerialPortPanel;
+import CNNY.Xin.model.FootPressureForceSensorSerialPortModel;
+import CNNY.Xin.view.FootPressureForceSensorSerialPortPanel;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -13,30 +14,30 @@ import jssc.SerialPortList;
 
 public class FootPressureForceSensorSerialPortAction {
 
-	private SingleIMUSerialPortModel model;
-	private SingleIMUSerialPortPanel panel;
+	private FootPressureForceSensorSerialPortModel model;
+	private FootPressureForceSensorSerialPortPanel panel;
 	
-	public IMUDataUpdateEventManager imuDataUpdateEventManager;
+	public FootPressureForceSensorDataUpdateEventManager eventManager;
 	
 	/**
 	 *	Func Info:
-	 *		SingleIMUSerialPortAction Class Init 
+	 *		FootPressureForceSensorSerialPortAction Class Init 
 	 */
 	public FootPressureForceSensorSerialPortAction(
-			SingleIMUSerialPortModel singleIMUSerialPortModel,
-			SingleIMUSerialPortPanel singleIMUSerialPortPanel) {
+			FootPressureForceSensorSerialPortModel model,
+			FootPressureForceSensorSerialPortPanel panel) {
 
-		this.model = singleIMUSerialPortModel;
-		this.panel = singleIMUSerialPortPanel;
+		this.model = model;
+		this.panel = panel;
 		
-		imuDataUpdateEventManager = new IMUDataUpdateEventManager();
+		eventManager = new FootPressureForceSensorDataUpdateEventManager();
 	}
 	
 	/**
 	 *	Class Info:
 	 *		IMU serial port event listener 
 	 */
-	public class IMUSerialPortEventListener implements SerialPortEventListener {
+	public class FootPressureForceSensorSerialPortEventListener implements SerialPortEventListener {
 		
 		public void serialEvent(SerialPortEvent serialPortEvent) {
 
@@ -53,10 +54,7 @@ public class FootPressureForceSensorSerialPortAction {
 						for (int i = 0; i < model.serialPortBufferData.size(); i++) {
 
 							// if decode success, imu data model is ready
-							if(model.imuFrameDecoder.PacketDecode(
-									model.serialPortBufferData.get(i))) {
-
-								// System.out.println("packet decode success.");
+							if(model.frameDecoder.PacketDecode(model.serialPortBufferData.get(i))) {
 
 								// broadcast to controller 
 								// to refresh data
@@ -79,8 +77,6 @@ public class FootPressureForceSensorSerialPortAction {
 			if (serialPortEvent.getEventType() == SerialPortEvent.ERR) {
 				System.err.println("IMUSerialPortEventListener.serialEvent()");
 			}
-
-			// there are still other events can be added...		
 		}
 
 	}
@@ -92,10 +88,10 @@ public class FootPressureForceSensorSerialPortAction {
 	public void refreshIMUDataDisplay() {
 
 		// refresh data display on text area
-		panel.textAreaContentVal.setText(model.imuDataDecoder.imuDataModel.StringData);
+		panel.textAreaContentVal.setText(model.dataDecoder.dataModel.StringData);
 
 		// notify serial port data update
-		imuDataUpdateEventManager.notifyListeners(model.imuDataDecoder.imuDataModel);
+		eventManager.notifyListeners(model.dataDecoder.dataModel);
 	}
 
 	/**
@@ -125,7 +121,7 @@ public class FootPressureForceSensorSerialPortAction {
 						new SerialPort(panel.comboBoxSerialPortSelection.getSelectedItem().toString());
 			}
 			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port select error!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): serial port select error!");
 			}
 
 			// open port
@@ -133,12 +129,12 @@ public class FootPressureForceSensorSerialPortAction {
 				try {
 					model.serialPort.openPort();
 				} catch (SerialPortException e) {
-					System.err.println("SingleIMUStatusAction.connectButtonCliced(): open serial port error!");
+					System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): open serial port error!");
 					return;
 				}
 			}
 			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port is already opened!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): serial port is already opened!");
 				return;
 			}
 
@@ -146,7 +142,7 @@ public class FootPressureForceSensorSerialPortAction {
 			try {
 				model.serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (SerialPortException e2) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): set port parameter error!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): set port parameter error!");
 				try {
 					model.serialPort.closePort();
 				} catch (SerialPortException e) {
@@ -157,9 +153,9 @@ public class FootPressureForceSensorSerialPortAction {
 
 			// add event listener
 			try {
-				model.serialPort.addEventListener(new IMUSerialPortEventListener());
+				model.serialPort.addEventListener(new FootPressureForceSensorSerialPortEventListener());
 			} catch (SerialPortException e1) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): add event listener error!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): add event listener error!");
 				return;
 			}
 
@@ -173,7 +169,7 @@ public class FootPressureForceSensorSerialPortAction {
 			try {
 				model.serialPort.removeEventListener();
 			} catch (SerialPortException e) {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): remove event listener error!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): remove event listener error!");
 				e.printStackTrace();
 				return;
 			}
@@ -183,12 +179,12 @@ public class FootPressureForceSensorSerialPortAction {
 				try {
 					model.serialPort.closePort();
 				} catch (SerialPortException e) {
-					System.err.println("SingleIMUStatusAction.connectButtonCliced(): close serial port error!");
+					System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): close serial port error!");
 					return;
 				}
 			}
 			else {
-				System.err.println("SingleIMUStatusAction.connectButtonCliced(): serial port is already closed!");
+				System.err.println("FootPressureForceSensorStatusAction.connectButtonCliced(): serial port is already closed!");
 				return;
 			}
 
@@ -210,7 +206,7 @@ public class FootPressureForceSensorSerialPortAction {
 		byte[] readData;
 
 		if (serialPort == null || serialPort.isOpened() == false) {
-			System.err.println("SingleIMUStatusAction.readSerialPort(): serial port is not ready.");
+			System.err.println("FootPressureForceSensorStatusAction.readSerialPort(): serial port is not ready.");
 			return null;
 		}
 

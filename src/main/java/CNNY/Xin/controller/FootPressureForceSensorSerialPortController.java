@@ -6,23 +6,23 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-import CNNY.Xin.action.SingleIMUSerialPortAction;
-import CNNY.Xin.model.SingleIMUSerialPortModel;
-import CNNY.Xin.view.SingleIMUSerialPortPanel;
+import CNNY.Xin.action.FootPressureForceSensorSerialPortAction;
+import CNNY.Xin.model.FootPressureForceSensorSerialPortModel;
+import CNNY.Xin.view.FootPressureForceSensorSerialPortPanel;
 
 public class FootPressureForceSensorSerialPortController {
 
-	public SingleIMUSerialPortAction action;
-	public SingleIMUSerialPortModel model;
-	public SingleIMUSerialPortPanel panel;
+	public FootPressureForceSensorSerialPortAction action;
+	public FootPressureForceSensorSerialPortModel model;
+	public FootPressureForceSensorSerialPortPanel panel;
 
 	public FootPressureForceSensorSerialPortController(
-			SingleIMUSerialPortModel singleIMUSerialPortModel,
-			SingleIMUSerialPortPanel singleIMUSerialPortPanel) {
+			FootPressureForceSensorSerialPortModel model,
+			FootPressureForceSensorSerialPortPanel panel) {
 
-		this.model = singleIMUSerialPortModel;
-		this.panel = singleIMUSerialPortPanel;
-		this.action = new SingleIMUSerialPortAction(model, panel);
+		this.model = model;
+		this.panel = panel;
+		this.action = new FootPressureForceSensorSerialPortAction(model, panel);
 
 		initActionListener();
 	}

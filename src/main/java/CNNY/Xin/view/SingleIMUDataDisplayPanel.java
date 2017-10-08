@@ -40,7 +40,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 	 */
 	public SingleIMUDataDisplayPanel() {
 		
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "IMU data display", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "data display", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setLayout(null);
 		
 		JLabel lblContentSel = new JLabel("ContentSel:");

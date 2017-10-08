@@ -8,13 +8,13 @@ public class FootPressureForceSensorSerialPortModel {
 
 	public SerialPort serialPort;
 	public ArrayList<Short> serialPortBufferData;
-	public IMUDataDecoder imuDataDecoder;
-	public IMUFrameDecoder imuFrameDecoder;
+	public FootPressureForceSensorDataDecoder dataDecoder;
+	public FootPressureForceSensorFrameDecoder frameDecoder;
 
 	public FootPressureForceSensorSerialPortModel() {
 
-		this.imuDataDecoder = new IMUDataDecoder();
-		this.imuFrameDecoder = new IMUFrameDecoder(imuDataDecoder);
+		this.dataDecoder = new FootPressureForceSensorDataDecoder();
+		this.frameDecoder = new FootPressureForceSensorFrameDecoder(dataDecoder);
 		
 		serialPortBufferData = new ArrayList<Short>();
 	}

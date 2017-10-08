@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import CNNY.Xin.model.IMUDataModel;
+import CNNY.Xin.model.FootPressureForceSensorDataModel;
 
 public class FootPressureForceSensorDataUpdateEventManager {
 
-	private Collection<IMUDataUpdateEventListener> listeners;
+	private Collection<FootPressureForceSensorDataUpdateEventListener> listeners;
 
 	/**
 	 *	Func Info:
@@ -17,7 +17,7 @@ public class FootPressureForceSensorDataUpdateEventManager {
 	 *	@param listener
 	 *   		DoorListener
 	 */
-	public void addListener(IMUDataUpdateEventListener listener) {
+	public void addListener(FootPressureForceSensorDataUpdateEventListener listener) {
 		if (listeners == null) {
 			listeners = new HashSet<>();
 		}
@@ -30,7 +30,7 @@ public class FootPressureForceSensorDataUpdateEventManager {
 	 * @param listener
 	 *            DoorListener
 	 */
-	public void removeListener(IMUDataUpdateEventListener listener) {
+	public void removeListener(FootPressureForceSensorDataUpdateEventListener listener) {
 		if (listeners == null)
 			return;
 		listeners.remove(listener);
@@ -39,11 +39,11 @@ public class FootPressureForceSensorDataUpdateEventManager {
 	/**
 	 * 通知所有的DoorListener
 	 */
-	public void notifyListeners(IMUDataModel imuDataModel) {
-		Iterator<IMUDataUpdateEventListener> iter = listeners.iterator();
+	public void notifyListeners(FootPressureForceSensorDataModel model) {
+		Iterator<FootPressureForceSensorDataUpdateEventListener> iter = listeners.iterator();
 		while (iter.hasNext()) {
-			IMUDataUpdateEventListener listener = (IMUDataUpdateEventListener) iter.next();
-			listener.imuDataUpdate(imuDataModel);;
+			FootPressureForceSensorDataUpdateEventListener listener = (FootPressureForceSensorDataUpdateEventListener) iter.next();
+			listener.footPressureForceSensorDataUpdate(model);
 		}
 	}
 }

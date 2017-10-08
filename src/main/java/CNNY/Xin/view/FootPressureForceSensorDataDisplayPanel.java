@@ -19,14 +19,14 @@ public class FootPressureForceSensorDataDisplayPanel extends JPanel {
 	
 	public JTextField textFieldRecordLength;
 	
-	public JCheckBox checkBoxAcceleration;
-	public JCheckBox checkBoxAngleVelocity;
-	public JCheckBox checkBoxEulerAngle;
-	public JCheckBox checkBoxAccelerationFiltered;
-	public JCheckBox checkBoxAngleVelocityFiltered;
-	public JCheckBox checkBoxEulerAngleFiltered;
-	public JCheckBox checkBoxToeOffHeelHitDetect;
-	public JCheckBox checkBoxDebug;
+	public JCheckBox checkBoxSensor61;
+	public JCheckBox checkBoxSensor62;
+	public JCheckBox checkBoxSensor63;
+	public JCheckBox checkBoxSensor64;
+	public JCheckBox checkBoxSensor32;
+	public JCheckBox checkBoxSensor33;
+	public JCheckBox checkBoxToePressure;
+	public JCheckBox checkBoxHeelPressure;
 	
 	public ChartPanel chartPanel;
 	public JFreeChart chart;
@@ -47,37 +47,37 @@ public class FootPressureForceSensorDataDisplayPanel extends JPanel {
 		lblContentSel.setBounds(10, 20, 100, 15);
 		add(lblContentSel);
 		
-		checkBoxAcceleration = new JCheckBox("Acceleration");
-		checkBoxAcceleration.setBounds(10, 41, 119, 23);
-		add(checkBoxAcceleration);
+		checkBoxSensor61 = new JCheckBox("sensor61");
+		checkBoxSensor61.setBounds(10, 41, 119, 23);
+		add(checkBoxSensor61);
 		
-		checkBoxAngleVelocity = new JCheckBox("Angle Velocity");
-		checkBoxAngleVelocity.setBounds(131, 41, 119, 23);
-		add(checkBoxAngleVelocity);
+		checkBoxSensor62 = new JCheckBox("sensor62");
+		checkBoxSensor62.setBounds(131, 41, 119, 23);
+		add(checkBoxSensor62);
 		
-		checkBoxEulerAngle = new JCheckBox("Euler Angle");
-		checkBoxEulerAngle.setBounds(252, 41, 119, 23);
-		add(checkBoxEulerAngle);
+		checkBoxSensor63 = new JCheckBox("sensor63");
+		checkBoxSensor63.setBounds(252, 41, 119, 23);
+		add(checkBoxSensor63);
 		
-		checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
-		checkBoxAccelerationFiltered.setBounds(10, 66, 119, 23);
-		add(checkBoxAccelerationFiltered);
+		checkBoxSensor64 = new JCheckBox("sensor64");
+		checkBoxSensor64.setBounds(10, 66, 119, 23);
+		add(checkBoxSensor64);
 		
-		checkBoxAngleVelocityFiltered = new JCheckBox("AngVel Filtered");
-		checkBoxAngleVelocityFiltered.setBounds(131, 66, 119, 23);
-		add(checkBoxAngleVelocityFiltered);
+		checkBoxSensor32 = new JCheckBox("sensor32");
+		checkBoxSensor32.setBounds(131, 66, 119, 23);
+		add(checkBoxSensor32);
 		
-		checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
-		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
-		add(checkBoxEulerAngleFiltered);
+		checkBoxSensor33 = new JCheckBox("sensor33");
+		checkBoxSensor33.setBounds(252, 66, 119, 23);
+		add(checkBoxSensor33);
 		
-		checkBoxToeOffHeelHitDetect = new JCheckBox("Toe-Off Heel-Hit Detect");
-		checkBoxToeOffHeelHitDetect.setBounds(10, 91, 240, 23);
-		add(checkBoxToeOffHeelHitDetect);
+		checkBoxToePressure = new JCheckBox("toePressure");
+		checkBoxToePressure.setBounds(10, 91, 119, 23);
+		add(checkBoxToePressure);
 		
-		checkBoxDebug = new JCheckBox("debug");
-		checkBoxDebug.setBounds(252, 91, 103, 23);
-		add(checkBoxDebug);
+		checkBoxHeelPressure = new JCheckBox("heelPressure");
+		checkBoxHeelPressure.setBounds(131, 91, 119, 23);
+		add(checkBoxHeelPressure);
 		
 		// chart panel IMU
 		chartPanel = new ChartPanel(null);
@@ -108,7 +108,5 @@ public class FootPressureForceSensorDataDisplayPanel extends JPanel {
 	}
 
 	private void panelConfig() {
-
-		checkBoxDebug.setEnabled(false);
 	}
 }

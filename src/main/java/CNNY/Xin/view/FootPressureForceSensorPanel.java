@@ -1,9 +1,10 @@
 package CNNY.Xin.view;
 
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
 import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 public class FootPressureForceSensorPanel extends JPanel {
 

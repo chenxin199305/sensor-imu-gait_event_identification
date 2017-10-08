@@ -1,7 +1,7 @@
 package CNNY.Xin.action;
 
-import CNNY.Xin.model.SingleIMUModel;
-import CNNY.Xin.view.SingleIMUPanel;
+import CNNY.Xin.model.FootPressureForceSensorModel;
+import CNNY.Xin.view.FootPressureForceSensorPanel;
 
 /**
  *	Class Info:
@@ -9,15 +9,15 @@ import CNNY.Xin.view.SingleIMUPanel;
  */
 public class FootPressureForceSensorAction {
 	
-	private SingleIMUModel singleIMUStatusModel;
-	private SingleIMUPanel singleIMUMainPanel;
+	private FootPressureForceSensorModel model;
+	private FootPressureForceSensorPanel panel;
 	
 	public FootPressureForceSensorAction(
-			SingleIMUModel singleIMUStatusModel,
-			SingleIMUPanel singleIMUMainPanel) {
+			FootPressureForceSensorModel model,
+			FootPressureForceSensorPanel panel) {
 
-		this.singleIMUStatusModel = singleIMUStatusModel;
-		this.singleIMUMainPanel = singleIMUMainPanel;
+		this.model = model;
+		this.panel = panel;
 
 	}
 

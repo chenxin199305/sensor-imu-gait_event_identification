@@ -5,24 +5,24 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import CNNY.Xin.action.SingleIMUDataDisplayAction;
+import CNNY.Xin.action.FootPressureForceSensorDataDisplayAction;
+import CNNY.Xin.model.FootPressureForceSensorDataDisplayModel;
 import CNNY.Xin.model.IMUDataModel;
-import CNNY.Xin.model.SingleIMUDataDisplayModel;
-import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.view.FootPressureForceSensorDataDisplayPanel;
 
-public class ForcePressureForceSensorDataDisplayController {
+public class FootPressureForceSensorDataDisplayController {
 
-	public SingleIMUDataDisplayAction action;
-	public SingleIMUDataDisplayModel model;
-	public SingleIMUDataDisplayPanel panel;
+	public FootPressureForceSensorDataDisplayAction action;
+	public FootPressureForceSensorDataDisplayModel model;
+	public FootPressureForceSensorDataDisplayPanel panel;
 
-	public ForcePressureForceSensorDataDisplayController(
-			SingleIMUDataDisplayModel singleIMUDataDisplayModel,
-			SingleIMUDataDisplayPanel singleIMUDataDisplayPanel) {
+	public FootPressureForceSensorDataDisplayController(
+			FootPressureForceSensorDataDisplayModel model,
+			FootPressureForceSensorDataDisplayPanel panel) {
 
-		this.model = singleIMUDataDisplayModel;
-		this.panel = singleIMUDataDisplayPanel;
-		this.action = new SingleIMUDataDisplayAction(model, panel);
+		this.model = model;
+		this.panel = panel;
+		this.action = new FootPressureForceSensorDataDisplayAction(this.model, this.panel);
 
 		initActionListener();
 	}
@@ -30,67 +30,67 @@ public class ForcePressureForceSensorDataDisplayController {
 	private void initActionListener() {
 
 		// check box selection
-		panel.checkBoxAcceleration.addItemListener(new ItemListener() {
+		panel.checkBoxSensor61.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.accelerationCheckBoxStateChange();
+				action.sensor61CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxAngleVelocity.addItemListener(new ItemListener() {
+		panel.checkBoxSensor62.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.angleVelocityCheckBoxStateChange();
+				action.sensor62CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxEulerAngle.addItemListener(new ItemListener() {
+		panel.checkBoxSensor63.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.eulerAngleCheckBoxStateChange();
+				action.sensor63CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxAccelerationFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxSensor64.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.accFilteredCheckBoxStateChange();
+				action.sensor64CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxAngleVelocityFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxSensor32.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.angVelFilteredCheckBoxStateChange();
+				action.sensor32CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxEulerAngleFiltered.addItemListener(new ItemListener() {
+		panel.checkBoxSensor33.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.eulerAngleFilteredCheckBoxStateChange();
+				action.sensor33CheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxToeOffHeelHitDetect.addItemListener(new ItemListener() {
+		panel.checkBoxToePressure.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.toeOffHeelHitDetectCheckBoxStateChange();
+				action.toePressureCheckBoxStateChange();
 			}
 		});
 
-		panel.checkBoxDebug.addItemListener(new ItemListener() {
+		panel.checkBoxHeelPressure.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				action.debugCheckBoxStateChange();
+				action.heelPressureCheckBoxStateChange();
 			}
 		});
 

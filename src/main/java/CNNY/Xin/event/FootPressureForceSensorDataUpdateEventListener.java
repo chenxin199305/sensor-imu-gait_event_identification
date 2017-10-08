@@ -2,8 +2,8 @@ package CNNY.Xin.event;
 
 import java.util.EventListener;
 
-import CNNY.Xin.model.IMUDataModel;
+import CNNY.Xin.model.FootPressureForceSensorDataModel;
 
 public interface FootPressureForceSensorDataUpdateEventListener extends EventListener {
-	public void imuDataUpdate(IMUDataModel imuDataModel);
+	public void footPressureForceSensorDataUpdate(FootPressureForceSensorDataModel imuDataModel);
 }
