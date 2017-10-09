@@ -7,10 +7,11 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 
 import CNNY.Xin.model.FootPressureForceSensorDataDisplayModel;
-import CNNY.Xin.model.IMUDataModel;
+import CNNY.Xin.model.FootPressureForceSensorDataModel;
 import CNNY.Xin.view.FootPressureForceSensorDataDisplayPanel;
 
 public class FootPressureForceSensorDataDisplayAction {
@@ -30,10 +31,41 @@ public class FootPressureForceSensorDataDisplayAction {
 	
 	/**
 	 *	Func Info:
-	 *		imu data update event
+	 *		foot pressure force sensor data update event
 	 */
-	public void imuDataUpdate(IMUDataModel imuDataModel) {
+	public void footPressureForceSensorDataUpdate(FootPressureForceSensorDataModel footPressureForceSensorDataModel) {
+		if (recordingFlag == true) {
+		}
+		else {
+			return;
+		}
+		
+		try {
+			final Millisecond millisecond = new Millisecond();
 
+			model.sensor32TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor32Value);
+			model.sensor33TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor33Value);
+			
+			model.sensor61TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor61Value);
+			model.sensor62TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor62Value);
+			model.sensor63TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor63Value);
+			model.sensor64TimeSeries.addOrUpdate(millisecond, footPressureForceSensorDataModel.sensor64Value);
+			
+//			Integer toePressureValue = footPressureForceSensorDataModel.sensor61Value 
+//					+ footPressureForceSensorDataModel.sensor62Value 
+//					+ footPressureForceSensorDataModel.sensor63Value
+//					+ footPressureForceSensorDataModel.sensor64Value;
+//			Integer heelPressureValue = footPressureForceSensorDataModel.sensor32Value
+//					+ footPressureForceSensorDataModel.sensor33Value;
+			Integer toePressureValue = footPressureForceSensorDataModel.sensor11Value
+					+ footPressureForceSensorDataModel.sensor22Value;
+			Integer heelPressureValue = footPressureForceSensorDataModel.sensor33Value;
+			model.toePressureTimeSeries.addOrUpdate(millisecond, toePressureValue);
+			model.heelPressureTimeSeries.addOrUpdate(millisecond, heelPressureValue);
+			
+		} catch (Exception e) {
+			System.out.println("1");
+		}
 	}
 	
 	/**

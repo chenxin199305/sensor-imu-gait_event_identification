@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 
 import CNNY.Xin.action.FootPressureForceSensorDataDisplayAction;
 import CNNY.Xin.model.FootPressureForceSensorDataDisplayModel;
-import CNNY.Xin.model.IMUDataModel;
+import CNNY.Xin.model.FootPressureForceSensorDataModel;
 import CNNY.Xin.view.FootPressureForceSensorDataDisplayPanel;
 
 public class FootPressureForceSensorDataDisplayController {
@@ -117,8 +117,8 @@ public class FootPressureForceSensorDataDisplayController {
 	 *	Func Info:
 	 *		imu data update event
 	 */
-	public void imuDataUpdate(IMUDataModel imuDataModel) {
-		action.imuDataUpdate(imuDataModel);
+	public void footPressureForceSensorDataUpdate(FootPressureForceSensorDataModel footPressureForceSensorDataModel) {
+		action.footPressureForceSensorDataUpdate(footPressureForceSensorDataModel);
 	}
 
 	public void setRecordingFlag() {

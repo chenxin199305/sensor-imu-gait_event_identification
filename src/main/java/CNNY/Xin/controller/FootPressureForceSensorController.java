@@ -4,7 +4,6 @@ import CNNY.Xin.action.FootPressureForceSensorAction;
 import CNNY.Xin.event.FootPressureForceSensorDataUpdateEventListener;
 import CNNY.Xin.model.FootPressureForceSensorDataModel;
 import CNNY.Xin.model.FootPressureForceSensorModel;
-import CNNY.Xin.model.IMUDataModel;
 import CNNY.Xin.view.FootPressureForceSensorPanel;
 
 public class FootPressureForceSensorController implements FootPressureForceSensorDataUpdateEventListener {
@@ -61,7 +60,7 @@ public class FootPressureForceSensorController implements FootPressureForceSenso
 	 */
 	@Override
 	public void footPressureForceSensorDataUpdate(FootPressureForceSensorDataModel footPressureForceSensorDataModel) {
-
+		dataDisplayController.footPressureForceSensorDataUpdate(footPressureForceSensorDataModel);
 	}
 
 	/**

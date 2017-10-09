@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import CNNY.Xin.controller.FootPressureForceSensorController;
 import CNNY.Xin.controller.SingleIMUController;
+import CNNY.Xin.model.FootPressureForceSensorModel;
 import CNNY.Xin.model.SingleIMUModel;
 import CNNY.Xin.view.FootPressureForceSensorPanel;
 import CNNY.Xin.view.SingleIMUPanel;
@@ -39,7 +41,9 @@ public class MainWindow {
 	public SingleIMUController controller4;
 	
 	// Foot Pressure Force Sensor
+	public FootPressureForceSensorModel FPFSModel1;
 	public FootPressureForceSensorPanel FPFSpanel1;
+	public FootPressureForceSensorController FPFSController1;
 
 	// total control panel
 	JButton btnStartrecord;
@@ -106,10 +110,13 @@ public class MainWindow {
 		controller4 = new SingleIMUController(model4, panel4);
 		
 		// Foot Pressure Force Sensor
+		FPFSModel1 = new FootPressureForceSensorModel();
 		FPFSpanel1 = new FootPressureForceSensorPanel();
 		FPFSpanel1.setBounds(892, 6, 456, 634);
 		this.frame.getContentPane().add(FPFSpanel1);
+		FPFSController1 = new FootPressureForceSensorController(FPFSModel1, FPFSpanel1);
 		
+		// Total control panel
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "total control", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 646, 426, 69);

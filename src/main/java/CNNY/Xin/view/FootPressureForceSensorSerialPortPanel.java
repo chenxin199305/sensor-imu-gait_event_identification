@@ -35,5 +35,4 @@ public class FootPressureForceSensorSerialPortPanel extends JPanel {
 		textAreaContentVal.setBounds(10, 49, 408, 117);
 		add(textAreaContentVal);
 	}
-
 }

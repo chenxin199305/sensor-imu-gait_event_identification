@@ -1,19 +1,14 @@
 package CNNY.Xin.model;
 
-import java.util.ArrayList;
-
-import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
-
-import Jama.Matrix;
 
 public class FootPressureForceSensorDataDisplayModel {
 
 	// char panel data
 	public TimeSeries sensor61TimeSeries = new TimeSeries("sensor_61");
-	public TimeSeries sensor62TimeSeries = new TimeSeries("sensor_61");
-	public TimeSeries sensor63TimeSeries = new TimeSeries("sensor_61");
-	public TimeSeries sensor64TimeSeries = new TimeSeries("sensor_61");
+	public TimeSeries sensor62TimeSeries = new TimeSeries("sensor_62");
+	public TimeSeries sensor63TimeSeries = new TimeSeries("sensor_63");
+	public TimeSeries sensor64TimeSeries = new TimeSeries("sensor_64");
 
 	public TimeSeries sensor32TimeSeries = new TimeSeries("sensor_32");
 	public TimeSeries sensor33TimeSeries = new TimeSeries("sensor_33");

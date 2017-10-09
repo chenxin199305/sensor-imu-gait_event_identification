@@ -2,8 +2,9 @@ package CNNY.Xin.action;
 
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import CNNY.Xin.event.FootPressureForceSensorDataUpdateEventManager;
-import CNNY.Xin.event.IMUDataUpdateEventManager;
 import CNNY.Xin.model.FootPressureForceSensorSerialPortModel;
 import CNNY.Xin.view.FootPressureForceSensorSerialPortPanel;
 import jssc.SerialPort;
@@ -16,9 +17,9 @@ public class FootPressureForceSensorSerialPortAction {
 
 	private FootPressureForceSensorSerialPortModel model;
 	private FootPressureForceSensorSerialPortPanel panel;
-	
+
 	public FootPressureForceSensorDataUpdateEventManager eventManager;
-	
+
 	/**
 	 *	Func Info:
 	 *		FootPressureForceSensorSerialPortAction Class Init 
@@ -29,41 +30,28 @@ public class FootPressureForceSensorSerialPortAction {
 
 		this.model = model;
 		this.panel = panel;
-		
+
 		eventManager = new FootPressureForceSensorDataUpdateEventManager();
 	}
-	
+
 	/**
 	 *	Class Info:
 	 *		IMU serial port event listener 
 	 */
 	public class FootPressureForceSensorSerialPortEventListener implements SerialPortEventListener {
-		
-		public void serialEvent(SerialPortEvent serialPortEvent) {
 
+		public void serialEvent(SerialPortEvent serialPortEvent) {
 			// Receive Data, decode and read data
 			if (serialPortEvent.getEventType() == SerialPortEvent.RXCHAR) {
-
 				synchronized (serialPortEvent) {
-					//					if (!checkReadFlag()) {
-					//						readData();
-					//					}
 					ArrayList<Short> tempArray;
 					if ((tempArray = readSerialPort(model.serialPort)) != null) {
 						model.serialPortBufferData.addAll(tempArray);
-						for (int i = 0; i < model.serialPortBufferData.size(); i++) {
-
-							// if decode success, imu data model is ready
-							if(model.frameDecoder.PacketDecode(model.serialPortBufferData.get(i))) {
-
-								// broadcast to controller 
-								// to refresh data
-								refreshIMUDataDisplay();
-
-								// clear serial port buffer
-								model.serialPortBufferData.clear();
-							}
+						while(model.frameDecoder.PacketDecode(model.serialPortBufferData)) {
+							refreshFootPressureForceSensorDataDisplay();
 						}
+					}
+					else {
 					}
 				}
 			}
@@ -78,20 +66,25 @@ public class FootPressureForceSensorSerialPortAction {
 				System.err.println("IMUSerialPortEventListener.serialEvent()");
 			}
 		}
-
 	}
-	
+
 	/**
 	 *	Function Info
 	 *		refresh the text content display of imu data 
 	 */
-	public void refreshIMUDataDisplay() {
+	public void refreshFootPressureForceSensorDataDisplay() {
 
-		// refresh data display on text area
-		panel.textAreaContentVal.setText(model.dataDecoder.dataModel.StringData);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// refresh data display on text area
+				panel.textAreaContentVal.setText(model.dataDecoder.dataModel.toString());
 
-		// notify serial port data update
-		eventManager.notifyListeners(model.dataDecoder.dataModel);
+				// notify serial port data update
+				eventManager.notifyListeners(model.dataDecoder.dataModel);				
+			}
+		});
+		
 	}
 
 	/**
@@ -116,7 +109,7 @@ public class FootPressureForceSensorSerialPortAction {
 		case "Connect":
 			// select port
 			if (panel.comboBoxSerialPortSelection.getSelectedItem() != null && 
-					panel.comboBoxSerialPortSelection.getSelectedItem().toString().length() > 1) {
+			panel.comboBoxSerialPortSelection.getSelectedItem().toString().length() > 1) {
 				model.serialPort = 
 						new SerialPort(panel.comboBoxSerialPortSelection.getSelectedItem().toString());
 			}
@@ -196,7 +189,7 @@ public class FootPressureForceSensorSerialPortAction {
 			break;
 		}
 	}
-	
+
 	/**
 	 *	Function Info
 	 *		read data from serialPort
