@@ -3,33 +3,33 @@ package CNNY.Xin.action;
 import java.util.ArrayList;
 
 import CNNY.Xin.event.IMUDataUpdateEventManager;
-import CNNY.Xin.model.SingleIMUSerialPortModel;
-import CNNY.Xin.view.SingleIMUSerialPortPanel;
+import CNNY.Xin.model.IMUSerialPortModel;
+import CNNY.Xin.view.IMUSerialPortPanel;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
-public class SingleIMUSerialPortAction {
+public class IMUSerialPortAction {
 
-	private SingleIMUSerialPortModel model;
-	private SingleIMUSerialPortPanel panel;
+	private IMUSerialPortModel model;
+	private IMUSerialPortPanel panel;
 	
-	public IMUDataUpdateEventManager imuDataUpdateEventManager;
+	public IMUDataUpdateEventManager eventManager;
 	
 	/**
 	 *	Func Info:
 	 *		SingleIMUSerialPortAction Class Init 
 	 */
-	public SingleIMUSerialPortAction(
-			SingleIMUSerialPortModel singleIMUSerialPortModel,
-			SingleIMUSerialPortPanel singleIMUSerialPortPanel) {
+	public IMUSerialPortAction(
+			IMUSerialPortModel iMUSerialPortModel,
+			IMUSerialPortPanel singleIMUSerialPortPanel) {
 
-		this.model = singleIMUSerialPortModel;
+		this.model = iMUSerialPortModel;
 		this.panel = singleIMUSerialPortPanel;
 		
-		imuDataUpdateEventManager = new IMUDataUpdateEventManager();
+		eventManager = new IMUDataUpdateEventManager();
 	}
 	
 	/**
@@ -92,10 +92,10 @@ public class SingleIMUSerialPortAction {
 	public void refreshIMUDataDisplay() {
 
 		// refresh data display on text area
-		panel.textAreaContentVal.setText(model.imuDataDecoder.imuDataModel.StringData);
+		panel.textAreaContentVal.setText(model.imuDataDecoder.imuDataModel.toString());
 
 		// notify serial port data update
-		imuDataUpdateEventManager.notifyListeners(model.imuDataDecoder.imuDataModel);
+		eventManager.notifyListeners(model.imuDataDecoder.imuDataModel);
 	}
 
 	/**

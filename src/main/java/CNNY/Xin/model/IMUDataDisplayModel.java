@@ -2,13 +2,12 @@ package CNNY.Xin.model;
 
 import java.util.ArrayList;
 
-import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 
-import Jama.Matrix;
+public class IMUDataDisplayModel {
 
-public class SingleIMUDataDisplayModel {
-
+	public Long recordTimeLengthInMS;
+	
 	// char panel data
 	public TimeSeries accRawXAxisTimeSeries = new TimeSeries("accRawX");
 	public TimeSeries accRawYAxisTimeSeries = new TimeSeries("accRawY");
@@ -44,7 +43,7 @@ public class SingleIMUDataDisplayModel {
 	public KalmanFilter eulerAngleFilteredYKalmanFilter;
 	public KalmanFilter eulerAngleFilteredZKalmanFilter;
 
-	public Integer tempDataArraySize = 15;
+	public Integer tempDataArraySize = 10;
 
 	public ArrayList<Integer> accFilteredXTempDataArray = new ArrayList<>();
 	public ArrayList<Integer> accFilteredYTempDataArray = new ArrayList<>();
@@ -81,52 +80,48 @@ public class SingleIMUDataDisplayModel {
 	public TimeSeries debugPPeriodTimeSeries = new TimeSeries("debug_pPeriod");
 	public TimeSeries debugPTotalTimeSeries = new TimeSeries("debug_pTotal");
 
-	public SingleIMUDataDisplayModel() {
+	public IMUDataDisplayModel() {
 
-		long timeForRecord = 6 * 1000;
-
-		accRawXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		accRawYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		accRawZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		gyoRawXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		gyoRawYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		gyoRawZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		eulerAnglesXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		eulerAnglesYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		eulerAnglesZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		// Filtered Data
-		accFilteredXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		accFilteredYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		accFilteredZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		gyoFilteredXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		gyoFilteredYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		gyoFilteredZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		eulerAnglesFilteredXAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		eulerAnglesFilteredYAxisTimeSeries.setMaximumItemAge(timeForRecord);
-		eulerAnglesFilteredZAxisTimeSeries.setMaximumItemAge(timeForRecord);
-
-		// Toe Off or Heel Hit
-		toeOffHeelHitTimeSeries.setMaximumItemAge(timeForRecord);
-
-		// debug
-		debugPPeakTimeSeries.setMaximumItemAge(timeForRecord);
-		debugPGradientTimeSeries.setMaximumItemAge(timeForRecord);
-		debugPPeriodTimeSeries.setMaximumItemAge(timeForRecord);
-		debugPTotalTimeSeries.setMaximumItemAge(timeForRecord);
-
+		setRecordTimeLengthInS(5);
 	}
 	
-	/**
-	 *	Function Info:
-	 *		update time series 
-	 */
-	public void updateTimeSeries(IMUDataDecoder imuDataDecoder) {
-
+	public void setRecordTimeLengthInS(Integer timeLengthInS) {
 		
+		Long timeLengthInMs = (long) (timeLengthInS * 1000);
+		this.recordTimeLengthInMS = timeLengthInMs;
+		
+		accRawXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);;
+		accRawYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		accRawZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		gyoRawXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		gyoRawYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		gyoRawZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		eulerAnglesXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		eulerAnglesYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		eulerAnglesZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		// Filtered Data
+		accFilteredXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		accFilteredYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		accFilteredZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		gyoFilteredXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		gyoFilteredYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		gyoFilteredZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		eulerAnglesFilteredXAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		eulerAnglesFilteredYAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+		eulerAnglesFilteredZAxisTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		// Toe Off or Heel Hit
+		toeOffHeelHitTimeSeries.setMaximumItemAge(timeLengthInMs);
+
+		// debug
+		debugPPeakTimeSeries.setMaximumItemAge(timeLengthInMs);
+		debugPGradientTimeSeries.setMaximumItemAge(timeLengthInMs);
+		debugPPeriodTimeSeries.setMaximumItemAge(timeLengthInMs);
+		debugPTotalTimeSeries.setMaximumItemAge(timeLengthInMs);
 	}
 }

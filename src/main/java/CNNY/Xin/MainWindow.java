@@ -10,35 +10,35 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import CNNY.Xin.controller.FootPressureForceSensorController;
-import CNNY.Xin.controller.SingleIMUController;
+import CNNY.Xin.controller.IMUController;
 import CNNY.Xin.model.FootPressureForceSensorModel;
-import CNNY.Xin.model.SingleIMUModel;
+import CNNY.Xin.model.IMUModel;
 import CNNY.Xin.view.FootPressureForceSensorPanel;
-import CNNY.Xin.view.SingleIMUPanel;
+import CNNY.Xin.view.IMUPanel;
 
 public class MainWindow {
 
 	private JFrame frame;
 	
 	// IMU1
-	public SingleIMUModel IMUmodel1;
-	public SingleIMUPanel IMUpanel1;
-	public SingleIMUController IMUcontroller1;
+	public IMUModel IMUmodel1;
+	public IMUPanel IMUpanel1;
+	public IMUController IMUcontroller1;
 
 	// IMU2
-	public SingleIMUModel model2;
-	public SingleIMUPanel panel2;
-	public SingleIMUController controller2;
+	public IMUModel model2;
+	public IMUPanel panel2;
+	public IMUController controller2;
 	
 	// IMU3
-	public SingleIMUModel model3;
-	public SingleIMUPanel panel3;
-	public SingleIMUController controller3;
+	public IMUModel model3;
+	public IMUPanel panel3;
+	public IMUController controller3;
 	
 	// IMU4
-	public SingleIMUModel model4;
-	public SingleIMUPanel panel4;
-	public SingleIMUController controller4;
+	public IMUModel model4;
+	public IMUPanel panel4;
+	public IMUController controller4;
 	
 	// Foot Pressure Force Sensor
 	public FootPressureForceSensorModel FPFSModel1;
@@ -82,32 +82,11 @@ public class MainWindow {
 		frame.getContentPane().setLayout(null);
 		
 		// IMU1
-		IMUmodel1 = new SingleIMUModel();
-		IMUpanel1 = new SingleIMUPanel();
+		IMUmodel1 = new IMUModel();
+		IMUpanel1 = new IMUPanel();
 		IMUpanel1.setBounds(10, 6, 872, 634);
 		this.frame.getContentPane().add(IMUpanel1);
-		IMUcontroller1 = new SingleIMUController(IMUmodel1, IMUpanel1);
-
-		// IMU2
-		model2 = new SingleIMUModel();
-		panel2 = new SingleIMUPanel();
-		panel2.setBounds(436, 0, 426, 589);
-//		this.frame.getContentPane().add(singleIMUPanel2);
-		controller2 = new SingleIMUController(model2, panel2);
-		
-		// IMU3
-		model3 = new SingleIMUModel();
-		panel3 = new SingleIMUPanel();
-		panel3.setBounds(872, 0, 426, 589);
-//		this.frame.getContentPane().add(singleIMUPanel3);
-		controller3 = new SingleIMUController(model3, panel3);
-		
-		// IMU4
-		model4 = new SingleIMUModel();
-		panel4 = new SingleIMUPanel();
-		panel4.setBounds(1308, 0, 426, 589);
-//		this.frame.getContentPane().add(singleIMUPanel4);
-		controller4 = new SingleIMUController(model4, panel4);
+		IMUcontroller1 = new IMUController(IMUmodel1, IMUpanel1);
 		
 		// Foot Pressure Force Sensor
 		FPFSModel1 = new FootPressureForceSensorModel();
@@ -135,17 +114,13 @@ public class MainWindow {
 				case "StartRecord":
 					IMUcontroller1.setDataDisplayRecordingFlag();
 					IMUcontroller1.setPhasePlainRecordingFlag();
-//					singleIMUController2.singleIMUAction.setToRecordState();
-//					singleIMUController3.singleIMUAction.setToRecordState();
-//					singleIMUController4.singleIMUAction.setToRecordState();
+					FPFSController1.setDataDisplayRecordingFlag();
 					btnStartrecord.setText("StopRecord");
 					break;
 				case "StopRecord":
 					IMUcontroller1.clearDataDisplayRecordingFlag();
 					IMUcontroller1.clearPhasePlainRecordingFlag();
-//					singleIMUController2.singleIMUAction.setToStopRecordState();
-//					singleIMUController3.singleIMUAction.setToStopRecordState();
-//					singleIMUController4.singleIMUAction.setToStopRecordState();
+					FPFSController1.clearDataDisplayRecordingFlag();
 					btnStartrecord.setText("StartRecord");
 					break;
 				default:

@@ -4,6 +4,8 @@ import org.jfree.data.time.TimeSeries;
 
 public class FootPressureForceSensorDataDisplayModel {
 
+	public Long recordTimeLengthInMS;
+	
 	// char panel data
 	public TimeSeries sensor61TimeSeries = new TimeSeries("sensor_61");
 	public TimeSeries sensor62TimeSeries = new TimeSeries("sensor_62");
@@ -18,27 +20,23 @@ public class FootPressureForceSensorDataDisplayModel {
 
 	public FootPressureForceSensorDataDisplayModel() {
 
-		long timeForRecord = 6 * 1000;
-
-		sensor61TimeSeries.setMaximumItemAge(timeForRecord);
-		sensor62TimeSeries.setMaximumItemAge(timeForRecord);
-		sensor63TimeSeries.setMaximumItemAge(timeForRecord);
-		sensor64TimeSeries.setMaximumItemAge(timeForRecord);
-		
-		sensor32TimeSeries.setMaximumItemAge(timeForRecord);
-		sensor33TimeSeries.setMaximumItemAge(timeForRecord);
-
-		toePressureTimeSeries.setMaximumItemAge(timeForRecord);
-		heelPressureTimeSeries.setMaximumItemAge(timeForRecord);
-
+		setRecordTimeLengthInS(5);
 	}
-	
-	/**
-	 *	Function Info:
-	 *		update time series 
-	 */
-	public void updateTimeSeries(IMUDataDecoder imuDataDecoder) {
 
+	public void setRecordTimeLengthInS(Integer recordTimeLengthInS) {
 		
+		Long recordTimeLengthInMS = (long) (recordTimeLengthInS * 1000);
+		this.recordTimeLengthInMS = recordTimeLengthInMS;
+		
+		sensor61TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		sensor62TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		sensor63TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		sensor64TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		
+		sensor32TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		sensor33TimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+
+		toePressureTimeSeries.setMaximumItemAge(recordTimeLengthInMS);
+		heelPressureTimeSeries.setMaximumItemAge(recordTimeLengthInMS);
 	}
 }

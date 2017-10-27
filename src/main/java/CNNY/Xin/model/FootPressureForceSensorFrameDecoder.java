@@ -65,7 +65,14 @@ public class FootPressureForceSensorFrameDecoder {
 						for (int j = 0; j < dataLength; j++) {
 							contentArray.add(dataArray.get(i + 3 + j));
 						}
-						if (dataLength == 32) {
+//						if (dataLength == 32) {
+//							dataDecoder.decode(contentArray);
+//						}
+//						else {
+//							System.err.println("FootPressureForceSensorFrameDecoder.PacketDecode() 接收到不合理的数据长度数据.");
+//							System.err.println("dataLength = " + dataLength);
+//						}
+						if (dataLength == 6) {
 							dataDecoder.decode(contentArray);
 						}
 						else {

@@ -7,37 +7,41 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
-import org.jfree.data.time.TimeSeries;
 import org.jfree.data.xy.XYSeries;
 
+import CNNY.Xin.event.IMUPhasePlainEventManager;
 import CNNY.Xin.model.AverageFilter;
 import CNNY.Xin.model.IMUDataModel;
-import CNNY.Xin.model.SingleIMUPhasePlainModel;
-import CNNY.Xin.view.SingleIMUPhasePlainPanel;
+import CNNY.Xin.model.IMUPhasePlainModel;
+import CNNY.Xin.view.IMUPhasePlainPanel;
 
-public class SingleIMUPhasePlainAction {
+public class IMUPhasePlainAction {
 
-	private SingleIMUPhasePlainModel model;
-	private SingleIMUPhasePlainPanel panel;
+	private IMUPhasePlainModel model;
+	private IMUPhasePlainPanel panel;
 
 	private Boolean recordingFlag = true;
-	
-	private AverageFilter averageFilterGyoX = new AverageFilter(4);
-	private AverageFilter averageFilterGyoY = new AverageFilter(4);
-	private AverageFilter averageFilterGyoZ = new AverageFilter(4);
+	private double updateFrequency = 100.0;
+	public IMUPhasePlainEventManager eventManager;
 
-	private AverageFilter averageFilterEulerAngleX = new AverageFilter(4);
-	private AverageFilter averageFilterEulerAngleY = new AverageFilter(4);
-	private AverageFilter averageFilterEulerAngleZ = new AverageFilter(4);
-	
-	public SingleIMUPhasePlainAction(
-			SingleIMUPhasePlainModel singleIMUPhasePlainModel,
-			SingleIMUPhasePlainPanel singleIMUPhasePlainPanel) {
-	
-		this.model = singleIMUPhasePlainModel;
+	private AverageFilter averageFilterGyoX = new AverageFilter(10);
+	private AverageFilter averageFilterGyoY = new AverageFilter(10);
+	private AverageFilter averageFilterGyoZ = new AverageFilter(10);
+
+	private AverageFilter averageFilterEulerAngleX = new AverageFilter(10);
+	private AverageFilter averageFilterEulerAngleY = new AverageFilter(10);
+	private AverageFilter averageFilterEulerAngleZ = new AverageFilter(10);
+
+	public IMUPhasePlainAction(
+			IMUPhasePlainModel iMUPhasePlainModel,
+			IMUPhasePlainPanel singleIMUPhasePlainPanel) {
+
+		this.model = iMUPhasePlainModel;
 		this.panel = singleIMUPhasePlainPanel;
+
+		eventManager = new IMUPhasePlainEventManager();
 	}
-	
+
 	/**
 	 *	Func Info:
 	 *		imu data update event
@@ -49,41 +53,39 @@ public class SingleIMUPhasePlainAction {
 		else {
 			return;
 		}
-		
-		double updateFrequency = 100.0;
-		
-		// filtering...
-		double gyoX = averageFilterGyoX.filter(imuDataModel.GyoRaw[0].doubleValue());
-		double gyoY = averageFilterGyoY.filter(imuDataModel.GyoRaw[1].doubleValue());
-		double gyoZ = averageFilterGyoZ.filter(imuDataModel.GyoRaw[2].doubleValue());
 
-		double eulerAngleX = averageFilterEulerAngleX.filter(imuDataModel.EulerAngles[0].doubleValue());
-		double eulerAngleY = averageFilterEulerAngleY.filter(imuDataModel.EulerAngles[1].doubleValue());
-		double eulerAngleZ = averageFilterEulerAngleZ.filter(imuDataModel.EulerAngles[2].doubleValue());
-		
+		// filtering...
+		double gyoX = averageFilterGyoX.filter(imuDataModel.GyoRaw[0].doubleValue() / 10.0);
+		double gyoY = averageFilterGyoY.filter(imuDataModel.GyoRaw[1].doubleValue() / 10.0);
+		double gyoZ = averageFilterGyoZ.filter(imuDataModel.GyoRaw[2].doubleValue() / 10.0);
+
+		double eulerAngleX = averageFilterEulerAngleX.filter(imuDataModel.EulerAngles[0].doubleValue() / 10.0);
+		double eulerAngleY = averageFilterEulerAngleY.filter(imuDataModel.EulerAngles[1].doubleValue() / 10.0);
+		double eulerAngleZ = averageFilterEulerAngleZ.filter(imuDataModel.EulerAngles[2].doubleValue() / 10.0);
+
 		// update data
-		if (model.gyoXAxisArray.size() == model.seriesMaximumCount) {
+		if (model.gyoXAxisArray.size() == model.recordCountLength) {
 			model.gyoXAxisXYSeries.remove(model.gyoXAxisArray.get(0));
 			model.gyoXAxisArray.remove(0);
 		}
-		if (model.gyoYAxisArray.size() == model.seriesMaximumCount) {
+		if (model.gyoYAxisArray.size() == model.recordCountLength) {
 			model.gyoYAxisXYSeries.remove(model.gyoYAxisArray.get(0));
 			model.gyoYAxisArray.remove(0);
 		}
-		if (model.gyoZAxisArray.size() == model.seriesMaximumCount) {
+		if (model.gyoZAxisArray.size() == model.recordCountLength) {
 			model.gyoZAxisXYSeries.remove(model.gyoZAxisArray.get(0));
 			model.gyoZAxisArray.remove(0);
 		}
-		
-		if (model.eulerAngleXAxisArray.size() == model.seriesMaximumCount) {
+
+		if (model.eulerAngleXAxisArray.size() == model.recordCountLength) {
 			model.eulerAnglesXAxisXYSeries.remove(model.eulerAngleXAxisArray.get(0));
 			model.eulerAngleXAxisArray.remove(0);
 		}
-		if (model.eulerAngleYAxisArray.size() == model.seriesMaximumCount) {
+		if (model.eulerAngleYAxisArray.size() == model.recordCountLength) {
 			model.eulerAnglesYAxisXYSeries.remove(model.eulerAngleYAxisArray.get(0));
 			model.eulerAngleYAxisArray.remove(0);
 		}
-		if (model.eulerAngleZAxisArray.size() == model.seriesMaximumCount) {
+		if (model.eulerAngleZAxisArray.size() == model.recordCountLength) {
 			model.eulerAnglesZAxisXYSeries.remove(model.eulerAngleZAxisArray.get(0));
 			model.eulerAngleZAxisArray.remove(0);
 		}
@@ -95,11 +97,11 @@ public class SingleIMUPhasePlainAction {
 		model.eulerAngleXAxisArray.add(eulerAngleX);
 		model.eulerAngleYAxisArray.add(eulerAngleY);
 		model.eulerAngleZAxisArray.add(eulerAngleZ);
-		
+
 		model.gyoXAxisXYSeries.add(gyoX, updateFrequency * (gyoX - model.LastGyoRaw[0]));
 		model.gyoYAxisXYSeries.add(gyoY, updateFrequency * (gyoY - model.LastGyoRaw[1]));
 		model.gyoZAxisXYSeries.add(gyoZ, updateFrequency * (gyoZ - model.LastGyoRaw[2]));
-		
+
 		model.eulerAnglesXAxisXYSeries.add(eulerAngleX, updateFrequency * (eulerAngleX - model.LastEulerAngles[0]));
 		model.eulerAnglesYAxisXYSeries.add(eulerAngleY, updateFrequency * (eulerAngleY - model.LastEulerAngles[1]));
 		model.eulerAnglesZAxisXYSeries.add(eulerAngleZ, updateFrequency * (eulerAngleZ - model.LastEulerAngles[2]));
@@ -111,45 +113,64 @@ public class SingleIMUPhasePlainAction {
 		model.LastEulerAngles[0] = eulerAngleX;
 		model.LastEulerAngles[1] = eulerAngleY;
 		model.LastEulerAngles[2] = eulerAngleZ;
-		
-	}
 
-	public void checkBoxAngleVelocityStateChange() {
-		if (panel.checkBoxAngleVelocity.isSelected()) {
-			panel.chartDataSet.addSeries(model.gyoXAxisXYSeries);
-			panel.chartDataSet.addSeries(model.gyoYAxisXYSeries);
-			panel.chartDataSet.addSeries(model.gyoZAxisXYSeries);
+		// 99. check one step is finished or not 
+		if (model.gyoYAxisArray.size() > 3) {
+
+			Double lastLastGyroAngleVelocityY = model.gyoYAxisArray.get(model.gyoYAxisArray.size() - 3);
+			Double lastGyroAngleVelocityY = model.gyoYAxisArray.get(model.gyoYAxisArray.size() - 2);
+			Double gyroAngleVelocityY = model.gyoYAxisArray.get(model.gyoYAxisArray.size() - 1);
+
+			Double lastGyroAngleAccelerationY = updateFrequency * (lastGyroAngleVelocityY - lastLastGyroAngleVelocityY);
+			Double gyroAngleAccelerationY = updateFrequency * (gyroAngleVelocityY - lastGyroAngleVelocityY);
+
+			Double lastTheta = Math.atan2(lastGyroAngleAccelerationY, lastGyroAngleVelocityY);
+			Double theta = Math.atan2(gyroAngleAccelerationY, gyroAngleVelocityY);
+
+			if (lastTheta > -Math.PI && lastTheta < -Math.PI/2 && theta < Math.PI && theta > Math.PI/2) {
+				eventManager.notifyListenersOneStepFinish(imuDataModel.receiveTime);
+				
+				// one step finish, remove all data on the chart
+//				model.gyoYAxisArray.clear();
+//				model.gyoYAxisXYSeries.clear();
+			}
 		}
 		else {
-			panel.chartDataSet.removeSeries(model.gyoXAxisXYSeries);
-			panel.chartDataSet.removeSeries(model.gyoYAxisXYSeries);
-			panel.chartDataSet.removeSeries(model.gyoZAxisXYSeries);
-
-			model.gyoXAxisXYSeries.clear();
-			model.gyoYAxisXYSeries.clear();
-			model.gyoZAxisXYSeries.clear();
 		}
 	}
 
+	/**
+	 *	Func Info:
+	 *		Angle Velocity Check Box State Change 
+	 */
+	public void checkBoxAngleVelocityStateChange() {
+		if (panel.checkBoxAngleVelocity.isSelected()) {
+			panel.chartDataSet.addSeries(model.gyoYAxisXYSeries);
+			panel.lineAndShapeRenderer.setSeriesLinesVisible(0, false);
+		}
+		else {
+			panel.chartDataSet.removeSeries(model.gyoYAxisXYSeries);
+			model.gyoYAxisXYSeries.clear();
+			model.gyoYAxisArray.clear();
+		}
+	}
+
+	/**
+	 *	Func Info:
+	 *		Euler Angle Check Box State Change 
+	 */
 	public void checkBoxEulerAngleStateChange() {
 		if (panel.checkBoxEulerAngle.isSelected()) {
 			panel.chartDataSet.addSeries(model.eulerAnglesXAxisXYSeries);
-//			panel.chartDataSet.addSeries(model.eulerAnglesYAxisXYSeries);
-//			panel.chartDataSet.addSeries(model.eulerAnglesZAxisXYSeries);
-
 			panel.lineAndShapeRenderer.setSeriesLinesVisible(0, false);
 		}
 		else {
 			panel.chartDataSet.removeSeries(model.eulerAnglesXAxisXYSeries);
-//			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisXYSeries);
-//			panel.chartDataSet.removeSeries(model.eulerAnglesZAxisXYSeries);
-			
-			model.eulerAnglesXAxisXYSeries.clear();
 			model.eulerAnglesYAxisXYSeries.clear();
-			model.eulerAnglesZAxisXYSeries.clear();
+			model.eulerAngleYAxisArray.clear();
 		}
 	}
-	
+
 	/**
 	 *	Function Info
 	 *		StartToRecord button clicked event handler 
@@ -169,17 +190,18 @@ public class SingleIMUPhasePlainAction {
 			break;
 		}
 	}
-	
+
 	public void setRecordingFlag() {
 		recordingFlag = true;
+		model.setRecordCountLength(Integer.valueOf(panel.textFieldRecordLength.getText()));
 		panel.buttonStartStopRecord.setText("StopRecord");
 	}
-	
+
 	public void clearRecordingFlag() {
 		recordingFlag = false;
 		panel.buttonStartStopRecord.setText("StartRecord");
 	}
-	
+
 	/**
 	 *	Function Info
 	 *		SaveToFile button clicked event handler 
@@ -217,12 +239,12 @@ public class SingleIMUPhasePlainAction {
 				}
 				bufferedWriter.write("\n");
 			}
-			
+
 			//---------------------- support information ----------------------
 			for (int i = 0; i < model.eulerAngleYAxisArray.size(); i++) {
 				bufferedWriter.write(model.eulerAngleYAxisArray.get(i).toString() + "\n");
 			}
-			
+
 			bufferedWriter.close();
 			fileWriter.close();
 
@@ -230,5 +252,5 @@ public class SingleIMUPhasePlainAction {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

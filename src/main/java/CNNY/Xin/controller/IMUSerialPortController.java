@@ -6,23 +6,23 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-import CNNY.Xin.action.SingleIMUSerialPortAction;
-import CNNY.Xin.model.SingleIMUSerialPortModel;
-import CNNY.Xin.view.SingleIMUSerialPortPanel;
+import CNNY.Xin.action.IMUSerialPortAction;
+import CNNY.Xin.model.IMUSerialPortModel;
+import CNNY.Xin.view.IMUSerialPortPanel;
 
-public class SingleIMUSerialPortController {
+public class IMUSerialPortController {
 
-	public SingleIMUSerialPortAction action;
-	public SingleIMUSerialPortModel model;
-	public SingleIMUSerialPortPanel panel;
+	public IMUSerialPortAction action;
+	public IMUSerialPortModel model;
+	public IMUSerialPortPanel panel;
 
-	public SingleIMUSerialPortController(
-			SingleIMUSerialPortModel singleIMUSerialPortModel,
-			SingleIMUSerialPortPanel singleIMUSerialPortPanel) {
+	public IMUSerialPortController(
+			IMUSerialPortModel iMUSerialPortModel,
+			IMUSerialPortPanel singleIMUSerialPortPanel) {
 
-		this.model = singleIMUSerialPortModel;
+		this.model = iMUSerialPortModel;
 		this.panel = singleIMUSerialPortPanel;
-		this.action = new SingleIMUSerialPortAction(model, panel);
+		this.action = new IMUSerialPortAction(model, panel);
 
 		initActionListener();
 	}

@@ -3,6 +3,8 @@ package CNNY.Xin.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.jfree.data.time.Millisecond;
+
 public class IMUDataDecoder {
 
 	public IMUDataModel imuDataModel = new IMUDataModel();
@@ -242,10 +244,12 @@ public class IMUDataDecoder {
 			}
 		}
 
-		imuDataModel.StringData = string_data;
+		imuDataModel.descritpion = string_data;
 		imuDataModel.AvailableItem = AvailableItem;
 		imuDataModel.CsvHeader = csv_headers;
 		imuDataModel.CsvData = csv_data;
+	
+		imuDataModel.receiveTime = new Millisecond();
 
 		return imuDataModel;
 	}

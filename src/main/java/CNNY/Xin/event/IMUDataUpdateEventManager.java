@@ -43,7 +43,7 @@ public class IMUDataUpdateEventManager {
 		Iterator<IMUDataUpdateEventListener> iter = listeners.iterator();
 		while (iter.hasNext()) {
 			IMUDataUpdateEventListener listener = (IMUDataUpdateEventListener) iter.next();
-			listener.imuDataUpdate(imuDataModel);;
+			listener.imuDataUpdate(imuDataModel);
 		}
 	}
 }

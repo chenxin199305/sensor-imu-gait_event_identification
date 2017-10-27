@@ -2,6 +2,9 @@ package CNNY.Xin.model;
 
 import java.util.ArrayList;
 
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.RegularTimePeriod;
+
 /**
  *	Class Info:
  *		This class is the model to describe IMU data 
@@ -61,10 +64,13 @@ public class IMUDataModel {
 	public ArrayList<Short> AvailableItem;
     public ArrayList<String> CsvHeader;
     public ArrayList<String> CsvData;
-    public String StringData;
+    
+    public RegularTimePeriod receiveTime;
+    
+    public String descritpion;
     
     public String toString() {
     	
-    	return StringData;
+    	return descritpion;
     }
 }

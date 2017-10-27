@@ -60,8 +60,16 @@ public class FootPressureForceSensorDataDisplayAction {
 			Integer toePressureValue = footPressureForceSensorDataModel.sensor11Value
 					+ footPressureForceSensorDataModel.sensor22Value;
 			Integer heelPressureValue = footPressureForceSensorDataModel.sensor33Value;
-			model.toePressureTimeSeries.addOrUpdate(millisecond, toePressureValue);
-			model.heelPressureTimeSeries.addOrUpdate(millisecond, heelPressureValue);
+			
+			Double a = 2771.0;
+			Double b = 3.478 * Math.pow(10, -5);
+			Double c = -2740.0;
+			Double d = -0.002549;
+			Double toePressureValueInKg = (a * Math.exp(b * toePressureValue) + c * Math.exp(d * toePressureValue)) / 1000.0;
+			Double heelPressureValueInKg = (a * Math.exp(b * heelPressureValue) + c * Math.exp(d * heelPressureValue)) / 1000.0;
+			
+			model.toePressureTimeSeries.addOrUpdate(millisecond, toePressureValueInKg);
+			model.heelPressureTimeSeries.addOrUpdate(millisecond, heelPressureValueInKg);
 			
 		} catch (Exception e) {
 			System.out.println("1");
@@ -202,6 +210,7 @@ public class FootPressureForceSensorDataDisplayAction {
 	
 	public void setRecordingFlag() {
 		recordingFlag = true;
+		model.setRecordTimeLengthInS(Integer.valueOf(panel.textFieldRecordLength.getText()));
 		panel.buttonStartStopRecord.setText("StopRecord");
 	}
 	

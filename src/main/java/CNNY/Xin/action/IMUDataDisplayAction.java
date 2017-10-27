@@ -5,32 +5,36 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFileChooser;
 
 import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeries;
 
 import CNNY.Xin.model.FindToeOffHeelHit;
 import CNNY.Xin.model.IMUDataModel;
+import CNNY.Xin.model.IMUTOHSDataModel;
 import CNNY.Xin.model.KalmanFilter;
 import CNNY.Xin.model.KalmanFilterModel;
-import CNNY.Xin.model.SingleIMUDataDisplayModel;
-import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.model.IMUDataDisplayModel;
+import CNNY.Xin.view.IMUDataDisplayPanel;
 import Jama.Matrix;
 
-public class SingleIMUDataDisplayAction {
+public class IMUDataDisplayAction {
 
-	private SingleIMUDataDisplayModel model;
-	private SingleIMUDataDisplayPanel panel;
+	private IMUDataDisplayModel model;
+	private IMUDataDisplayPanel panel;
 	
 	private Boolean recordingFlag = true;
 	
-	public SingleIMUDataDisplayAction(
-			SingleIMUDataDisplayModel singleIMUDataDisplayModel,
-			SingleIMUDataDisplayPanel singleIMUDataDisplayPanel) {
+	public IMUDataDisplayAction(
+			IMUDataDisplayModel iMUDataDisplayModel,
+			IMUDataDisplayPanel singleIMUDataDisplayPanel) {
 	
-		this.model = singleIMUDataDisplayModel;
+		this.model = iMUDataDisplayModel;
 		this.panel = singleIMUDataDisplayPanel;
 	}
 	
@@ -47,35 +51,35 @@ public class SingleIMUDataDisplayAction {
 		}
 		
 		try {
-			final Millisecond millisecond = new Millisecond();
+			final RegularTimePeriod currentTime = imuDataModel.receiveTime;
 
-			model.accRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[0]);
-			model.accRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[1]);
-			model.accRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.AccRaw[2]);
+//			model.accRawXAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.AccRaw[0]);
+//			model.accRawYAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.AccRaw[1]);
+//			model.accRawZAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.AccRaw[2]);
 
-			model.gyoRawXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[0]);
-			model.gyoRawYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[1]);
-			model.gyoRawZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.GyoRaw[2]);
+			model.gyoRawXAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.GyoRaw[0] / 10.0);
+			model.gyoRawYAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.GyoRaw[1] / 10.0);
+			model.gyoRawZAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.GyoRaw[2] / 10.0);
 
-			model.eulerAnglesXAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[0]);
-			model.eulerAnglesYAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[1]);
-			model.eulerAnglesZAxisTimeSeries.addOrUpdate(millisecond, imuDataModel.EulerAngles[2]);
+//			model.eulerAnglesXAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.EulerAngles[0]);
+//			model.eulerAnglesYAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.EulerAngles[1]);
+//			model.eulerAnglesZAxisTimeSeries.addOrUpdate(currentTime, imuDataModel.EulerAngles[2]);
 
 			// Filtering Data ...
-			model.imuFilteredDataModel.AccFiltered[0] = imuDataModel.AccRaw[0].intValue();
-			model.imuFilteredDataModel.AccFiltered[1] = imuDataModel.AccRaw[1].intValue();
-			model.imuFilteredDataModel.AccFiltered[2] = imuDataModel.AccRaw[2].intValue();
+//			model.imuFilteredDataModel.AccFiltered[0] = imuDataModel.AccRaw[0].intValue();
+//			model.imuFilteredDataModel.AccFiltered[1] = imuDataModel.AccRaw[1].intValue();
+//			model.imuFilteredDataModel.AccFiltered[2] = imuDataModel.AccRaw[2].intValue();
 
-			model.imuFilteredDataModel.GyoFiltered[0] = imuDataModel.GyoRaw[0].intValue();
-			model.imuFilteredDataModel.GyoFiltered[1] = imuDataModel.GyoRaw[1].intValue();
-			model.imuFilteredDataModel.GyoFiltered[2] = imuDataModel.GyoRaw[2].intValue();
+			model.imuFilteredDataModel.GyoFiltered[0] = imuDataModel.GyoRaw[0].intValue() / 10;
+			model.imuFilteredDataModel.GyoFiltered[1] = imuDataModel.GyoRaw[1].intValue() / 10;
+			model.imuFilteredDataModel.GyoFiltered[2] = imuDataModel.GyoRaw[2].intValue() / 10;
 
-			model.imuFilteredDataModel.EulerAnglesFiltered[0] = imuDataModel.EulerAngles[0].intValue();
-			model.imuFilteredDataModel.EulerAnglesFiltered[1] = imuDataModel.EulerAngles[1].intValue();
-			model.imuFilteredDataModel.EulerAnglesFiltered[2] = imuDataModel.EulerAngles[2].intValue();
+//			model.imuFilteredDataModel.EulerAnglesFiltered[0] = imuDataModel.EulerAngles[0].intValue();
+//			model.imuFilteredDataModel.EulerAnglesFiltered[1] = imuDataModel.EulerAngles[1].intValue();
+//			model.imuFilteredDataModel.EulerAnglesFiltered[2] = imuDataModel.EulerAngles[2].intValue();
 
 			// 1. Kalman Filter
-			if (true) {
+			if (false) {
 				if (model.gyoFilteredXKalmanFilter == null) {
 					double[][] A = {{1}};
 					double[][] G = {{1}};
@@ -179,16 +183,17 @@ public class SingleIMUDataDisplayAction {
 			}
 
 			// 2. Average Filter
-			if (false) {
-				while (model.accFilteredXTempDataArray.size() >= model.tempDataArraySize) {
-					model.accFilteredXTempDataArray.remove(0);
-				}
-				while (model.accFilteredYTempDataArray.size() >= model.tempDataArraySize) {
-					model.accFilteredYTempDataArray.remove(0);
-				}
-				while (model.accFilteredZTempDataArray.size() >= model.tempDataArraySize) {
-					model.accFilteredZTempDataArray.remove(0);
-				}
+			if (true) {
+//				while (model.accFilteredXTempDataArray.size() >= model.tempDataArraySize) {
+//					model.accFilteredXTempDataArray.remove(0);
+//				}
+//				while (model.accFilteredYTempDataArray.size() >= model.tempDataArraySize) {
+//					model.accFilteredYTempDataArray.remove(0);
+//				}
+//				while (model.accFilteredZTempDataArray.size() >= model.tempDataArraySize) {
+//					model.accFilteredZTempDataArray.remove(0);
+//				}
+				
 				while (model.gyoFilteredXTempDataArray.size() >= model.tempDataArraySize) {
 					model.gyoFilteredXTempDataArray.remove(0);
 				}
@@ -198,49 +203,50 @@ public class SingleIMUDataDisplayAction {
 				while (model.gyoFilteredZTempDataArray.size() >= model.tempDataArraySize) {
 					model.gyoFilteredZTempDataArray.remove(0);
 				}
-				while (model.eulerAngleFilteredXTempDataArray.size() >= model.tempDataArraySize) {
-					model.eulerAngleFilteredXTempDataArray.remove(0);
-				}
-				while (model.eulerAngleFilteredYTempDataArray.size() >= model.tempDataArraySize) {
-					model.eulerAngleFilteredYTempDataArray.remove(0);
-				}
-				while (model.eulerAngleFilteredZTempDataArray.size() >= model.tempDataArraySize) {
-					model.eulerAngleFilteredZTempDataArray.remove(0);
-				}
+				
+//				while (model.eulerAngleFilteredXTempDataArray.size() >= model.tempDataArraySize) {
+//					model.eulerAngleFilteredXTempDataArray.remove(0);
+//				}
+//				while (model.eulerAngleFilteredYTempDataArray.size() >= model.tempDataArraySize) {
+//					model.eulerAngleFilteredYTempDataArray.remove(0);
+//				}
+//				while (model.eulerAngleFilteredZTempDataArray.size() >= model.tempDataArraySize) {
+//					model.eulerAngleFilteredZTempDataArray.remove(0);
+//				}
 
-				model.accFilteredXTempDataArray.add(model.imuFilteredDataModel.AccFiltered[0]);
-				model.accFilteredYTempDataArray.add(model.imuFilteredDataModel.AccFiltered[1]);
-				model.accFilteredZTempDataArray.add(model.imuFilteredDataModel.AccFiltered[2]);
+//				model.accFilteredXTempDataArray.add(model.imuFilteredDataModel.AccFiltered[0]);
+//				model.accFilteredYTempDataArray.add(model.imuFilteredDataModel.AccFiltered[1]);
+//				model.accFilteredZTempDataArray.add(model.imuFilteredDataModel.AccFiltered[2]);
 
 				model.gyoFilteredXTempDataArray.add(model.imuFilteredDataModel.GyoFiltered[0]);
 				model.gyoFilteredYTempDataArray.add(model.imuFilteredDataModel.GyoFiltered[1]);
 				model.gyoFilteredZTempDataArray.add(model.imuFilteredDataModel.GyoFiltered[2]);
 
-				model.eulerAngleFilteredXTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[0]);
-				model.eulerAngleFilteredYTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[1]);
-				model.eulerAngleFilteredZTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[2]);
+//				model.eulerAngleFilteredXTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[0]);
+//				model.eulerAngleFilteredYTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[1]);
+//				model.eulerAngleFilteredZTempDataArray.add(model.imuFilteredDataModel.EulerAnglesFiltered[2]);
 
-				Integer accFilteredXTempSum = 0;
-				Integer accFilteredYTempSum = 0;
-				Integer accFilteredZTempSum = 0;
+//				Integer accFilteredXTempSum = 0;
+//				Integer accFilteredYTempSum = 0;
+//				Integer accFilteredZTempSum = 0;
 
 				Integer gyoFilteredXTempSum = 0;
 				Integer gyoFilteredYTempSum = 0;
 				Integer gyoFilteredZTempSum = 0;
 
-				Integer eulerAngleFilteredXTempSum = 0;
-				Integer eulerAngleFilteredYTempSum = 0;
-				Integer eulerAngleFilteredZTempSum = 0;
+//				Integer eulerAngleFilteredXTempSum = 0;
+//				Integer eulerAngleFilteredYTempSum = 0;
+//				Integer eulerAngleFilteredZTempSum = 0;
 
-				for (int i = 0; i < model.accFilteredXTempDataArray.size(); i++) {
-					accFilteredXTempSum += model.accFilteredXTempDataArray.get(i);
-				}
-				for (int i = 0; i < model.accFilteredYTempDataArray.size(); i++) {
-					accFilteredYTempSum += model.accFilteredYTempDataArray.get(i);
-				}
-				for (int i = 0; i < model.accFilteredZTempDataArray.size(); i++) {
-					accFilteredZTempSum += model.accFilteredZTempDataArray.get(i);
-				}
+//				for (int i = 0; i < model.accFilteredXTempDataArray.size(); i++) {
+//					accFilteredXTempSum += model.accFilteredXTempDataArray.get(i);
+//				}
+//				for (int i = 0; i < model.accFilteredYTempDataArray.size(); i++) {
+//					accFilteredYTempSum += model.accFilteredYTempDataArray.get(i);
+//				}
+//				for (int i = 0; i < model.accFilteredZTempDataArray.size(); i++) {
+//					accFilteredZTempSum += model.accFilteredZTempDataArray.get(i);
+//				}
 
 				for (int i = 0; i < model.gyoFilteredXTempDataArray.size(); i++) {
 					gyoFilteredXTempSum += model.gyoFilteredXTempDataArray.get(i);
@@ -252,45 +258,41 @@ public class SingleIMUDataDisplayAction {
 					gyoFilteredZTempSum += model.gyoFilteredZTempDataArray.get(i);
 				}
 
-				for (int i = 0; i < model.eulerAngleFilteredXTempDataArray.size(); i++) {
-					eulerAngleFilteredXTempSum += model.eulerAngleFilteredXTempDataArray.get(i);
-				}
-				for (int i = 0; i < model.eulerAngleFilteredYTempDataArray.size(); i++) {
-					eulerAngleFilteredYTempSum += model.eulerAngleFilteredYTempDataArray.get(i);
-				}
-				for (int i = 0; i < model.eulerAngleFilteredZTempDataArray.size(); i++) {
-					eulerAngleFilteredZTempSum += model.eulerAngleFilteredZTempDataArray.get(i);
-				}
-
-				model.imuFilteredDataModel.AccFiltered[0] = accFilteredXTempSum / model.accFilteredXTempDataArray.size();
-				model.imuFilteredDataModel.AccFiltered[1] = accFilteredYTempSum / model.accFilteredYTempDataArray.size();
-				model.imuFilteredDataModel.AccFiltered[2] = accFilteredZTempSum / model.accFilteredZTempDataArray.size();
+//				for (int i = 0; i < model.eulerAngleFilteredXTempDataArray.size(); i++) {
+//					eulerAngleFilteredXTempSum += model.eulerAngleFilteredXTempDataArray.get(i);
+//				}
+//				for (int i = 0; i < model.eulerAngleFilteredYTempDataArray.size(); i++) {
+//					eulerAngleFilteredYTempSum += model.eulerAngleFilteredYTempDataArray.get(i);
+//				}
+//				for (int i = 0; i < model.eulerAngleFilteredZTempDataArray.size(); i++) {
+//					eulerAngleFilteredZTempSum += model.eulerAngleFilteredZTempDataArray.get(i);
+//				}
 
 				model.imuFilteredDataModel.GyoFiltered[0] = gyoFilteredXTempSum / model.gyoFilteredXTempDataArray.size();
 				model.imuFilteredDataModel.GyoFiltered[1] = gyoFilteredYTempSum / model.gyoFilteredYTempDataArray.size();
 				model.imuFilteredDataModel.GyoFiltered[2] = gyoFilteredZTempSum / model.gyoFilteredZTempDataArray.size();
 
-				model.imuFilteredDataModel.EulerAnglesFiltered[0] = eulerAngleFilteredXTempSum / model.eulerAngleFilteredXTempDataArray.size();
-				model.imuFilteredDataModel.EulerAnglesFiltered[1] = eulerAngleFilteredYTempSum / model.eulerAngleFilteredXTempDataArray.size();
-				model.imuFilteredDataModel.EulerAnglesFiltered[2] = eulerAngleFilteredZTempSum / model.eulerAngleFilteredXTempDataArray.size();
+//				model.imuFilteredDataModel.EulerAnglesFiltered[0] = eulerAngleFilteredXTempSum / model.eulerAngleFilteredXTempDataArray.size();
+//				model.imuFilteredDataModel.EulerAnglesFiltered[1] = eulerAngleFilteredYTempSum / model.eulerAngleFilteredXTempDataArray.size();
+//				model.imuFilteredDataModel.EulerAnglesFiltered[2] = eulerAngleFilteredZTempSum / model.eulerAngleFilteredXTempDataArray.size();
 			}
 
 			// 99. add to time series
-			model.accFilteredXAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.AccFiltered[0]);
-			model.accFilteredYAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.AccFiltered[1]);
-			model.accFilteredZAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.AccFiltered[2]);
+			model.accFilteredXAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.AccFiltered[0]);
+			model.accFilteredYAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.AccFiltered[1]);
+			model.accFilteredZAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.AccFiltered[2]);
 
-			model.gyoFilteredXAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.GyoFiltered[0]);
-			model.gyoFilteredYAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.GyoFiltered[1]);
-			model.gyoFilteredZAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.GyoFiltered[2]);
+			model.gyoFilteredXAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.GyoFiltered[0]);
+			model.gyoFilteredYAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.GyoFiltered[1]);
+			model.gyoFilteredZAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.GyoFiltered[2]);
 
-			model.eulerAnglesFilteredXAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.EulerAnglesFiltered[0]);
-			model.eulerAnglesFilteredYAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.EulerAnglesFiltered[1]);
-			model.eulerAnglesFilteredZAxisTimeSeries.addOrUpdate(millisecond, model.imuFilteredDataModel.EulerAnglesFiltered[2]);
+			model.eulerAnglesFilteredXAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.EulerAnglesFiltered[0]);
+			model.eulerAnglesFilteredYAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.EulerAnglesFiltered[1]);
+			model.eulerAnglesFilteredZAxisTimeSeries.addOrUpdate(currentTime, model.imuFilteredDataModel.EulerAnglesFiltered[2]);
 
 			//----------------------------------------------------------
 			// find toe-off and heel hit
-			if (true) {
+			if (false) {
 				if (model.findToeOffHeelHit == null) {
 					//				FindToeOffHeelHitModel findToeOffHeelHitModel = new FindToeOffHeelHitModel();
 					//				findToeOffHeelHitModel.windowWidth = 10;
@@ -311,13 +313,12 @@ public class SingleIMUDataDisplayAction {
 
 					Boolean findResult = model.findToeOffHeelHit.isToeOffOrHeelHitAtMiddle(tempArray);
 
-					model.debugPPeakTimeSeries.addOrUpdate(millisecond, model.findToeOffHeelHit.findToeOffHeelHitModel.pPeak);
-					model.debugPGradientTimeSeries.addOrUpdate(millisecond, model.findToeOffHeelHit.findToeOffHeelHitModel.pGradient);
-					model.debugPPeriodTimeSeries.addOrUpdate(millisecond, model.findToeOffHeelHit.findToeOffHeelHitModel.pPeriod);
-					model.debugPTotalTimeSeries.addOrUpdate(millisecond, model.findToeOffHeelHit.findToeOffHeelHitModel.pTotal);
+					model.debugPPeakTimeSeries.addOrUpdate(currentTime, model.findToeOffHeelHit.findToeOffHeelHitModel.pPeak);
+					model.debugPGradientTimeSeries.addOrUpdate(currentTime, model.findToeOffHeelHit.findToeOffHeelHitModel.pGradient);
+					model.debugPPeriodTimeSeries.addOrUpdate(currentTime, model.findToeOffHeelHit.findToeOffHeelHitModel.pPeriod);
+					model.debugPTotalTimeSeries.addOrUpdate(currentTime, model.findToeOffHeelHit.findToeOffHeelHitModel.pTotal);
 
 					if(findResult) {
-
 						model.toeOffHeelHitTimeSeries.addOrUpdate(
 								model.gyoFilteredYAxisTimeSeries.getTimePeriod(model.gyoFilteredYAxisTimeSeries.getItemCount() - tempArray.size() / 2),
 								model.gyoFilteredYAxisTimeSeries.getValue(model.gyoFilteredYAxisTimeSeries.getItemCount() - tempArray.size() / 2));
@@ -359,18 +360,11 @@ public class SingleIMUDataDisplayAction {
 	 */
 	public void angleVelocityCheckBoxStateChange() {
 		if (panel.checkBoxAngleVelocity.isSelected()) {
-			panel.chartDataSet.addSeries(model.gyoRawXAxisTimeSeries);
-//			panel.chartDataSet.addSeries(model.gyoRawYAxisTimeSeries);
-//			panel.chartDataSet.addSeries(model.gyoRawZAxisTimeSeries);
+			panel.chartDataSet.addSeries(model.gyoRawYAxisTimeSeries);
 		}
 		else {
-			panel.chartDataSet.removeSeries(model.gyoRawXAxisTimeSeries);
-//			panel.chartDataSet.removeSeries(model.gyoRawYAxisTimeSeries);
-//			panel.chartDataSet.removeSeries(model.gyoRawZAxisTimeSeries);
-
-			model.gyoRawXAxisTimeSeries.clear();
+			panel.chartDataSet.removeSeries(model.gyoRawYAxisTimeSeries);
 			model.gyoRawYAxisTimeSeries.clear();
-			model.gyoRawZAxisTimeSeries.clear();
 		}
 	}
 
@@ -381,13 +375,13 @@ public class SingleIMUDataDisplayAction {
 	public void eulerAngleCheckBoxStateChange() {
 		if (panel.checkBoxEulerAngle.isSelected()) {
 			panel.chartDataSet.addSeries(model.eulerAnglesXAxisTimeSeries);
-//			panel.chartDataSet.addSeries(model.eulerAnglesYAxisTimeSeries);
-//			panel.chartDataSet.addSeries(model.eulerAnglesZAxisTimeSeries);
+			panel.chartDataSet.addSeries(model.eulerAnglesYAxisTimeSeries);
+			panel.chartDataSet.addSeries(model.eulerAnglesZAxisTimeSeries);
 		}
 		else {
 			panel.chartDataSet.removeSeries(model.eulerAnglesXAxisTimeSeries);
-//			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisTimeSeries);
-//			panel.chartDataSet.removeSeries(model.eulerAnglesZAxisTimeSeries);
+			panel.chartDataSet.removeSeries(model.eulerAnglesYAxisTimeSeries);
+			panel.chartDataSet.removeSeries(model.eulerAnglesZAxisTimeSeries);
 
 			model.eulerAnglesXAxisTimeSeries.clear();
 			model.eulerAnglesYAxisTimeSeries.clear();
@@ -422,18 +416,11 @@ public class SingleIMUDataDisplayAction {
 	 */
 	public void angVelFilteredCheckBoxStateChange() {
 		if (panel.checkBoxAngleVelocityFiltered.isSelected()) {
-//			panel.chartDataSet.addSeries(model.gyoFilteredXAxisTimeSeries);
 			panel.chartDataSet.addSeries(model.gyoFilteredYAxisTimeSeries);
-//			panel.chartDataSet.addSeries(model.gyoFilteredZAxisTimeSeries);
 		}
 		else {
-//			panel.chartDataSet.removeSeries(model.gyoFilteredXAxisTimeSeries);
 			panel.chartDataSet.removeSeries(model.gyoFilteredYAxisTimeSeries);
-//			panel.chartDataSet.removeSeries(model.gyoFilteredZAxisTimeSeries);
-
-			model.gyoFilteredXAxisTimeSeries.clear();
 			model.gyoFilteredYAxisTimeSeries.clear();
-			model.gyoFilteredZAxisTimeSeries.clear();
 		}
 	}
 
@@ -477,15 +464,15 @@ public class SingleIMUDataDisplayAction {
 	 */
 	public void debugCheckBoxStateChange() {
 		if (panel.checkBoxDebug.isSelected()) {
-//			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPPeakTimeSeries);
-//			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPGradientTimeSeries);
-//			singleIMUDataDisplayPanel.chartDataSet.addSeries(singleIMUDataDisplayModel.debugPPeriodTimeSeries);
+			panel.chartDataSet.addSeries(model.debugPPeakTimeSeries);
+			panel.chartDataSet.addSeries(model.debugPGradientTimeSeries);
+			panel.chartDataSet.addSeries(model.debugPPeriodTimeSeries);
 			panel.chartDataSet.addSeries(model.debugPTotalTimeSeries);
 		}
 		else {
-//			singleIMUDataDisplayPanel.chartDataSet.removeSeries(singleIMUDataDisplayModel.debugPPeakTimeSeries);
-//			singleIMUDataDisplayPanel.chartDataSet.removeSeries(singleIMUDataDisplayModel.debugPGradientTimeSeries);
-//			singleIMUDataDisplayPanel.chartDataSet.removeSeries(singleIMUDataDisplayModel.debugPPeriodTimeSeries);
+			panel.chartDataSet.removeSeries(model.debugPPeakTimeSeries);
+			panel.chartDataSet.removeSeries(model.debugPGradientTimeSeries);
+			panel.chartDataSet.removeSeries(model.debugPPeriodTimeSeries);
 			panel.chartDataSet.removeSeries(model.debugPTotalTimeSeries);
 		}
 	}
@@ -498,12 +485,10 @@ public class SingleIMUDataDisplayAction {
 
 		switch (panel.buttonStartStopRecord.getText()) {
 		case "StartRecord":
-			recordingFlag = true;
-			panel.buttonStartStopRecord.setText("StopRecord");
+			setRecordingFlag();
 			break;
 		case "StopRecord":
-			recordingFlag = false;
-			panel.buttonStartStopRecord.setText("StartRecord");
+			clearRecordingFlag();
 			break;
 		default:
 			break;
@@ -512,6 +497,7 @@ public class SingleIMUDataDisplayAction {
 	
 	public void setRecordingFlag() {
 		recordingFlag = true;
+		model.setRecordTimeLengthInS(Integer.valueOf(panel.textFieldRecordLength.getText()));
 		panel.buttonStartStopRecord.setText("StopRecord");
 	}
 	
@@ -564,5 +550,13 @@ public class SingleIMUDataDisplayAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 *	Func Info:
+	 *		detect algorithm update event listen 
+	 */
+	public void newTOHSPointFound(IMUTOHSDataModel imutohsDataModel) {
+		model.toeOffHeelHitTimeSeries.addOrUpdate(imutohsDataModel.time, imutohsDataModel.value.doubleValue());
 	}
 }

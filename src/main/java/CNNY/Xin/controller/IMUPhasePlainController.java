@@ -5,24 +5,24 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import CNNY.Xin.action.SingleIMUPhasePlainAction;
+import CNNY.Xin.action.IMUPhasePlainAction;
 import CNNY.Xin.model.IMUDataModel;
-import CNNY.Xin.model.SingleIMUPhasePlainModel;
-import CNNY.Xin.view.SingleIMUPhasePlainPanel;
+import CNNY.Xin.model.IMUPhasePlainModel;
+import CNNY.Xin.view.IMUPhasePlainPanel;
 
-public class SingleIMUPhasePlainController {
+public class IMUPhasePlainController {
 
-	public SingleIMUPhasePlainAction action;
-	public SingleIMUPhasePlainModel model;
-	public SingleIMUPhasePlainPanel panel;
+	public IMUPhasePlainAction action;
+	public IMUPhasePlainModel model;
+	public IMUPhasePlainPanel panel;
 
-	public SingleIMUPhasePlainController(
-			SingleIMUPhasePlainModel singleIMUPhasePlainModel,
-			SingleIMUPhasePlainPanel singleIMUPhasePlainPanel) {
+	public IMUPhasePlainController(
+			IMUPhasePlainModel iMUPhasePlainModel,
+			IMUPhasePlainPanel singleIMUPhasePlainPanel) {
 
-		this.model = singleIMUPhasePlainModel;
+		this.model = iMUPhasePlainModel;
 		this.panel = singleIMUPhasePlainPanel;
-		this.action = new SingleIMUPhasePlainAction(model, panel);
+		this.action = new IMUPhasePlainAction(model, panel);
 
 		initActionListener();
 	}

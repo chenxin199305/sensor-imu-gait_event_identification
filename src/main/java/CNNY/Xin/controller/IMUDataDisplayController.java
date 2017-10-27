@@ -5,24 +5,25 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import CNNY.Xin.action.SingleIMUDataDisplayAction;
+import CNNY.Xin.action.IMUDataDisplayAction;
 import CNNY.Xin.model.IMUDataModel;
-import CNNY.Xin.model.SingleIMUDataDisplayModel;
-import CNNY.Xin.view.SingleIMUDataDisplayPanel;
+import CNNY.Xin.model.IMUTOHSDataModel;
+import CNNY.Xin.model.IMUDataDisplayModel;
+import CNNY.Xin.view.IMUDataDisplayPanel;
 
-public class SingleIMUDataDisplayController {
+public class IMUDataDisplayController {
 
-	public SingleIMUDataDisplayAction action;
-	public SingleIMUDataDisplayModel model;
-	public SingleIMUDataDisplayPanel panel;
+	public IMUDataDisplayAction action;
+	public IMUDataDisplayModel model;
+	public IMUDataDisplayPanel panel;
 
-	public SingleIMUDataDisplayController(
-			SingleIMUDataDisplayModel singleIMUDataDisplayModel,
-			SingleIMUDataDisplayPanel singleIMUDataDisplayPanel) {
+	public IMUDataDisplayController(
+			IMUDataDisplayModel iMUDataDisplayModel,
+			IMUDataDisplayPanel singleIMUDataDisplayPanel) {
 
-		this.model = singleIMUDataDisplayModel;
+		this.model = iMUDataDisplayModel;
 		this.panel = singleIMUDataDisplayPanel;
-		this.action = new SingleIMUDataDisplayAction(model, panel);
+		this.action = new IMUDataDisplayAction(model, panel);
 
 		initActionListener();
 	}
@@ -120,6 +121,14 @@ public class SingleIMUDataDisplayController {
 	public void imuDataUpdate(IMUDataModel imuDataModel) {
 		action.imuDataUpdate(imuDataModel);
 	}
+	
+	/**
+	 *	Func Info:
+	 *		detect algorithm update event listen 
+	 */
+	public void newTOHSPointFound(IMUTOHSDataModel imutohsDataModel) {
+		action.newTOHSPointFound(imutohsDataModel);
+	}
 
 	public void setRecordingFlag() {
 		action.setRecordingFlag();
@@ -128,4 +137,5 @@ public class SingleIMUDataDisplayController {
 	public void clearRecordingFlag() {
 		action.clearRecordingFlag();
 	}
+
 }

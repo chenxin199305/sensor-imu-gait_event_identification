@@ -7,13 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
-public class SingleIMUSerialPortPanel extends JPanel {
+public class IMUSerialPortPanel extends JPanel {
 
 	public JComboBox<String> comboBoxSerialPortSelection;
 	public JButton buttonConnectDisconnect;
 	public JTextArea textAreaContentVal;
 	
-	public SingleIMUSerialPortPanel() {
+	public IMUSerialPortPanel() {
 
 		setBorder(new TitledBorder(null, "serial port", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(null);

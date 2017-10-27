@@ -15,7 +15,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class SingleIMUDataDisplayPanel extends JPanel {
+public class IMUDataDisplayPanel extends JPanel {
 	
 	public JTextField textFieldRecordLength;
 	
@@ -38,7 +38,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SingleIMUDataDisplayPanel() {
+	public IMUDataDisplayPanel() {
 		
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "data display", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setLayout(null);
@@ -48,6 +48,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		add(lblContentSel);
 		
 		checkBoxAcceleration = new JCheckBox("Acceleration");
+		checkBoxAcceleration.setEnabled(false);
 		checkBoxAcceleration.setBounds(10, 41, 119, 23);
 		add(checkBoxAcceleration);
 		
@@ -56,10 +57,12 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		add(checkBoxAngleVelocity);
 		
 		checkBoxEulerAngle = new JCheckBox("Euler Angle");
+		checkBoxEulerAngle.setEnabled(false);
 		checkBoxEulerAngle.setBounds(252, 41, 119, 23);
 		add(checkBoxEulerAngle);
 		
 		checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
+		checkBoxAccelerationFiltered.setEnabled(false);
 		checkBoxAccelerationFiltered.setBounds(10, 66, 119, 23);
 		add(checkBoxAccelerationFiltered);
 		
@@ -68,6 +71,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		add(checkBoxAngleVelocityFiltered);
 		
 		checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
+		checkBoxEulerAngleFiltered.setEnabled(false);
 		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
 		add(checkBoxEulerAngleFiltered);
 		
@@ -95,6 +99,7 @@ public class SingleIMUDataDisplayPanel extends JPanel {
 		textFieldRecordLength.setBounds(108, 390, 66, 21);
 		add(textFieldRecordLength);
 		textFieldRecordLength.setColumns(10);
+		textFieldRecordLength.setText("5");
 		
 		buttonStartStopRecord = new JButton("StopRecord");
 		buttonStartStopRecord.setBounds(184, 389, 100, 23);

@@ -13,14 +13,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class SingleIMUPhasePlainPanel extends JPanel {
+public class IMUPhasePlainPanel extends JPanel {
 
 	public JCheckBox checkBoxAcceleration;
 	public JCheckBox checkBoxAngleVelocity;
 	public JCheckBox checkBoxEulerAngle;
-	public JCheckBox checkBoxAccelerationFiltered;
-	public JCheckBox checkBoxAngleVelocityFiltered;
-	public JCheckBox checkBoxEulerAngleFiltered;
 	
 	public JTextField textFieldRecordLength;
 	public JButton buttonStartStopRecord;
@@ -34,7 +31,7 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SingleIMUPhasePlainPanel() {
+	public IMUPhasePlainPanel() {
 		setBorder(new TitledBorder(null, "PhasePlain", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(null);
 
@@ -51,33 +48,22 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		add(checkBoxAngleVelocity);
 
 		checkBoxEulerAngle = new JCheckBox("Euler Angle");
+		checkBoxEulerAngle.setEnabled(false);
 		checkBoxEulerAngle.setBounds(252, 41, 119, 23);
 		add(checkBoxEulerAngle);
-
-		checkBoxAccelerationFiltered = new JCheckBox("Acc Filtered");
-		checkBoxAccelerationFiltered.setBounds(10, 66, 119, 23);
-		add(checkBoxAccelerationFiltered);
-
-		checkBoxAngleVelocityFiltered = new JCheckBox("AngVel Filtered");
-		checkBoxAngleVelocityFiltered.setBounds(131, 66, 119, 23);
-		add(checkBoxAngleVelocityFiltered);
-
-		checkBoxEulerAngleFiltered = new JCheckBox("EulAng Filtered");
-		checkBoxEulerAngleFiltered.setBounds(252, 66, 119, 23);
-		add(checkBoxEulerAngleFiltered);
 
 		// chart panel Phase Plain
 		chartPanel = new ChartPanel((JFreeChart) null);
 		chartPanel.setBounds(10, 124, 384, 255);
 		chartDataSet = new XYSeriesCollection();
-		chart = ChartFactory.createXYLineChart("Phase Plain", "X(deg)", "Y(deg/s)", chartDataSet);
+		chart = ChartFactory.createXYLineChart("Phase Plain", "X(deg/s)", "Y(deg/s^2)", chartDataSet);
 		chartPanel.setChart(chart);
 		add(chartPanel);
 
 		lineAndShapeRenderer = new XYLineAndShapeRenderer();
 		chart.getXYPlot().setRenderer(lineAndShapeRenderer);
 		
-		JLabel labelRecordLength = new JLabel("RecordLen(s)");
+		JLabel labelRecordLength = new JLabel("RecordLen(c)");
 		labelRecordLength.setBounds(10, 393, 90, 15);
 		add(labelRecordLength);
 
@@ -85,6 +71,7 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 		textFieldRecordLength.setColumns(10);
 		textFieldRecordLength.setBounds(108, 390, 66, 21);
 		add(textFieldRecordLength);
+		textFieldRecordLength.setText("150");
 
 		buttonStartStopRecord = new JButton("StopRecord");
 		buttonStartStopRecord.setBounds(184, 389, 100, 23);
@@ -100,10 +87,6 @@ public class SingleIMUPhasePlainPanel extends JPanel {
 	private void panelConfig() {
 
 		checkBoxAcceleration.setEnabled(false);
-		checkBoxAngleVelocity.setEnabled(false);
-		checkBoxAccelerationFiltered.setEnabled(false);
-		checkBoxAngleVelocityFiltered.setEnabled(false);
-		checkBoxEulerAngleFiltered.setEnabled(false);
 	}
 
 }

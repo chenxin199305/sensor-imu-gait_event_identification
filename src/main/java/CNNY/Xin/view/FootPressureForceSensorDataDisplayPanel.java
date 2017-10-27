@@ -95,6 +95,7 @@ public class FootPressureForceSensorDataDisplayPanel extends JPanel {
 		textFieldRecordLength.setBounds(108, 390, 66, 21);
 		add(textFieldRecordLength);
 		textFieldRecordLength.setColumns(10);
+		textFieldRecordLength.setText("5");
 		
 		buttonStartStopRecord = new JButton("StopRecord");
 		buttonStartStopRecord.setBounds(184, 389, 100, 23);
