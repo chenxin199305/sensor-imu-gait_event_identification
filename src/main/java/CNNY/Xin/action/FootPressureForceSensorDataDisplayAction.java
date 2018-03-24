@@ -61,12 +61,12 @@ public class FootPressureForceSensorDataDisplayAction {
 					+ footPressureForceSensorDataModel.sensor22Value;
 			Integer heelPressureValue = footPressureForceSensorDataModel.sensor33Value;
 			
-			Double a = 2771.0;
-			Double b = 3.478 * Math.pow(10, -5);
-			Double c = -2740.0;
-			Double d = -0.002549;
-			Double toePressureValueInKg = (a * Math.exp(b * toePressureValue) + c * Math.exp(d * toePressureValue)) / 1000.0;
-			Double heelPressureValueInKg = (a * Math.exp(b * heelPressureValue) + c * Math.exp(d * heelPressureValue)) / 1000.0;
+//			Double a = 2771.0;
+//			Double b = 3.478 * Math.pow(10, -5);
+//			Double c = -2740.0;
+//			Double d = -0.002549;
+			Double toePressureValueInKg = toePressureValue.doubleValue();//(a * Math.exp(b * toePressureValue) + c * Math.exp(d * toePressureValue)) / 1000.0;
+			Double heelPressureValueInKg = heelPressureValue.doubleValue();//(a * Math.exp(b * heelPressureValue) + c * Math.exp(d * heelPressureValue)) / 1000.0;
 			
 			model.toePressureTimeSeries.addOrUpdate(millisecond, toePressureValueInKg);
 			model.heelPressureTimeSeries.addOrUpdate(millisecond, heelPressureValueInKg);

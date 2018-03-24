@@ -7,11 +7,11 @@
 clear;
 clc;
 
-windowLength = 7;
+windowLength = 5;
 
 % 2. open file, get file id
-gyroscope_fid = fopen('normal_IMU_2kmh_1.txt', 'r');
-pressure_fid = fopen('normal_Pressure_2kmh_1.txt', 'r');
+gyroscope_fid = fopen('CHENXIN_IMU_6kmh_1.txt', 'r');
+pressure_fid = fopen('CHENXIN_PRESSURE_6kmh_1.txt', 'r');
 
 if gyroscope_fid >= 0
 else

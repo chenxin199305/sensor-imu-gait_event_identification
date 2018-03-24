@@ -47,6 +47,7 @@ public class FootPressureForceSensorSerialPortAction {
 					ArrayList<Short> tempArray;
 					if ((tempArray = readSerialPort(model.serialPort)) != null) {
 						model.serialPortBufferData.addAll(tempArray);
+//						System.out.println(model.serialPortBufferData.size());
 						while(model.frameDecoder.PacketDecode(model.serialPortBufferData)) {
 							refreshFootPressureForceSensorDataDisplay();
 						}

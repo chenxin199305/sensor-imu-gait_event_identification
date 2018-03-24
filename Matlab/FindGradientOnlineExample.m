@@ -15,8 +15,8 @@ learningRateAlpha = 1.2;
 learningRateBeta = 0.8;
 
 % 2. open file, get file id
-training_fid = fopen('normal_IMU_1kmh_3.txt', 'r');
-gyroscope_fid = fopen('normal_IMU_1kmh_3.txt', 'r');
+training_fid = fopen('vary_IMU_2to3kmh_1.txt', 'r');
+gyroscope_fid = fopen('vary_IMU_2to3kmh_1.txt', 'r');
 % pressure_fid = fopen('normal_Pressure_3ms_3.txt', 'r');
 
 if training_fid >= 0
@@ -80,43 +80,6 @@ while ~feof(gyroscope_fid)
     end
 end
 
-% heelPressure = [];
-% toePressure = [];
-% 
-% while ~feof(pressure_fid)
-%     
-%     line = fgetl(pressure_fid);
-%     
-%     if strcmp(line, 'heelPressure')
-%         line = fgetl(pressure_fid);
-%         [startIndex, endIndex] = regexp(line, '... ... .. ..:..:.. ... ....');
-%         while startIndex ~= endIndex
-%             % remove head info
-%             line(startIndex:endIndex) = [];
-%             lineNum = str2num(line);
-%             heelPressure = [heelPressure lineNum];
-%             
-%             %             disp(lineNum);
-%             
-%             line = fgetl(pressure_fid);
-%             [startIndex, endIndex] = regexp(line, '... ... .. ..:..:.. ... ....');
-%         end
-%     end
-%     if strcmp(line, 'toePressure')
-%         line = fgetl(pressure_fid);
-%         [startIndex, endIndex] = regexp(line, '... ... .. ..:..:.. ... ....');
-%         while startIndex ~= endIndex
-%             % remove head info
-%             line(startIndex:endIndex) = [];
-%             lineNum = str2num(line);
-%             toePressure = [toePressure lineNum];
-%             
-%             line = fgetl(pressure_fid);
-%             [startIndex, endIndex] = regexp(line, '... ... .. ..:..:.. ... ....');
-%         end
-%     end
-% end
-
 % 4. training process, get TOHS training threshold
 trainingFilteredValue = [];
 
@@ -178,6 +141,7 @@ figure();
 plot(t, trainingFilteredValue);
 
 hold on
+plot(t, trainingRawValue, 'r');
 plot(TOPositions, TOValues, '*r');
 plot(HSPositions, HSValues, '*g');
 plot(stepPositions, stepValues, '*y');

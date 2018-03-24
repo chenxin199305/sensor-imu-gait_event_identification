@@ -13,7 +13,7 @@ public class IMUDetectAlgorithmPanel extends JPanel {
 		setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 15, 386, 158);
+		tabbedPane.setBounds(10, 15, 386, 351);
 		add(tabbedPane);
 	}
 }

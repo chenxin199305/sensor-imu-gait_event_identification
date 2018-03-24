@@ -59,9 +59,9 @@ public class IMUPhasePlainAction {
 		double gyoY = averageFilterGyoY.filter(imuDataModel.GyoRaw[1].doubleValue() / 10.0);
 		double gyoZ = averageFilterGyoZ.filter(imuDataModel.GyoRaw[2].doubleValue() / 10.0);
 
-		double eulerAngleX = averageFilterEulerAngleX.filter(imuDataModel.EulerAngles[0].doubleValue() / 10.0);
-		double eulerAngleY = averageFilterEulerAngleY.filter(imuDataModel.EulerAngles[1].doubleValue() / 10.0);
-		double eulerAngleZ = averageFilterEulerAngleZ.filter(imuDataModel.EulerAngles[2].doubleValue() / 10.0);
+		double eulerAngleX = 0.0;//averageFilterEulerAngleX.filter(imuDataModel.EulerAngles[0].doubleValue() / 10.0);
+		double eulerAngleY = 0.0;//averageFilterEulerAngleY.filter(imuDataModel.EulerAngles[1].doubleValue() / 10.0);
+		double eulerAngleZ = 0.0;//averageFilterEulerAngleZ.filter(imuDataModel.EulerAngles[2].doubleValue() / 10.0);
 
 		// update data
 		if (model.gyoXAxisArray.size() == model.recordCountLength) {

@@ -132,12 +132,9 @@ for i = 1 : 1 : length(rawValueArray)
     trainingFilteredGradient = ...
         (trainingFiltered - lastTrainingFilteredValue) / timeInterval;
     
-    lastTan = atan2(lastTrainingFilteredGradient, lastTrainingFilteredValue);
-    tan = atan2(trainingFilteredGradient, trainingFiltered);
-    
-    if lastTan <= -pi/2 && lastTan >= -pi ...
-            && tan <= pi && tan >= pi/2 ...
-            && trainingFiltered <= stepMinimumValue * 0.3
+    if lastTrainingFilteredGradient < 0 ...
+            && trainingFilteredGradient > 0 ...
+            && trainingFiltered <= -50
         
         %   classify toe-off and heel-strike
         TOHSaverageValue = 0;
@@ -207,7 +204,10 @@ for i = 1 : 1 : length(rawValueArray)
         end
         stepAverageLength = stepAverageLength / length(stepLengths);
         
-        windowLength = floor(stepAverageLength * 0.2) + 1 - mod(floor(stepAverageLength * 0.2), 2);
+        windowLength = floor(stepAverageLength * 0.1) + 1 - mod(floor(stepAverageLength * 0.1), 2);
+        if windowLength < 3
+            windowLength = 3;
+        end
         
         %   record necessary information
         stepCount       = stepCount + 1;

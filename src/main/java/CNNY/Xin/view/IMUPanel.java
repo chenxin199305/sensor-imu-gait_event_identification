@@ -36,12 +36,13 @@ public class IMUPanel extends JPanel {
 		
 		// phase plain panel
 		phasePlainPanel = new IMUPhasePlainPanel();
-		phasePlainPanel.setBounds(444, 203, 408, 422);
+		phasePlainPanel.setBounds(444, 203, 408, 1);
 		add(phasePlainPanel);
 		
 		// detect algorithm panel
 		detectAlgorithmPanel = new IMUDetectAlgorithmPanel();
-		detectAlgorithmPanel.setBounds(449, 17, 403, 176);
+		detectAlgorithmPanel.tabbedPane.setBounds(10, 15, 386, 583);
+		detectAlgorithmPanel.setBounds(449, 17, 403, 608);
 		add(detectAlgorithmPanel);
 	}
 }

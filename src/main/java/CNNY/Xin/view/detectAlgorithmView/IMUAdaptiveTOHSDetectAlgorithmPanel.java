@@ -50,7 +50,7 @@ public class IMUAdaptiveTOHSDetectAlgorithmPanel extends JPanel {
 		add(buttonStartStop);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(10, 72, 358, 56);
+		textArea.setBounds(10, 72, 358, 470);
 		add(textArea);
 		
 		JLabel lblAlpha = new JLabel("alpha:");
